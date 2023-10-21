@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "707769663992",
+    "project_id": "bebo-auto-service",
+    "storage_bucket": "bebo-auto-service.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707769663992:android:407ecb56919f7922c0560d",
+        "android_client_info": {
+          "package_name": "com.example.bebo_auto_service"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJJiibFYA8v3Slr4Q8A83Y398ybfIsDA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

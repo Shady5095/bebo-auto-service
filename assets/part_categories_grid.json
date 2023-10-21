@@ -1,0 +1,88 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "name": "Engine",
+      "nameAr": "الماتور",
+      "networkImage": "https://i.ibb.co/8KsYtxL/engine.png",
+      "assetImage": "assets/images/priceList1.png"
+    },
+    {
+      "id": "2",
+      "name": "Transmission and Gear",
+      "nameAr": "ناقل الحركة",
+      "networkImage": "https://i.ibb.co/y5r9RD8/transmission.png",
+      "assetImage": "assets/images/priceList2.png"
+    },
+    {
+      "id": "3",
+      "name": "Suspension and Steering",
+      "nameAr": "العفشه ونظام التوجيه",
+      "networkImage": "https://i.ibb.co/86xgwzK/suspension-and-steering.png",
+      "assetImage": "assets/images/priceList3.png"
+    },
+    {
+      "id": "4",
+      "name": "Brake System",
+      "nameAr": "نظام الفرامل",
+      "networkImage": "https://i.ibb.co/zFDwmYG/brake.png",
+      "assetImage": "assets/images/priceList4.png"
+    },
+    {
+      "id": "5",
+      "name": "Oils",
+      "nameAr": "الزيوت",
+      "networkImage": "https://i.ibb.co/VBhq5Yd/oils.png",
+      "assetImage": "assets/images/priceList5.png"
+    },
+    {
+      "id": "6",
+      "name": "Filters",
+      "nameAr": "الفلاتر",
+      "networkImage": "https://i.ibb.co/Jtz35jt/filter.png",
+      "assetImage": "assets/images/priceList6.png"
+    },
+    {
+      "id": "7",
+      "name": "Lights",
+      "nameAr": "الفوانيس والاضاءه",
+      "networkImage": "https://i.ibb.co/MGSHpC8/lights.png",
+      "assetImage": "assets/images/priceList7.png"
+    },
+    {
+      "id": "8",
+      "name": "Electrics",
+      "nameAr": "الكهرباء",
+      "networkImage": "https://i.ibb.co/qyvG5Fp/electrics.png",
+      "assetImage": "assets/images/priceList8.png"
+    },
+    {
+      "id": "9",
+      "name": "Body",
+      "nameAr": "هيكل السياره",
+      "networkImage": "https://i.ibb.co/JyLyx0B/body.png",
+      "assetImage": "assets/images/priceList9.png"
+    },
+    {
+      "id": "10",
+      "name": "Interior",
+      "nameAr": "الصالون الداخلي",
+      "networkImage": "https://i.ibb.co/G2Mq7d6/interior.jpg",
+      "assetImage": "assets/images/priceList10.png"
+    },
+    {
+      "id": "11",
+      "name": "Cooling System",
+      "nameAr": "أنظمة التبريد",
+      "networkImage": "https://i.ibb.co/Hgc6NHh/cooling-system.png",
+      "assetImage": "assets/images/priceList11.png"
+    },
+    {
+      "id": "12",
+      "name": "Others",
+      "nameAr": "أخري",
+      "networkImage": "https://i.ibb.co/8PXdTVc/others.png",
+      "assetImage": "assets/images/priceList12.png"
+    }
+  ]
+}

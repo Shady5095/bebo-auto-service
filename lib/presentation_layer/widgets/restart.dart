@@ -1,0 +1,36 @@
+import 'package:flutter/cupertino.dart';
+
+class RestartWidget extends StatefulWidget {
+  RestartWidget({this.child});
+
+  final Widget? child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    return _RestartWidgetState();
+  }
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+    print('restart done');
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child ?? Container(),
+    );
+  }
+}

@@ -1,0 +1,19 @@
+abstract class AuthStates {}
+
+class IntStateRegister extends AuthStates {}
+
+class PasswordChangeRegister extends AuthStates {}
+
+class RegisterLoadingState extends AuthStates {}
+
+class RegisterSuccessState extends AuthStates {}
+
+class RegisterErrorState extends AuthStates {}
+
+class UserCreateSuccessState extends AuthStates {}
+
+class UserCreateErrorState extends AuthStates {
+  late final String error ;
+
+  UserCreateErrorState(this.error);
+}
