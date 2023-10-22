@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/login_screen/login_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/register_screen/register_screen.dart';
 import 'package:bebo_auto_service/styles/themes.dart';
 import 'package:bloc/bloc.dart';
@@ -14,14 +15,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'components/app_locale.dart';
 import 'components/bloc_observer.dart';
 import 'data_layer/local/cache_helper.dart';
+import 'data_layer/network/dio_helper.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+  DioHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await CacheHelper.init();
   bool? isArabic = CacheHelper.getBool(key: 'isArabic');
   runApp(MyApp(isArabic: isArabic,));
 }
@@ -62,7 +66,7 @@ class MyApp extends StatelessWidget {
                 home:  child,
               );
             },
-            child: const RegisterScreen(),
+            child: const LoginScreen(),
           );
         },
       ),

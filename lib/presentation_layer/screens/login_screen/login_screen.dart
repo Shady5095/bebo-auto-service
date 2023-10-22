@@ -1,0 +1,223 @@
+import 'package:bebo_auto_service/components/constans.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:page_transition/page_transition.dart';
+
+import '../../../business_logic_layer/app_cubit/authentication_cubit/authentication_cubit.dart';
+import '../../../business_logic_layer/app_cubit/authentication_cubit/authentication_states.dart';
+import '../../../components/components.dart';
+import '../../widgets/dropdown_buttom.dart';
+import '../register_screen/register_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+final passController = TextEditingController();
+final emailController = TextEditingController();
+final formKey = GlobalKey<FormState>();
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AuthCubit(),
+      child: BlocConsumer<AuthCubit,AuthStates>(
+        listener: (context, state){},
+        builder: (context, state){
+          var cubit = AuthCubit.get(context);
+          return Scaffold(
+            body : SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Form(
+                  key: formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 40.h,
+                        ),
+                        Center(
+                          child: Image(
+                            width: 200,
+                            height: 200,
+                            image: AssetImage(
+                                'assets/images/logo.png'
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 78.h,
+                        ),
+                        TextFormField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .secondaryHeaderColor,
+                              fontSize: 14.sp),
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                              color: Theme.of(context)
+                                  .secondaryHeaderColor,
+                            ),
+                            labelText: 'البريد الألكتروني',
+                            prefixIcon:
+                            const Icon(Icons.email_outlined),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          autovalidateMode:
+                          AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'برجاء ادخال البيانات';
+                            } else if (!EmailValidator.validate(
+                                value, true)) {
+                              return 'البريد الألكتروني غير صالح';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 11.h,
+                        ),
+                        TextFormField(
+                          controller: passController,
+                          keyboardType: TextInputType.visiblePassword,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .secondaryHeaderColor,
+                              fontSize: 14.sp),
+                          obscureText: cubit.isPassword,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                              color: Theme.of(context)
+                                  .secondaryHeaderColor,
+                            ),
+                            labelText: 'كلمه السر',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                cubit.changeSuffixIcon();
+                              },
+                              icon: Icon(
+                                cubit.suffix,
+                              ),
+                            ),
+                            prefixIcon: const Icon(Icons.lock),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          autovalidateMode:
+                          AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'برجاء ادخال البيانات';
+                            } else if (value.length < 8) {
+                              return 'كلمه السر غير صالحة';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        ConditionalBuilder(
+                          condition: state is! LoginLoadingState,
+                          builder: (context) => deafultButton(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                cubit.userLogin(
+                                    email: emailController.text,
+                                    password: passController.text.trim(),
+                                    context: context
+                                );
+                              }
+                            },
+                            height: 45.h,
+                            text: 'تسجيل الدخول',
+                            textColor:
+                            Theme.of(context).secondaryHeaderColor,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: defaultColor
+                            ),
+                          ),
+                          fallback: (context) => const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.purple,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 11.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'ليس لديك حساب ؟',
+                              style: TextStyle(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  fontSize: 14.sp
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await FirebaseMessaging.instance.subscribeToTopic('userr').then((value) {
+                                  print('object');
+                                });
+                                navigateToAnimated(
+                                  context: context,
+                                  widget: RegisterScreen(),
+                                  animation: PageTransitionType.leftToRight
+                                );
+                              },
+                              child:  Text(
+                                'تسجيل',
+                                style: TextStyle(
+                                    fontSize: 13.sp
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Center(
+                          child: TextButton(
+                            onPressed: () {
+                              cubit.resetPassword(
+                                  email: emailController.text,
+                                  context: context);
+                            },
+                            child:  Text(
+                              'نسيت كلمه السر ؟',
+                              style: TextStyle(
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

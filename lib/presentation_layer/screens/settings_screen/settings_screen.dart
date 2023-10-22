@@ -1,14 +1,18 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../components/app_locale.dart';
 import '../../../components/components.dart';
 import '../../../data_layer/local/cache_helper.dart';
+import '../login_screen/login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -92,7 +96,11 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: (){},
+                  onTap: (){
+                     FirebaseMessaging.instance.subscribeToTopic('userr').then((value) {
+                      print('object');
+                    });
+                  },
                   splashColor: Colors.transparent,
                   contentPadding: EdgeInsets.all(10),
                   leading: Icon(
@@ -109,7 +117,21 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: (){},
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                     CacheHelper.removeData(
+                        key: 'uId'
+                    )?.then((value) {
+                      if (value) {
+                        Navigator.pushReplacement(context, PageTransition(
+                            type: PageTransitionType.fade,
+                            child: const LoginScreen(),
+                            duration: const Duration(milliseconds: 500)
+                        ),
+                        );
+                      }
+                    });
+                  },
                   splashColor: Colors.transparent,
                   contentPadding: const EdgeInsets.all(10),
                   leading: Icon(

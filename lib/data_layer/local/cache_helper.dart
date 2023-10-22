@@ -37,6 +37,13 @@ class CacheHelper {
   {
     return await sharedPreferences?.setBool(key, value);
   }
+  static Future<bool?> putString({
+    required key,
+    required value
+  }) async
+  {
+    return await sharedPreferences?.setString(key, value);
+  }
 
   static Future<bool?> putData({
     required String key,

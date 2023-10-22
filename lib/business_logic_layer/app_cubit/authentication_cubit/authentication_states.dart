@@ -17,3 +17,12 @@ class UserCreateErrorState extends AuthStates {
 
   UserCreateErrorState(this.error);
 }
+
+class ResetPasswordState extends AuthStates {}
+
+class LoginLoadingState extends AuthStates {}
+
+class LoginSuccessState extends AuthStates {}
+
+class LoginErrorState extends AuthStates {}
+

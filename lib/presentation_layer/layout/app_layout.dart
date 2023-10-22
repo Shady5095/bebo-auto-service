@@ -3,6 +3,7 @@ import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart
 import 'package:bebo_auto_service/styles/icon_broken.dart';
 import 'package:bottom_bar_matu/bottom_bar_double_bullet/bottom_bar_double_bullet.dart';
 import 'package:bottom_bar_matu/bottom_bar_item.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 
 import '../../components/app_locale.dart';
+import '../../components/components.dart';
 
-class AppLayout extends StatelessWidget {
+class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
 
+  @override
+  State<AppLayout> createState() => _AppLayoutState();
+}
+
+class _AppLayoutState extends State<AppLayout> {
+
+  void getInit() async {
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.subscribeToTopic('shady');
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CarCubit,CarStates>(

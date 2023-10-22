@@ -13,8 +13,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../components/components.dart';
+import '../../widgets/my_circular_progress_indicator.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -169,6 +171,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 controller: firstNameController,
                                 keyboardType: TextInputType.name,
                                 textCapitalization: TextCapitalization.words,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(9),
+                                ],
                                 style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
                                     fontSize: 13.sp
@@ -207,6 +212,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 controller: lastNameController,
                                 keyboardType: TextInputType.name,
                                 textCapitalization: TextCapitalization.words,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(9),
+                                ],
                                 style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
                                     fontSize: 13.sp
@@ -640,8 +648,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 12.h,
                         ),
-                        Center(
-                          child: const Padding(
+                        const Center(
+                          child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               'رقم اللوحه',
@@ -771,8 +779,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   fontSize: 13.sp
                                               ),
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.symmetric(horizontal: 7),
-                                                hintStyle: TextStyle(
+                                                contentPadding: const EdgeInsets.symmetric(horizontal: 7),
+                                                hintStyle: const TextStyle(
                                                   color: Colors.black,
                                                 ),
                                                 hintText: 'الرقم',
@@ -781,7 +789,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(
+                                                    borderSide: const BorderSide(
                                                       color: defaultBackgroundColor,
                                                     ),
                                                     borderRadius: BorderRadius.circular(15)
@@ -797,6 +805,90 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ],
                           ),
+                        ),
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              CupertinoIcons.pin,
+                              color: defaultColor,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 8.w,
+                            ),
+                            const Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'سيتم مراجعة بياناتك من قبل المسئول',
+                                    style: TextStyle(
+                                      color: Colors.white54
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              CupertinoIcons.pin,
+                              color: defaultColor,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 8.w,
+                            ),
+                            const Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'برجاء العلم انه لن يتم قبول حسابك اذا انت ليس عميل بمركز بيبو',
+                                    style: TextStyle(
+                                      color: Colors.white54
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              CupertinoIcons.pin,
+                              color: defaultColor,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 8.w,
+                            ),
+                            const Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'برجاء تذكر البريد الأليكتروني وكلمه السر للتسجيل بهما بعد قبول حسابك ',
+                                    style: TextStyle(
+                                      color: Colors.white54
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 12.h,
@@ -833,7 +925,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: defaultColor
                             ),
                           ),
-                          fallback: (context) => const Center(child: CircularProgressIndicator(color: Colors.purple,)),
+                          fallback: (context) => Center(child: myCircularProgressIndicator()),
                         ),
                         SizedBox(
                           height: 14.h,

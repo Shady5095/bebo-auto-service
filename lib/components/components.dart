@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../styles/icon_broken.dart';
+import 'constans.dart';
 
 
 void navigateToAnimated({context , widget , animation=PageTransitionType.fade}) => Navigator.push(context, PageTransition(
@@ -192,4 +194,6 @@ bool isArabic(context){
   Locale myLocale = Localizations.localeOf(context);
   return myLocale.languageCode == 'ar' ;
 }
+
+Widget myCircularProgressIndicator() => LoadingAnimationWidget.threeRotatingDots(color: defaultColor, size: 40 ,) ;
 
