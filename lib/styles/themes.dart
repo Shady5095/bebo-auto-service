@@ -1,7 +1,7 @@
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:flutter/material.dart';
 
-ThemeData darkTheme(context,Locale locale) => ThemeData(
+ThemeData darkTheme(context) => ThemeData(
   bottomSheetTheme:  BottomSheetThemeData(
       backgroundColor: Colors.grey[900],
       shape: const RoundedRectangleBorder(

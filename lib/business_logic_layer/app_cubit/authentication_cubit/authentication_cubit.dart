@@ -1,3 +1,4 @@
+import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/authentication_cubit/authentication_states.dart';
 import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -116,16 +117,17 @@ class AuthCubit extends Cubit<AuthStates> {
         email: email,
         password: password,
       ).then((userCredential)  async {
-        emit(LoginSuccessState());
-        print(userCredential.user!.uid);
         await CacheHelper.putString(key: 'uId', value: userCredential.user!.uid)
             .then((value) async {
           myUid = userCredential.user?.uid;
-          navigateAndFinish(
-            context: context,
-            widget: const AppLayout(),
-            animation: PageTransitionType.leftToRight,
-          );
+          await CarCubit.get(context).getUserData().then((value) {
+            navigateAndFinish(
+              context: context,
+              widget: const AppLayout(),
+              animation: PageTransitionType.leftToRight,
+            );
+          });
+          emit(LoginSuccessState());
         });
 
       });

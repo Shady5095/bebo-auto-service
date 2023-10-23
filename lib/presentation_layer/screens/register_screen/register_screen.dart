@@ -794,7 +794,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     ),
                                                     borderRadius: BorderRadius.circular(15)
                                                 ),
+
                                               ),
+                                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                              validator: (value){
+                                                if (value==null || value.isEmpty){
+                                                  return 'برجاء ادخال البيانات';
+                                                }
+                                                else if (value == '-' || value == '.'){
+                                                  return 'الرقم غير صالح';
+                                                }
+                                                return null;
+                                              },
                                             ),
                                           ),
                                         ),
@@ -895,26 +906,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         ConditionalBuilder(
                           condition: state is !RegisterLoadingState,
-                          builder: (context) => deafultButton(
+                          builder: (context) => defaultButton(
                             onTap: (){
-                              if (formKey.currentState!.validate()){
-                                cubit.userRegister(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                    firstName: firstNameController.text,
-                                    lastName: lastNameController.text,
-                                    carModel: carModelSelected!,
-                                    year: carYearSelected!,
-                                    transmission: transmissionSelected!,
-                                    color: carColorSelected!,
-                                    bodyType: bodyTypeSelected!,
-                                    km: kiloMeterCount.text,
-                                    chassisNo: chassisNo.text,
-                                    engineNo: engineNo.text,
-                                    plate: '$firstLetter $secondLetter ${thirdLetter??''}  ${plateNo.text}',
-                                    phone: phoneController.text,
-                                    context: context
-                                );
+                              if(formKey.currentState!.validate()){
+                                if(carModelSelected == null
+                                    && carYearSelected == null
+                                    && carColorSelected == null
+                                    && bodyTypeSelected == null
+                                    && transmissionSelected == null
+                                ){
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text('برجاء ادخال جميع البيانات '),
+                                    backgroundColor: Colors.red,
+
+                                  ));
+                                }
+                                else if(firstLetter == null){
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text('برجاء ادخال اول حرف من نمر السياره'),
+                                    backgroundColor: Colors.red,
+                                  ));
+                                }
+                                else {
+                                  cubit.userRegister(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      firstName: firstNameController.text,
+                                      lastName: lastNameController.text,
+                                      carModel: carModelSelected!,
+                                      year: carYearSelected!,
+                                      transmission: transmissionSelected!,
+                                      color: carColorSelected!,
+                                      bodyType: bodyTypeSelected!,
+                                      km: kiloMeterCount.text,
+                                      chassisNo: chassisNo.text,
+                                      engineNo: engineNo.text,
+                                      plate: '$firstLetter $secondLetter ${thirdLetter??''}  ${plateNo.text}',
+                                      phone: phoneController.text,
+                                      context: context
+                                  );
+                                }
                               }
                             },
                             text: 'تسجيل',

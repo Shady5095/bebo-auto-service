@@ -1,10 +1,14 @@
+import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
+import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
+import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,125 +57,185 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: defaultBackgroundColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Stack(
+    return BlocConsumer<CarCubit,CarStates>(
+      listener: (context,state){},
+      builder: (context,state){
+        UserModel? userData = CarCubit.get(context).userData ;
+        return Scaffold(
+          backgroundColor: defaultBackgroundColor,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                height: 385.h,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: [
-                        0.1,
-                        0.65,
-                      ],
-                      colors: [
-                        Color.fromRGBO(254, 79, 79, 1.0),
-                        Color.fromRGBO(35, 33, 33, 1.0),
-                      ]),
-                ),
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 60.h,
-                        child: AnimatedBuilder(
-                            animation: helloTextSlidingAnimation,
-                            builder: (context,_) {
-                              return SlideTransition(
-                                position: helloTextSlidingAnimation,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 10).w,
-                                  child: Text(
-                                    '${getLang(context, 'Hey')},Shady',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 27.sp,
+              Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 385.h,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: [
+                            0.1,
+                            0.65,
+                          ],
+                          colors: [
+                            Color.fromRGBO(254, 79, 79, 1.0),
+                            Color.fromRGBO(35, 33, 33, 1.0),
+                          ]),
+                    ),
+                    child: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 60.h,
+                            child: AnimatedBuilder(
+                                animation: helloTextSlidingAnimation,
+                                builder: (context,_) {
+                                  return SlideTransition(
+                                    position: helloTextSlidingAnimation,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 10).w,
+                                      child: Text(
+                                        'أهلا,${userData!.firstName}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 27.sp,
                                         ),
-                                  ),
-                                ),
-                              );
-                            }
-                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                            ),
+                          ),
+                          Positioned(
+                            top: 165.h,
+                            child: AnimatedBuilder(
+                                animation: pointsTextSlidingAnimation,
+                                builder: (context,_) {
+                                  return SlideTransition(
+                                    position: pointsTextSlidingAnimation,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 10).w,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Countup(
+                                            begin: 0,
+                                            end: userData!.points!.toDouble(),
+                                            duration: const Duration(milliseconds: 1500),
+                                            separator: ',',
+                                            style: GoogleFonts.dosis(
+                                                color: Colors.white,
+                                                fontSize: 60.sp,
+                                                height: 0.8,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          Text(
+                                            '${getLang(context, 'POINTS')}',
+                                            style: GoogleFonts.dosis(
+                                                color: Colors.white,
+                                                fontSize: 60.sp,
+                                                height: 0.8,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional.bottomEnd,
+                            child: AnimatedBuilder(
+                                animation: carSlidingAnimation,
+                                builder: (context, _) {
+                                  return SlideTransition(
+                                    position: carSlidingAnimation,
+                                    child: InkWell(
+                                      onTap: (){
+                                        initCarAnimation();
+                                        initButtonsAnimation();
+                                        initHelloTextAnimation();
+                                        initPointsTextAnimation();
+                                        setState(() {
+
+                                        });
+                                      },
+                                      child: Image(
+                                        width: displayWidth(context) <= 385 ? 270.w : 305.w,
+                                        image: AssetImage(
+                                          'assets/images/mazda3copy.png',
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                            ),
+                          ),
+                        ],
                       ),
-                      Positioned(
-                        top: 150.h,
-                        child: AnimatedBuilder(
-                          animation: pointsTextSlidingAnimation,
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AnimatedBuilder(
+                          animation: button1Animation,
                           builder: (context,_) {
                             return SlideTransition(
-                              position: pointsTextSlidingAnimation,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 10).w,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Countup(
-                                      begin: 0,
-                                      end: 3500,
-                                      duration: const Duration(milliseconds: 1500),
-                                      separator: ',',
-                                      style: GoogleFonts.dosis(
-                                          color: Colors.white,
-                                          fontSize: 60.sp,
-                                          height: 0.8,
-                                          fontWeight: FontWeight.w600
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Text(
-                                      '${getLang(context, 'POINTS')}',
-                                      style: GoogleFonts.dosis(
-                                          color: Colors.white,
-                                          fontSize: 60.sp,
-                                          height: 0.8,
-                                          fontWeight: FontWeight.w600
-                                      ),
-                                    ),
-                                  ],
+                              position: button1Animation,
+                              child: defaultButton(
+                                onTap: (){},
+                                text: '${getLang(context, 'Book a maintenance appointment')}',
+                                width: double.infinity,
+                                height: 37.h,
+                                textColor: Colors.white,
+                                isUppercase: false,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: defaultColor
                                 ),
                               ),
                             );
                           }
-                        ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional.bottomEnd,
-                        child: AnimatedBuilder(
-                          animation: carSlidingAnimation,
-                          builder: (context, _) {
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      AnimatedBuilder(
+                          animation: button2Animation,
+                          builder: (context,_) {
                             return SlideTransition(
-                              position: carSlidingAnimation,
-                              child: InkWell(
-                                onTap: (){
-                                  initCarAnimation();
-                                  initButtonsAnimation();
-                                  initHelloTextAnimation();
-                                  initPointsTextAnimation();
-                                  setState(() {
-
-                                  });
-                                },
-                                child: Image(
-                                  width: displayWidth(context) <= 385 ? 270.w : 305.w,
-                                  image: AssetImage(
-                                    'assets/images/mazda3copy.png',
-                                  ),
+                              position: button2Animation,
+                              child: defaultButton(
+                                onTap: (){},
+                                text: '${getLang(context, 'Redeem points')}',
+                                width: double.infinity,
+                                height: 37.h,
+                                textColor: Colors.white,
+                                isUppercase: false,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color.fromRGBO(49, 47, 47, 1.0)
                                 ),
                               ),
                             );
                           }
-                        ),
                       ),
                     ],
                   ),
@@ -179,62 +243,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AnimatedBuilder(
-                    animation: button1Animation,
-                    builder: (context,_) {
-                      return SlideTransition(
-                        position: button1Animation,
-                        child: deafultButton(
-                            onTap: (){},
-                            text: '${getLang(context, 'Book a maintenance appointment')}',
-                          width: double.infinity,
-                          height: 37.h,
-                          textColor: Colors.white,
-                          isUppercase: false,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: defaultColor
-                          ),
-                        ),
-                      );
-                    }
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  AnimatedBuilder(
-                      animation: button2Animation,
-                      builder: (context,_) {
-                        return SlideTransition(
-                          position: button2Animation,
-                          child: deafultButton(
-                            onTap: (){},
-                            text: '${getLang(context, 'Redeem points')}',
-                            width: double.infinity,
-                            height: 37.h,
-                            textColor: Colors.white,
-                            isUppercase: false,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Color.fromRGBO(49, 47, 47, 1.0)
-                            ),
-                          ),
-                        );
-                      }
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

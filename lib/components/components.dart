@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -28,7 +29,7 @@ void navigateAndFinish({required context ,required widget,required PageTransitio
 );
 
 
-Widget deafultButton({
+Widget defaultButton({
   double width=double.infinity,
   Color? background ,
   double height = 60,
@@ -37,14 +38,17 @@ Widget deafultButton({
   Widget? child ,
   bool isUppercase = true,
   BoxDecoration? decoration ,
-  Color textColor = Colors.black,
+  Color textColor = Colors.white,
   FontWeight fontWeight = FontWeight.normal,
-  double fontSize = 17,
+  double? fontSize ,
 }) => Container(
   width: width,
   height: height,
   color: background,
-  decoration: decoration,
+  decoration: decoration?? BoxDecoration(
+    borderRadius: BorderRadius.circular(15),
+    color: defaultColor
+  ),
   child: MaterialButton(
     onPressed: onTap,
     padding: EdgeInsets.zero,
@@ -55,7 +59,7 @@ Widget deafultButton({
       style: TextStyle(
           color: textColor,
         fontWeight: fontWeight,
-        fontSize: fontSize,
+        fontSize: fontSize??14.sp,
 
       ),
     ),
@@ -94,7 +98,7 @@ Color toastColor(ToastStates state) {
   return color;
 }
 
-PreferredSizeWidget deafaultAppBar({
+PreferredSizeWidget defaultAppbar({
   required BuildContext context,
   String? title ,
   List<Widget>? actions ,
@@ -103,7 +107,7 @@ PreferredSizeWidget deafaultAppBar({
   title: Text(
     title!,
     style: TextStyle(
-      fontSize: 25,
+      fontSize: 18.sp,
     ),
   ),
   actions: actions,
@@ -112,7 +116,7 @@ PreferredSizeWidget deafaultAppBar({
       Navigator.pop(context);
     },
     icon: Icon(
-      IconBroken.Arrow___Left_2,
+      Icons.arrow_back_ios,
       color: Theme.of(context).secondaryHeaderColor,
     ),
   ),
@@ -190,10 +194,9 @@ Widget colorPicker({
   selectedColor: selectedColor ,
 );
 
-bool isArabic(context){
-  Locale myLocale = Localizations.localeOf(context);
-  return myLocale.languageCode == 'ar' ;
-}
+
 
 Widget myCircularProgressIndicator() => LoadingAnimationWidget.threeRotatingDots(color: defaultColor, size: 40 ,) ;
+
+
 

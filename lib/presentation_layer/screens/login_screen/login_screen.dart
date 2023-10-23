@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         ConditionalBuilder(
                           condition: state is! LoginLoadingState,
-                          builder: (context) => deafultButton(
+                          builder: (context) => defaultButton(
                             onTap: () {
                               if (formKey.currentState!.validate()) {
                                 cubit.userLogin(
@@ -156,10 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: defaultColor
                             ),
                           ),
-                          fallback: (context) => const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.purple,
-                              )),
+                          fallback: (context) =>  Center(
+                              child: myCircularProgressIndicator()
+                          ),
                         ),
                         SizedBox(
                           height: 11.h,
@@ -175,13 +174,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () async {
-                                await FirebaseMessaging.instance.subscribeToTopic('userr').then((value) {
-                                  print('object');
-                                });
+                              onPressed: () {
                                 navigateToAnimated(
                                   context: context,
-                                  widget: RegisterScreen(),
+                                  widget: const RegisterScreen(),
                                   animation: PageTransitionType.leftToRight
                                 );
                               },

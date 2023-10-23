@@ -112,7 +112,6 @@ class _IntroScreenState extends State<IntroScreen> {
                       onTap: (){
                         setState(() {
                           isEnglish = true ;
-                          CarCubit.get(context).appLang(isArabic: false);
                         });
                       },
                       highlightColor: Colors.transparent,
@@ -157,7 +156,6 @@ class _IntroScreenState extends State<IntroScreen> {
                       onTap: (){
                         setState(() {
                           isEnglish = false ;
-                          CarCubit.get(context).appLang(isArabic: true);
                         });
                       },
                       highlightColor: Colors.transparent,
@@ -198,7 +196,7 @@ class _IntroScreenState extends State<IntroScreen> {
           SizedBox(
             height: 25.h,
           ),
-          deafultButton(
+          defaultButton(
             onTap: (){
               navigateToAnimated(
                 context: context,
@@ -227,7 +225,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   width: 10.w,
                 ),
                 Icon(
-                  isArabic(context) ? CupertinoIcons.arrow_left : CupertinoIcons.arrow_right,
+                   CupertinoIcons.arrow_left,
                   color: Colors.white,
                   size: 20.sp,
                 ),

@@ -1,6 +1,7 @@
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/home_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/login_screen/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,7 +48,7 @@ class _OnBoardingState extends State<OnBoarding> {
     CacheHelper.putData(key: 'onBoarding', value: true);
     navigateAndFinish(
         context: context,
-        widget: const AppLayout(),
+        widget: const LoginScreen(),
         animation: PageTransitionType.rightToLeft);
   }
 

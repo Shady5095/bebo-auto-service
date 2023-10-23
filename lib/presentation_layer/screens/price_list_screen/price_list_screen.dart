@@ -100,7 +100,7 @@ class PriceListScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    CarCubit.get(context).categoriesGrid[index][isArabic(context) ? 'nameAr' : 'name'],
+                    CarCubit.get(context).categoriesGrid[index]['nameAr'],
                     style: const TextStyle(
                       fontSize: 12,
                       overflow: TextOverflow.ellipsis,

@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/my_profile_screen/my_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,7 +44,13 @@ class SettingsScreen extends StatelessWidget {
               ),
               children: [
                 ListTile(
-                  onTap: (){},
+                  onTap: (){
+                    navigateToAnimated(
+                      context: context,
+                      widget:  MyProfileScreen(userData: (CarCubit.get(context).userData)!),
+                      animation: PageTransitionType.leftToRight
+                    );
+                  },
                   splashColor: Colors.transparent,
                   contentPadding: const EdgeInsets.all(10),
                   leading: Icon(
@@ -52,7 +59,7 @@ class SettingsScreen extends StatelessWidget {
                     size: 24.sp,
                   ),
                   title: Text(
-                    '${getLang(context, 'Profile')}',
+                    'تعديل الملف الشخصي',
                     style: TextStyle(
                         fontSize: 18.sp,
                         color: Colors.white
@@ -61,7 +68,6 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: (){
-                    CarCubit.get(context).appLang(isArabic: !isArabic(context));
                   },
                   splashColor: Colors.transparent,
                   contentPadding: const EdgeInsets.all(10),
@@ -97,9 +103,6 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: (){
-                     FirebaseMessaging.instance.subscribeToTopic('userr').then((value) {
-                      print('object');
-                    });
                   },
                   splashColor: Colors.transparent,
                   contentPadding: EdgeInsets.all(10),

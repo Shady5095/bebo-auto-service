@@ -21,7 +21,7 @@ final int? photosListIndex ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: deafaultAppBar(
+      appBar: defaultAppbar(
           context: context,
         title: '',
       ),

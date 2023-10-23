@@ -1,6 +1,10 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
+import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/intro_screen/intro_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/login_screen/login_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/register_screen/register_screen.dart';
 import 'package:bebo_auto_service/styles/themes.dart';
 import 'package:bloc/bloc.dart';
@@ -26,18 +30,31 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await CacheHelper.init();
-  bool? isArabic = CacheHelper.getBool(key: 'isArabic');
-  runApp(MyApp(isArabic: isArabic,));
+
+  bool? onBoarding = CacheHelper.getBool(key: 'onBoarding');
+  myUid = CacheHelper.getString(key: 'uId');
+  Widget startScreen(){
+    if(onBoarding == true ){
+      if(myUid!=null){
+        return const AppLayout();
+      }
+      else {
+        return const LoginScreen();
+      }
+    }
+    return const IntroScreen();
+  }
+  runApp(MyApp(startScreen: startScreen(),));
 }
 
 class MyApp extends StatelessWidget {
-  final bool? isArabic ;
-  const MyApp({super.key,required this.isArabic});
+  final Widget startScreen ;
+  const MyApp({super.key, required this.startScreen,});
 
   @override
   Widget build(BuildContext context) {
     return  BlocProvider(
-        create: (context) => CarCubit()..categoriesGridJson()..appLang(fromShared: isArabic) ,
+        create: (context) => CarCubit()..categoriesGridJson()..getUserData() ,
       child: BlocConsumer<CarCubit,CarStates>(
         listener: (context,state){},
         builder: (context,state){
@@ -57,26 +74,19 @@ class MyApp extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                 ],
                 supportedLocales: const [
-                  Locale('en'), // English
                   Locale('ar'), // Arabic
                 ],
-                locale: appLocale(context),
+                locale: const Locale('ar'),
                 builder: DevicePreview.appBuilder,
-                theme: darkTheme(context,appLocale(context)),
+                theme: darkTheme(context),
                 home:  child,
               );
             },
-            child: const LoginScreen(),
+            child: startScreen,
           );
         },
       ),
     );
-  }
-  Locale appLocale(context){
-    if(CarCubit.get(context).isArabic == null || CarCubit.get(context).isArabic == true){
-      return const Locale('ar');
-    }
-    return const Locale('en');
   }
 }
 
