@@ -62,12 +62,11 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   flutter_material_color_picker: ^1.1.0
   shimmer: ^3.0.0
-  google_fonts: ^6.1.0
+  google_fonts: ^4.0.4
   device_preview: ^1.1.0
   flutter_screenutil: ^5.9.0
   countup: ^0.1.4
   dropdown_button2: ^2.3.9
-
 
   #firebase
   firebase_storage: ^11.2.5
@@ -94,6 +93,7 @@ dependencies:
   path_provider: ^2.1.1
   transparent_image: ^2.0.0
   flutter_staggered_animations: ^1.1.1
+  gallery_saver: ^2.3.2
 
 dev_dependencies:
   flutter_test:

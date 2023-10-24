@@ -93,7 +93,7 @@ class CarCubit extends Cubit<CarStates> {
         email: userData!.email!,
         password: currentPassword,
     );
-     // ReAuthenticate
+     // ReAuthenticate with old password
     await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential).then((value) {
       // updatePassword
       FirebaseAuth.instance.currentUser?.updatePassword(newPassword).then((value) {

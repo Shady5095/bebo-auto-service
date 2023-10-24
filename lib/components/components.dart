@@ -10,9 +10,13 @@ import '../styles/icon_broken.dart';
 import 'constans.dart';
 
 
-void navigateToAnimated({context , widget , animation=PageTransitionType.fade}) => Navigator.push(context, PageTransition(
+void navigateToAnimated({context , widget , animation=PageTransitionType.leftToRight}) => Navigator.push(context, PageTransition(
   type: animation,
   child: widget,
+  curve: Curves.fastOutSlowIn,
+  duration: const Duration(
+    milliseconds: 400
+  )
 ),
 );
 
@@ -197,6 +201,33 @@ Widget colorPicker({
 
 
 Widget myCircularProgressIndicator() => LoadingAnimationWidget.threeRotatingDots(color: defaultColor, size: 40 ,) ;
+
+void unFocusKeyboard(BuildContext context) {
+  FocusScopeNode currentFocus = FocusScope.of(context);
+
+  if (!currentFocus.hasPrimaryFocus) {
+    currentFocus.unfocus();
+  }
+}
+
+String addCommaToString(String num){
+  String price = num;
+  String priceInText = "";
+  int counter = 0;
+  for(int i = (price.length - 1);  i >= 0; i--){
+    counter++;
+    String str = price[i];
+    if((counter % 3) != 0 && i !=0){
+      priceInText = "$str$priceInText";
+    }else if(i == 0 ){
+      priceInText = "$str$priceInText";
+
+    }else{
+      priceInText = ",$str$priceInText";
+    }
+  }
+  return priceInText.trim();
+}
 
 
 
