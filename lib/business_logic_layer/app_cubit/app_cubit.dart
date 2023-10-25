@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_car_screen/my_car_screen.dart';
@@ -117,5 +118,18 @@ class CarCubit extends Cubit<CarStates> {
       ));
     });
 
+  }
+
+  void test(){
+    db.collection('spareParts').get().then((value) {
+      for (var spareParts in value.docs) {
+        SparePartsModel sparePartsModel = SparePartsModel.fromJson(spareParts.data());
+        print(sparePartsModel.name);
+        db.collection('spareParts').doc(spareParts.id).collection('mazda3').doc('2008').get().then((value) {
+          SparePartPriceDetailsModel sparePartPriceDetailsModel = SparePartPriceDetailsModel.fromJson(value.data()!);
+          sparePartsModel.price = sparePartPriceDetailsModel;
+          print(sparePartsModel.price!.org);
+        });
+      }});
   }
 }
