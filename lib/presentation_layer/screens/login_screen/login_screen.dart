@@ -9,8 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../business_logic_layer/app_cubit/authentication_cubit/authentication_cubit.dart';
-import '../../../business_logic_layer/app_cubit/authentication_cubit/authentication_states.dart';
+import '../../../business_logic_layer/authentication_cubit/authentication_cubit.dart';
+import '../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../components/components.dart';
 import '../../widgets/dropdown_buttom.dart';
 import '../register_screen/register_screen.dart';
@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context, state){
           var cubit = AuthCubit.get(context);
           return Scaffold(
+            appBar: defaultAppbar(context: context),
             body : GestureDetector(
               onTap: () {
                 unFocusKeyboard(context);
@@ -55,15 +56,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Center(
                             child: Image(
-                              width: 200,
-                              height: 200,
+                              width: 160,
+                              height: 160,
                               image: AssetImage(
                                   'assets/images/logo.png'
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 78.h,
+                            height: 40.h,
                           ),
                           TextFormField(
                             controller: emailController,

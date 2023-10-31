@@ -2,87 +2,87 @@
   "items": [
     {
       "id": "1",
-      "name": "Engine",
+      "name": "engine",
       "nameAr": "الماتور",
       "networkImage": "https://i.ibb.co/8KsYtxL/engine.png",
-      "assetImage": "assets/images/priceList1.png"
+      "assetImage": "assets/images/engine.png"
     },
     {
       "id": "2",
-      "name": "Transmission and Gear",
+      "name": "transmission",
       "nameAr": "ناقل الحركة",
       "networkImage": "https://i.ibb.co/y5r9RD8/transmission.png",
-      "assetImage": "assets/images/priceList2.png"
+      "assetImage": "assets/images/transmission.png"
     },
     {
       "id": "3",
-      "name": "Suspension and Steering",
+      "name": "suspension",
       "nameAr": "العفشه ونظام التوجيه",
       "networkImage": "https://i.ibb.co/86xgwzK/suspension-and-steering.png",
-      "assetImage": "assets/images/priceList3.png"
+      "assetImage": "assets/images/suspension.png"
     },
     {
       "id": "4",
-      "name": "Brake System",
+      "name": "brake",
       "nameAr": "نظام الفرامل",
       "networkImage": "https://i.ibb.co/zFDwmYG/brake.png",
-      "assetImage": "assets/images/priceList4.png"
+      "assetImage": "assets/images/brake.png"
     },
     {
       "id": "5",
-      "name": "Oils",
+      "name": "oils",
       "nameAr": "الزيوت",
       "networkImage": "https://i.ibb.co/VBhq5Yd/oils.png",
-      "assetImage": "assets/images/priceList5.png"
+      "assetImage": "assets/images/oils.png"
     },
     {
       "id": "6",
-      "name": "Filters",
+      "name": "filters",
       "nameAr": "الفلاتر",
       "networkImage": "https://i.ibb.co/Jtz35jt/filter.png",
-      "assetImage": "assets/images/priceList6.png"
+      "assetImage": "assets/images/filters.png"
     },
     {
       "id": "7",
-      "name": "Lights",
+      "name": "lights",
       "nameAr": "الفوانيس والاضاءه",
       "networkImage": "https://i.ibb.co/MGSHpC8/lights.png",
-      "assetImage": "assets/images/priceList7.png"
+      "assetImage": "assets/images/lights.png"
     },
     {
       "id": "8",
-      "name": "Electrics",
+      "name": "electrics",
       "nameAr": "الكهرباء",
       "networkImage": "https://i.ibb.co/qyvG5Fp/electrics.png",
-      "assetImage": "assets/images/priceList8.png"
+      "assetImage": "assets/images/electrics.png"
     },
     {
       "id": "9",
-      "name": "Body",
+      "name": "body",
       "nameAr": "هيكل السياره",
       "networkImage": "https://i.ibb.co/JyLyx0B/body.png",
-      "assetImage": "assets/images/priceList9.png"
+      "assetImage": "assets/images/body.png"
     },
     {
       "id": "10",
-      "name": "Interior",
+      "name": "interior",
       "nameAr": "الصالون الداخلي",
       "networkImage": "https://i.ibb.co/G2Mq7d6/interior.jpg",
-      "assetImage": "assets/images/priceList10.png"
+      "assetImage": "assets/images/interior.png"
     },
     {
       "id": "11",
-      "name": "Cooling System",
+      "name": "coolingSystem",
       "nameAr": "أنظمة التبريد",
       "networkImage": "https://i.ibb.co/Hgc6NHh/cooling-system.png",
-      "assetImage": "assets/images/priceList11.png"
+      "assetImage": "assets/images/coolingSystem.png"
     },
     {
       "id": "12",
-      "name": "Others",
+      "name": "others",
       "nameAr": "أخري",
       "networkImage": "https://i.ibb.co/8PXdTVc/others.png",
-      "assetImage": "assets/images/priceList12.png"
+      "assetImage": "assets/images/others.png"
     }
   ]
 }

@@ -1,11 +1,14 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
+import 'package:bebo_auto_service/business_logic_layer/my_bloc_providers/my_bloc_providers.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/intro_screen/intro_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/login_screen/login_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/register_screen/register_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/rpm_loading_screen/rpm_loading_screen.dart';
 import 'package:bebo_auto_service/styles/themes.dart';
 import 'package:bloc/bloc.dart';
 import 'package:device_preview/device_preview.dart';
@@ -36,10 +39,10 @@ Future<void> main() async {
   Widget startScreen(){
     if(onBoarding == true ){
       if(myUid!=null){
-        return const AppLayout();
+        return const RpmLoadingScreen();
       }
       else {
-        return const LoginScreen();
+        return const BlurHomeScreen();
       }
     }
     return const IntroScreen();
@@ -53,8 +56,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocProvider(
-        create: (context) => CarCubit()..categoriesGridJson()..getUserData() ,
+    return  myBlocProviders(
       child: BlocConsumer<CarCubit,CarStates>(
         listener: (context,state){},
         builder: (context,state){

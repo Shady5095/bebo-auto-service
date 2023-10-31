@@ -1,6 +1,6 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/authentication_cubit/authentication_cubit.dart';
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/authentication_cubit/authentication_states.dart';
+import 'package:bebo_auto_service/business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/login_screen/login_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/widgets/dropdown_buttom.dart';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../components/components.dart';
 import '../../widgets/my_circular_progress_indicator.dart';
 
@@ -134,6 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         builder: (context, state){
           var cubit = AuthCubit.get(context);
           return Scaffold(
+            appBar: defaultAppbar(context: context),
             body : SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -539,6 +541,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 controller: kiloMeterCount,
                                 keyboardType: TextInputType.number,
                                 textCapitalization: TextCapitalization.words,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(6),
+                                ],
                                 style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
                                     fontSize: 13.sp
@@ -960,29 +965,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(
                           height: 14.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'لديك حساب ؟',
-                              style: TextStyle(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  fontSize: 14.sp
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child:  Text(
-                                'تسجيل الدخول',
-                                style: TextStyle(
-                                    fontSize: 13.sp
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ],
                     ),

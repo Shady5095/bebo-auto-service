@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_view/photo_view.dart';
@@ -42,11 +43,11 @@ final String? photoUrlToSaveImage ;
                    ));
                  });
               },
-              child: const Text(
+              child:  Text(
                 'حفظ',
                 style: TextStyle(
                     color: defaultColor,
-                    fontSize: 19
+                    fontSize: 16.sp
                 ),
               )
           ),

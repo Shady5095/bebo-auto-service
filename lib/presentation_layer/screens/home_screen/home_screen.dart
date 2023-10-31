@@ -5,6 +5,7 @@ import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -153,8 +154,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 }
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional.bottomEnd,
+                          Positioned(
+                            bottom: 0,
+                            left: displayWidth(context) <= 385 ? displayWidth(context)*0.21 :displayWidth(context)*0.16,
                             child: AnimatedBuilder(
                                 animation: carSlidingAnimation,
                                 builder: (context, _) {
@@ -171,9 +173,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         });
                                       },
                                       child: Image(
-                                        width: displayWidth(context) <= 385 ? 270.w : 305.w,
-                                        image: AssetImage(
-                                          'assets/images/mazda3copy.png',
+                                        width: displayWidth(context) <= 385 ? 330.w : 350.w,
+                                        image: CachedNetworkImageProvider(
+                                          'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a',
                                         ),
                                       ),
                                     ),

@@ -14,7 +14,7 @@ class OffersScreen extends StatelessWidget {
         backgroundColor: defaultBackgroundColor,
         elevation: 0,
         title: Text(
-          '${getLang(context, 'Offers')}',
+          'العروض',
           style: TextStyle(
               fontSize: 22.sp
           ),

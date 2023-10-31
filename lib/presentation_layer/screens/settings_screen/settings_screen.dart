@@ -68,7 +68,6 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: (){
-                    CarCubit.get(context).test();
                   },
                   splashColor: Colors.transparent,
                   contentPadding: const EdgeInsets.all(10),

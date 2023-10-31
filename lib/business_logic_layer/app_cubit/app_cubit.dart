@@ -6,7 +6,6 @@ import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_car_screen/my_car_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/offers_screen/offers_screen.dart';
-import 'package:bebo_auto_service/presentation_layer/screens/price_list_screen/price_list_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/settings_screen/settings_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data_layer/local/cache_helper.dart';
+import '../../presentation_layer/screens/spare_parts_categories_screen/spare_parts_categories_screen.dart';
 import 'app_states.dart';
 
 class CarCubit extends Cubit<CarStates> {
@@ -30,7 +30,7 @@ class CarCubit extends Cubit<CarStates> {
   List<Widget> screens = [
     const HomeScreen(),
     const MyCarScreen(),
-    const PriceListScreen(),
+    const SparePartsCategoriesScreen(),
     const OffersScreen(),
     const SettingsScreen(),
   ];
@@ -42,7 +42,7 @@ class CarCubit extends Cubit<CarStates> {
   }
 
   late List categoriesGrid ;
-  Future<void> categoriesGridJson() async {
+  Future<void> sparePartsCategoriesGridJsonGenerate() async {
     final String response = await rootBundle.loadString('assets/part_categories_grid.json');
     final data = await json.decode(response);
     categoriesGrid = data['items'];
@@ -120,16 +120,4 @@ class CarCubit extends Cubit<CarStates> {
 
   }
 
-  void test(){
-    db.collection('spareParts').get().then((value) {
-      for (var spareParts in value.docs) {
-        SparePartsModel sparePartsModel = SparePartsModel.fromJson(spareParts.data());
-        print(sparePartsModel.name);
-        db.collection('spareParts').doc(spareParts.id).collection('mazda3').doc('2008').get().then((value) {
-          SparePartPriceDetailsModel sparePartPriceDetailsModel = SparePartPriceDetailsModel.fromJson(value.data()!);
-          sparePartsModel.price = sparePartPriceDetailsModel;
-          print(sparePartsModel.price!.org);
-        });
-      }});
-  }
 }

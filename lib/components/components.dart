@@ -23,7 +23,7 @@ void navigateToAnimated({context , widget , animation=PageTransitionType.leftToR
 void navigateTo({context , widget ,}) => Navigator.push(context, MaterialPageRoute(builder: (context) => widget)
 );
 
-void navigateAndFinish({required context ,required widget,required PageTransitionType animation}) => Navigator.pushAndRemoveUntil(context,
+void navigateAndFinish({required context ,required widget,animation=PageTransitionType.leftToRight}) => Navigator.pushAndRemoveUntil(context,
      PageTransition(
   type: animation,
   child: widget,
@@ -109,7 +109,7 @@ PreferredSizeWidget defaultAppbar({
   Function()? onPopMethod,
 }) => AppBar(
   title: Text(
-    title!,
+    title??'',
     style: TextStyle(
       fontSize: 18.sp,
     ),
@@ -210,23 +210,26 @@ void unFocusKeyboard(BuildContext context) {
   }
 }
 
-String addCommaToString(String num){
-  String price = num;
-  String priceInText = "";
-  int counter = 0;
-  for(int i = (price.length - 1);  i >= 0; i--){
-    counter++;
-    String str = price[i];
-    if((counter % 3) != 0 && i !=0){
-      priceInText = "$str$priceInText";
-    }else if(i == 0 ){
-      priceInText = "$str$priceInText";
-
-    }else{
-      priceInText = ",$str$priceInText";
-    }
+extension ReformatString on String {
+  String removeSpaceAndToLowercase() {
+    return replaceAll(RegExp(r"\s+\b|\b\s"), "").toLowerCase();
   }
-  return priceInText.trim();
+  String addCommaToString(){
+    String priceInText = "";
+    int counter = 0;
+    for (int i = (length - 1); i >= 0; i--) {
+      counter++;
+      String str = this[i];
+      if ((counter % 3) != 0 && i != 0) {
+        priceInText = "$str$priceInText";
+      } else if (i == 0) {
+        priceInText = "$str$priceInText";
+      } else {
+        priceInText = ",$str$priceInText";
+      }
+    }
+    return priceInText.trim();
+  }
 }
 
 

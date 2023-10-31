@@ -30,7 +30,6 @@ class _IntroScreenState extends State<IntroScreen> {
   }
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -59,7 +58,7 @@ class _IntroScreenState extends State<IntroScreen> {
             ),
           if(displayAspectRatio(context) <= 0.7)
           SizedBox(
-            height: (displayHeight(context) >= 790 && displayAspectRatio(context) <= 0.6 ) ? 120.h : 75.h,
+            height: (displayHeight(context) >= 775 && displayAspectRatio(context) <= 0.6 ) ? 115.h : 75.h,
           ),
           Text(
               'Bebo Auto Service',
@@ -84,7 +83,7 @@ class _IntroScreenState extends State<IntroScreen> {
             )
           ),
           SizedBox(
-              height: (displayHeight(context) >= 790 && displayAspectRatio(context) <= 0.6 ) ? 75.h : 30.h,
+              height: (displayHeight(context) >= 775 && displayAspectRatio(context) <= 0.6 ) ? 75.h : 30.h,
           ),
           Transform(
             alignment: Alignment.center,
