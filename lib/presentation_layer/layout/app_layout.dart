@@ -1,17 +1,12 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
-import 'package:bebo_auto_service/styles/icon_broken.dart';
-import 'package:bottom_bar_matu/bottom_bar_double_bullet/bottom_bar_double_bullet.dart';
-import 'package:bottom_bar_matu/bottom_bar_item.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 
 import '../../components/app_locale.dart';
-import '../../components/components.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
@@ -44,7 +39,7 @@ class _AppLayoutState extends State<AppLayout> {
             bottomNavigationBar: SizedBox(
               height: 71,
               child: BottomNavigationBar(
-                backgroundColor: Color.fromRGBO(35, 33, 33, 1.0),
+                backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
                 selectedItemColor: Color.fromRGBO(210, 29, 29, 1.0),
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.white54,
@@ -79,8 +74,8 @@ class _AppLayoutState extends State<AppLayout> {
 
                   ),
                   BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
+                    icon: const Padding(
+                      padding: EdgeInsets.only(bottom: 6.0),
                       child: Icon(
                         FontAwesomeIcons.list,
                         size: 20,
@@ -89,8 +84,8 @@ class _AppLayoutState extends State<AppLayout> {
                     label: '${getLang(context, 'Price list')}',
                   ),
                   BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
+                    icon: const Padding(
+                      padding: EdgeInsets.only(bottom: 6.0),
                       child: Icon(
                         FontAwesomeIcons.fireFlameCurved,
                         size: 20,
@@ -99,8 +94,8 @@ class _AppLayoutState extends State<AppLayout> {
                     label: '${getLang(context, 'Offers')}',
                   ),
                   BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
+                    icon: const Padding(
+                      padding: EdgeInsets.only(bottom: 6.0),
                       child: Icon(
                         FontAwesomeIcons.gear,
                         size: 20,

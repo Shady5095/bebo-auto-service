@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
@@ -229,6 +230,74 @@ extension ReformatString on String {
       }
     }
     return priceInText.trim();
+  }
+}
+
+Future<DateTime> getServerTimeNow() async {
+  late DateTime dateTime;
+  await FirebaseFirestore.instance.collection('timeNow').doc('time').set(
+    {'timeStamp': FieldValue.serverTimestamp()},
+  );
+  await FirebaseFirestore.instance
+      .collection('timeNow')
+      .doc('time')
+      .get()
+      .then((value) {
+    final Timestamp timestamp = value.data()!['timeStamp'] as Timestamp;
+    dateTime = timestamp.toDate();
+  });
+  FirebaseFirestore.instance.collection('timeNow').doc('time').delete();
+  return dateTime;
+}
+
+String myTimeLeft(BuildContext context ,DateTime datetime, {bool full = true}) {
+  DateTime now = DateTime.now();
+  DateTime ago = datetime;
+  Duration dur = now.difference(ago);
+  int days = dur.inDays;
+  int years = (days / 365).toInt();
+  int months =  ((days - (years * 365)) / 30).toInt();
+  int weeks = ((days - (years * 365 + months * 30)) / 7).toInt();
+  int rdays = days - (years * 365 + months * 30 + weeks * 7).toInt();
+  int hours = (dur.inHours % 24).toInt();
+  int minutes = (dur.inMinutes % 60).toInt();
+  int seconds = (dur.inSeconds % 60).toInt();
+  var diff = {
+    "d":rdays,
+    "w":weeks,
+    "m":months,
+    "y":years,
+    "s":seconds,
+    "i":minutes,
+    "h":hours
+  };
+
+  Map str = {
+    'y':'سنة',
+    'm':'شهر',
+    'w':'أسبوع',
+    'd':'يوم',
+    'h':'ساعة',
+    'i':'دقيقة',
+    's':'ثانية',
+  };
+
+  str.forEach((k, v){
+    if (diff[k]! < 0) {
+      str[k] = diff[k].toString()  +  '' + v.toString() +  (diff[k]! < 1 ? '' : '');
+    } else {
+      str[k] = "";
+    }
+  });
+  str.removeWhere((index, ele)=>ele == "");
+  List<String> tlist = [];
+  str.forEach((k, v){
+    tlist.add(v);
+  });
+  if(full){
+    return str.length > 0?tlist.join(", ") + "":"Just Now";
+  }else{
+    return str.length > 0?tlist[0] + "":"Just Now";
   }
 }
 

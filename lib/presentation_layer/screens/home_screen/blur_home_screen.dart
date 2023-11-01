@@ -255,7 +255,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                       //mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: displayHeight(context) * 0.27,
+                          height: displayHeight(context) * 0.30,
                         ),
                         Expanded(
                           child: Column(

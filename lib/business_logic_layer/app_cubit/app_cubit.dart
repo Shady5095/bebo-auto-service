@@ -5,7 +5,6 @@ import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_car_screen/my_car_screen.dart';
-import 'package:bebo_auto_service/presentation_layer/screens/offers_screen/offers_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/settings_screen/settings_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data_layer/local/cache_helper.dart';
+import '../../presentation_layer/screens/offers_screens/offers_screen.dart';
 import '../../presentation_layer/screens/spare_parts_categories_screen/spare_parts_categories_screen.dart';
 import 'app_states.dart';
 

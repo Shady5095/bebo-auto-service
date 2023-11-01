@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_profile_screen/my_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -128,7 +129,7 @@ class SettingsScreen extends StatelessWidget {
                       if (value) {
                         Navigator.pushReplacement(context, PageTransition(
                             type: PageTransitionType.fade,
-                            child: const LoginScreen(),
+                            child: const BlurHomeScreen(),
                             duration: const Duration(milliseconds: 500)
                         ),
                         );
