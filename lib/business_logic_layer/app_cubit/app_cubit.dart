@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_car_screen/my_car_screen.dart';
@@ -15,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data_layer/local/cache_helper.dart';
+import '../../presentation_layer/screens/car_sell_screens/listed_cars_screen.dart';
 import '../../presentation_layer/screens/offers_screens/offers_screen.dart';
 import '../../presentation_layer/screens/spare_parts_categories_screen/spare_parts_categories_screen.dart';
 import 'app_states.dart';
@@ -31,7 +31,7 @@ class CarCubit extends Cubit<CarStates> {
     const HomeScreen(),
     const MyCarScreen(),
     const SparePartsCategoriesScreen(),
-    const OffersScreen(),
+    const ListedCarsForSaleScreen(),
     const SettingsScreen(),
   ];
   var db = FirebaseFirestore.instance;

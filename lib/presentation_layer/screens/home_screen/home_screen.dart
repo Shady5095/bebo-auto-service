@@ -4,6 +4,7 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/offers_screens/offers_screen.dart';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:countup/countup.dart';
@@ -202,8 +203,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             return SlideTransition(
                               position: button1Animation,
                               child: defaultButton(
-                                onTap: (){},
-                                text: '${getLang(context, 'Book a maintenance appointment')}',
+                                onTap: (){
+                                  navigateToAnimated(
+                                    widget: const OffersScreen(),
+                                    context: context,
+                                  );
+                                },
+                                text: 'الأطلاع علي احدث العروض',
                                 width: double.infinity,
                                 height: 37.h,
                                 textColor: Colors.white,
@@ -226,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               position: button2Animation,
                               child: defaultButton(
                                 onTap: (){},
-                                text: '${getLang(context, 'Redeem points')}',
+                                text: 'أستبدال النقاط',
                                 width: double.infinity,
                                 height: 37.h,
                                 textColor: Colors.white,

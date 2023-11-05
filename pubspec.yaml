@@ -95,6 +95,8 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   gallery_saver: ^2.3.2
   flutter_native_splash: ^2.3.5
+  url_launcher: ^6.2.1
+  sleek_circular_slider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -135,6 +137,7 @@ flutter:
   assets:
     - assets/images/
     - assets/lang/
+    - assets/icons/
     - assets/part_categories_grid.json
 
   fonts:

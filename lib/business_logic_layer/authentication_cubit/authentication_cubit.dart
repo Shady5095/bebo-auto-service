@@ -3,6 +3,7 @@ import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -72,12 +73,6 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(RegisterSuccessState());
       db.collection('unverifiedUsers').doc(value.id).update(
           {'newUserId': value.id, 'time': FieldValue.serverTimestamp()});
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-            'تم التسجيل بنجاح ... برجاء الانتظار لحين تفعيل الحساب من قبل المركز'),
-        duration: Duration(seconds: 6),
-        backgroundColor: Colors.green,
-      ));
       DioHelper.pushNotification(data: {
         'to': '/topics/admin',
         'notification': {
@@ -86,10 +81,11 @@ class AuthCubit extends Cubit<AuthStates> {
           "sound": "default",
         },
         'data': {
-          "docId": value.id,
+          "newUserDocId": value.id,
           "click_action": "FLUTTER_NOTIFICATION_CLICK"
         },
       });
+      FirebaseMessaging.instance.subscribeToTopic(chassisNo); // to send to customer notification when he accepted
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(error.toString()),
@@ -122,14 +118,15 @@ class AuthCubit extends Cubit<AuthStates> {
                   'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a'),
               context,
             ).then((value) {
+              emit(LoginSuccessState());
               navigateAndFinish(
                 context: context,
                 widget: const AppLayout(),
                 animation: PageTransitionType.leftToRight,
               );
+              FirebaseMessaging.instance.subscribeToTopic('all');
             });
           });
-          emit(LoginSuccessState());
         });
       });
     } on FirebaseAuthException catch (e) {

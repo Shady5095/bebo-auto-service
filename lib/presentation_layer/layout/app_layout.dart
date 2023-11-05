@@ -1,9 +1,11 @@
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 
 import '../../components/app_locale.dart';
@@ -16,96 +18,107 @@ class AppLayout extends StatefulWidget {
 }
 
 class _AppLayoutState extends State<AppLayout> {
-
   void getInit() async {
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    await FirebaseMessaging.instance.getInitialMessage().then((value) {
+      if (value != null) {
+        for (var key in value.data.keys) {
+          if (key == 'newOffer') {
+            CarCubit.get(context).changeBottomNav(3);
+          }
+        }
+      }
+      return null;
+    });
   }
 
   @override
   void initState() {
     super.initState();
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      for (var key in event.data.keys) {
+        if (key == 'newOffer') {
+          CarCubit.get(context).changeBottomNav(3);
+        }
+      }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: BlocProvider.of<CarCubit>(context),
-      child: BlocConsumer<CarCubit,CarStates>(
-        listener: (context,state) {},
-        builder: (context,state) {
+      child: BlocConsumer<CarCubit, CarStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
           return Scaffold(
-            body: CarCubit.get(context).screens[CarCubit.get(context).currentIndex],
+            body: CarCubit.get(context)
+                .screens[CarCubit.get(context).currentIndex],
             bottomNavigationBar: SizedBox(
-              height: 71,
+              height: 65.h,
               child: BottomNavigationBar(
                 backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
                 selectedItemColor: Color.fromRGBO(210, 29, 29, 1.0),
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.white54,
                 elevation: 20,
-
-                unselectedFontSize: 14,
+                unselectedFontSize: 11.sp,
                 currentIndex: CarCubit.get(context).currentIndex,
-                onTap: (index){
+                onTap: (index) {
                   CarCubit.get(context).changeBottomNav(index);
                 },
                 items: [
-                  BottomNavigationBarItem(
-                    icon: const Padding(
+                   BottomNavigationBarItem(
+                    icon: Padding(
                       padding: EdgeInsets.only(bottom: 6.0),
                       child: Icon(
-                          FontAwesomeIcons.houseChimney,
-                        size: 20,
-
+                        FontAwesomeIcons.houseChimney,
+                        size: 19.sp,
                       ),
                     ),
-                    label: '${getLang(context, 'Home')}',
+                    label: 'الرئيسية',
                   ),
-                  BottomNavigationBarItem(
-                    icon: const Padding(
-                      padding: EdgeInsets.only(bottom: 6.0),
-                      child: Icon(
-                        FontAwesomeIcons.car,
-                        size: 20,
-                      ),
+                   BottomNavigationBarItem(
+                    icon: Icon(
+                      CupertinoIcons.car_detailed,
+                      size: 21.sp,
                     ),
-                    label: '${getLang(context, 'My Car')}',
-
+                    label: 'سيارتي',
                   ),
                   BottomNavigationBarItem(
-                    icon: const Padding(
-                      padding: EdgeInsets.only(bottom: 6.0),
+                    icon:  Padding(
+                      padding: const EdgeInsets.only(bottom: 6.0),
                       child: Icon(
                         FontAwesomeIcons.list,
-                        size: 20,
+                        size: 19.sp,
                       ),
                     ),
-                    label: '${getLang(context, 'Price list')}',
+                    label: 'قطع الغيار',
                   ),
                   BottomNavigationBarItem(
-                    icon: const Padding(
-                      padding: EdgeInsets.only(bottom: 6.0),
-                      child: Icon(
-                        FontAwesomeIcons.fireFlameCurved,
-                        size: 20,
+                    icon:  Padding(
+                      padding: EdgeInsets.only(bottom: 0.0),
+                      child: ImageIcon(
+                        size: 28.sp,
+                        AssetImage(
+                          'assets/icons/carSell.png'
+                        ),
                       ),
                     ),
-                    label: '${getLang(context, 'Offers')}',
+                    label: 'سيارات للبيع',
                   ),
                   BottomNavigationBarItem(
-                    icon: const Padding(
+                    icon:  Padding(
                       padding: EdgeInsets.only(bottom: 6.0),
                       child: Icon(
                         FontAwesomeIcons.gear,
-                        size: 20,
+                        size: 19.sp,
                       ),
                     ),
                     label: '${getLang(context, 'Settings')}',
                   ),
                 ],
               ),
-            )  /*BottomBarDoubleBullet(
+            ) /*BottomBarDoubleBullet(
               color: Color.fromRGBO(210, 29, 29, 1.0),
               selectedIndex: CarCubit.get(context).currentIndex,
               backgroundColor: Color.fromRGBO(35, 33, 33, 1.0),
@@ -141,12 +154,11 @@ class _AppLayoutState extends State<AppLayout> {
                   iconSize: 20,
                 ),
               ],
-            )*/,
+            )*/
+            ,
           );
         },
       ),
     );
   }
 }
-
-

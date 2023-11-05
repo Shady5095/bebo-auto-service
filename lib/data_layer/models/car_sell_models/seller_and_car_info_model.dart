@@ -1,0 +1,73 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class CarSellModel {
+  String? docId ;
+  String? sellerName ;
+  String? sellerPhone;
+  String? carName;
+  String? carYear;
+  String? km;
+  String? plate;
+  String? chassisNo;
+  String? engineNo;
+  bool? isSold;
+  String? price;
+  List<dynamic>? images ;
+  List<dynamic>? imagesPath ;
+  Timestamp? addedTime;
+
+  CarSellModel({
+    this.docId,
+    this.sellerName,
+    this.sellerPhone,
+    this.carName,
+    this.carYear,
+    this.km,
+    this.plate,
+    this.chassisNo,
+    this.engineNo,
+    this.isSold,
+    this.price,
+    this.images,
+    this.imagesPath,
+    this.addedTime,
+  });
+
+  CarSellModel.fromJson(Map<String,dynamic> json){
+    docId = json['docId'];
+    sellerName = json['sellerName'];
+    sellerPhone = json['sellerPhone'];
+    carName = json['carName'];
+    carYear = json['carYear'];
+    km = json['km'];
+    plate = json['plate'];
+    chassisNo = json['chassisNo'];
+    engineNo = json['engineNo'];
+    isSold = json['isSold'];
+    price = json['price'];
+    images = json['images'];
+    imagesPath = json['imagesPath'];
+    addedTime = json['addedTime'];
+  }
+
+  Map<String,dynamic> toMap()
+  {
+    return
+      {
+        'docId' : docId ,
+        'sellerName' : sellerName ,
+        'sellerPhone' : sellerPhone ,
+        'carName' : carName ,
+        'carYear' : carYear ,
+        'km' : km ,
+        'plate' : plate ,
+        'chassisNo' : chassisNo ,
+        'engineNo' : engineNo ,
+        'isSold' : isSold ,
+        'price' : price ,
+        'images' : images ,
+        'imagesPath' : imagesPath ,
+        'addedTime' : addedTime ,
+      };
+  }
+}

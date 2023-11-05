@@ -39,7 +39,12 @@ class RpmLoadingScreen extends StatelessWidget {
               width: displayWidth(context),
               height: displayHeight(context),
               decoration: BoxDecoration(color: defaultBackgroundColor),
-              child: Lottie.asset('assets/images/rpmLoading.json'),
+              child: Lottie.asset(
+                'assets/images/carLoading.json',
+                height : 50,
+                width: 50,
+
+              ),
             ),
           );
         },

@@ -47,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Form(
                     key: formKey,
                     child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 40.h,
                           ),
-                          Center(
+                          const Center(
                             child: Image(
                               width: 160,
                               height: 160,
@@ -74,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .secondaryHeaderColor,
                                 fontSize: 14.sp),
                             decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(5),
                               labelStyle: TextStyle(
                                 color: Theme.of(context)
                                     .secondaryHeaderColor,
@@ -112,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 14.sp),
                               obscureText: cubit.isPassword,
                               decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(5),
                                 labelStyle: TextStyle(
                                   color: Theme.of(context)
                                       .secondaryHeaderColor,

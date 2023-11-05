@@ -16,15 +16,9 @@ class OffersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: defaultBackgroundColor,
-        elevation: 0,
-        title: Text(
-          'العروض',
-          style: TextStyle(
-              fontSize: 22.sp
-          ),
-        ),
+      appBar: defaultAppbar(
+        context: context,
+        title: 'العروض',
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -72,7 +66,7 @@ class OffersScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   OffersModel offersModel =
-                  OffersModel.fromJson(snapshot.data!.docs[index].data());
+                      OffersModel.fromJson(snapshot.data!.docs[index].data());
                   return AnimationConfiguration.staggeredList(
                     position: index,
                     duration: const Duration(milliseconds: 375),
@@ -91,9 +85,9 @@ class OffersScreen extends StatelessWidget {
   }
 
   Widget buildOfferItem(
-      OffersModel offersModel,
-      BuildContext context,
-      ) =>
+    OffersModel offersModel,
+    BuildContext context,
+  ) =>
       InkWell(
         onTap: () {
           navigateTo(
@@ -140,18 +134,17 @@ class OffersScreen extends StatelessWidget {
                           }
                           if (!snapshot.hasData) {
                             return Center(
-                                child:
-                                LoadingAnimationWidget.prograssiveDots(
-                                  color: defaultColor,
-                                  size: 20,
-                                ));
+                                child: LoadingAnimationWidget.prograssiveDots(
+                              color: defaultColor,
+                              size: 20,
+                            ));
                           }
                           if (snapshot.data == null) {
                             return Center(
                                 child: LoadingAnimationWidget.waveDots(
-                                  color: defaultColor,
-                                  size: 30,
-                                ));
+                              color: defaultColor,
+                              size: 30,
+                            ));
                           }
                           return snapshot.data!;
                         }),
@@ -192,10 +185,10 @@ class OffersScreen extends StatelessWidget {
                                   child: CircularProgressIndicator(
                                     color: defaultColor,
                                     value: loadingProgress.expectedTotalBytes !=
-                                        null
+                                            null
                                         ? loadingProgress
-                                        .cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
                                         : null,
                                   ),
                                 ),

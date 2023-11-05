@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../styles/icon_broken.dart';
 import 'constans.dart';
@@ -105,29 +106,40 @@ Color toastColor(ToastStates state) {
 
 PreferredSizeWidget defaultAppbar({
   required BuildContext context,
-  String? title ,
-  List<Widget>? actions ,
+  String? title = '',
+  List<Widget>? actions,
+  List<Widget>? tabs,
   Function()? onPopMethod,
-}) => AppBar(
-  title: Text(
-    title??'',
-    style: TextStyle(
-      fontSize: 18.sp,
-    ),
-  ),
-  actions: actions,
-  leading:IconButton(
-    onPressed: onPopMethod??(){
-      Navigator.pop(context);
-    },
-    icon: Icon(
-      Icons.arrow_back_ios,
-      color: Theme.of(context).secondaryHeaderColor,
-    ),
-  ),
-  titleSpacing: 5,
-
-);
+}) =>
+    AppBar(
+      toolbarHeight: 45.h,
+      title: Text(
+        title!,
+        style: TextStyle(
+          fontSize: 18.sp,
+        ),
+      ),
+      actions: actions,
+      leading: IconButton(
+        onPressed: onPopMethod ??
+                () {
+              Navigator.pop(context);
+            },
+        icon: Padding(
+          padding: const EdgeInsets.only(right: 15.0),
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Theme.of(context).secondaryHeaderColor,
+          ),
+        ),
+      ),
+      titleSpacing: 5,
+      bottom: tabs == null
+          ? null
+          : TabBar(
+        tabs: tabs,
+      ),
+    );
 
 Widget myBottomSheet({
   required BuildContext context,
@@ -299,6 +311,11 @@ String myTimeLeft(BuildContext context ,DateTime datetime, {bool full = true}) {
   }else{
     return str.length > 0?tlist[0] + "":"Just Now";
   }
+}
+
+void callDial(String phoneNumber) async {
+  Uri uri = Uri(scheme: 'tel', path: phoneNumber);
+  await launchUrl(uri);
 }
 
 

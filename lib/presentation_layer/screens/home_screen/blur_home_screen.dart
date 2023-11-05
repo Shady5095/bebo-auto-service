@@ -6,6 +6,7 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/register_screen/register_screen.dart';
 import 'package:countup/countup.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,6 +58,19 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
         });
       }
     });
+    FirebaseMessaging.instance.subscribeToTopic('admin');
+    getInit();
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+
+    });
+  }
+  void getInit() async {
+    await FirebaseMessaging.instance.getInitialMessage().then((value) {
+      if(value != null){
+      }
+      return null ;
+    });
+
   }
 
   @override
@@ -65,6 +79,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
     pointsTextAnimationController.dispose();
     button1AnimationController.dispose();
     button2AnimationController.dispose();
+
     super.dispose();
   }
 
@@ -185,11 +200,8 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                 return SlideTransition(
                                   position: button1Animation,
                                   child: defaultButton(
-                                    onTap: () {
-                                      print(pointsTextSlidingAnimation
-                                          .isCompleted);
-                                    },
-                                    text: 'حجز الصيانة',
+                                    onTap: () {},
+                                    text: 'الأطلاع علي احدث العروض',
                                     width: double.infinity,
                                     height: 37.h,
                                     textColor: Colors.white,

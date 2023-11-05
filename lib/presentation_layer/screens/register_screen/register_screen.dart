@@ -17,6 +17,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../components/components.dart';
+import '../../widgets/my_alert_dialog.dart';
 import '../../widgets/my_circular_progress_indicator.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -949,7 +950,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       plate: '$firstLetter $secondLetter ${thirdLetter??''}  ${plateNo.text}',
                                       phone: phoneController.text,
                                       context: context
-                                  );
+                                  ).then((value) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => const MyAlertDialog(
+                                        isFailed: false,
+                                        title: 'تم التسجيل بنجاح ... برجاء الانتظار قليلا لحين تفعيل الحساب من قبل المركز ثم عد لتسجيل الدخول',
+                                        actions: [],
+                                      ),
+                                    );
+                                  });
                                 }
                               }
                             },
