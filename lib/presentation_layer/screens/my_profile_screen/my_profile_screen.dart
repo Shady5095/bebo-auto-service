@@ -1,5 +1,3 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -8,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 
 class MyProfileScreen extends StatefulWidget {
   final UserModel userData ;
@@ -39,7 +40,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CarCubit,CarStates>(
+    return BlocConsumer<MainAppCubit,MainAppStates>(
       listener: (context,state){},
       builder: (context,state){
         return GestureDetector(
@@ -186,7 +187,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 onTap: (){
                                   unFocusKeyboard(context);
                                   if ((formKey.currentState?.validate())!){
-                                    CarCubit.get(context).updateUserData(
+                                    MainAppCubit.get(context).updateUserData(
                                       context: context,
                                       firstName: firstNameController.text,
                                       lastName: lastNameController.text,
@@ -379,7 +380,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             onTap: (){
                               unFocusKeyboard(context);
                               if ((passFormKey.currentState?.validate())!){
-                                CarCubit.get(context).updateUserPassword(
+                                MainAppCubit.get(context).updateUserPassword(
                                     context: context,
                                     newPassword: passwordController.text,
                                     currentPassword: currentPasswordController.text,

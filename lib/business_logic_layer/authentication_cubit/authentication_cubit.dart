@@ -1,4 +1,3 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +12,7 @@ import '../../components/constans.dart';
 import '../../data_layer/local/cache_helper.dart';
 import '../../data_layer/models/user_model.dart';
 import '../../data_layer/network/dio_helper.dart';
+import '../main_app_cubit/main_app_cubit.dart';
 import 'authentication_states.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
@@ -112,7 +112,7 @@ class AuthCubit extends Cubit<AuthStates> {
         await CacheHelper.putString(key: 'uId', value: userCredential.user!.uid)
             .then((value) async {
           myUid = userCredential.user?.uid;
-          await CarCubit.get(context).getUserData().then((value) async {
+          await MainAppCubit.get(context).getUserData().then((value) async {
             await precacheImage(
               const CachedNetworkImageProvider(
                   'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a'),
@@ -171,18 +171,18 @@ class AuthCubit extends Cubit<AuthStates> {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) {
       emit(ResetPasswordState());
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Password reset link was sent to $email'),
+        content: Text(' تم ارسال رابط تغيير كلمه السر لبريد اليكتروني  :  $email'),
       ));
     }).catchError((error) {
       if (error.toString() ==
           '[firebase_auth/channel-error] Unable to establish connection on channel.') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Please enter your email'),
+          content: Text('برجاء ادخال البريد الاليكتروني لارسال رابط لتغيير كلمه المرور'),
           backgroundColor: Colors.red,
         ));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('$email was not exist'),
+          content: Text('$email  غير متوفر  '),
           backgroundColor: Colors.red,
         ));
       }

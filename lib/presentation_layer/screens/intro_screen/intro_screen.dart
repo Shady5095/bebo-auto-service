@@ -1,18 +1,14 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../components/app_locale.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
@@ -74,7 +70,7 @@ class _IntroScreenState extends State<IntroScreen> {
             height: 10.h,
           ),
           Text(
-              '${getLang(context, 'New concept of car maintenance in Egypt')}',
+              'مفهوم جديد لصيانه السيارات في مصر',
             textAlign: TextAlign.center,
             style: GoogleFonts.almarai(
               decoration: TextDecoration.none,
@@ -90,7 +86,7 @@ class _IntroScreenState extends State<IntroScreen> {
             transform: Matrix4.rotationY(math.pi),
             child: Padding(
               padding: const EdgeInsets.only(left: 50).w,
-              child: Image(
+              child: const Image(
                 image: AssetImage('assets/images/intro.png'),
               ),
             ),
@@ -213,7 +209,7 @@ class _IntroScreenState extends State<IntroScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${getLang(context, 'Get Started')}',
+                  'ابدأ',
                   style: GoogleFonts.cairo(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,

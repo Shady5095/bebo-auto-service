@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'app_locale.dart';
 
 
-const Color defaultColor = Color.fromRGBO(210, 29, 29, 1.0);
-const Color defaultBackgroundColor = Color.fromRGBO(35, 33, 33, 1.0);
+const Color defaultColor = Color.fromRGBO(210, 29, 29, 1.0); ///#D21D1D
+const Color defaultBackgroundColor = Color.fromRGBO(35, 33, 33, 1.0); ///#232121
 String? myUid = '';
 
 

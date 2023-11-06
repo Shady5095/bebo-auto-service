@@ -1,3 +1,4 @@
+/*
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,4 +52,4 @@ class  _AppLocalDelegate extends LocalizationsDelegate<AppLocale> {
 
 getLang(BuildContext context  , String key) {
   return AppLocale.of(context).getTranslated(key) ;
-}
+}*/

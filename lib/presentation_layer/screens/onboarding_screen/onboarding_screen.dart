@@ -61,24 +61,24 @@ class _OnBoardingState extends State<OnBoarding> {
         image1: 'assets/images/onboarding111.png',
         image2: 'assets/images/maintenance.png',
         image2Alignment: AlignmentDirectional.bottomCenter,
-        title: '${getLang(context, 'Fast maintenance')}',
+        title: '',
         body:
-        '${getLang(context, 'Fast maintenance..')}',
+        '',
       ),
       BoardingModel(
         image1: 'assets/images/onboarding2.png',
         image2: 'assets/images/report.png',
         image2Alignment: AlignmentDirectional.bottomStart,
-        title: '${getLang(context, 'Car report')}',
+        title: '',
         body:
-        '${getLang(context, 'Car report..')}',
+        '',
       ),
       BoardingModel(
         image1: 'assets/images/onboarding3.png',
         image2: 'assets/images/price.png',
         image2Alignment: AlignmentDirectional.bottomEnd,
-        title: '${getLang(context, 'Spare parts prices')}',
-        body: '${getLang(context, 'Spare parts prices..')}',
+        title: '',
+        body: '',
       ),
     ];
     return Scaffold(
@@ -96,7 +96,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     onSubmit();
                   },
                   child:  Text(
-                    '${getLang(context, 'Skip')}',
+                    'تخطي',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
@@ -182,7 +182,7 @@ class _OnBoardingState extends State<OnBoarding> {
             image: AssetImage(model.image1),
           ),
           Text(
-            '${model.title}',
+            model.title,
             style: TextStyle(
               fontWeight: FontWeight.w900,
               fontSize: 30.sp,
@@ -196,7 +196,7 @@ class _OnBoardingState extends State<OnBoarding> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Text(
-              '${model.body}',
+              model.body,
               style: TextStyle(fontSize: 15.sp, color: Colors.white54, fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
             ),

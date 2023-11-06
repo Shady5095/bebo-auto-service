@@ -1,19 +1,19 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_profile_screen/my_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../components/app_locale.dart';
 import '../../../components/components.dart';
 import '../../../data_layer/local/cache_helper.dart';
+import '../../widgets/my_alert_dialog.dart';
+import '../complaint_screen/complaint_screen.dart';
 import '../login_screen/login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -26,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          '${getLang(context, 'Settings')}',
+          'المزيد',
           style: TextStyle(
               fontSize: 22.sp
           ),
@@ -48,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
                   onTap: (){
                     navigateToAnimated(
                       context: context,
-                      widget:  MyProfileScreen(userData: (CarCubit.get(context).userData)!),
+                      widget:  MyProfileScreen(userData: (MainAppCubit.get(context).userData)!),
                       animation: PageTransitionType.leftToRight
                     );
                   },
@@ -69,33 +69,20 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: (){
+                    navigateToAnimated(
+                      context: context,
+                      widget: const ComplaintScreen(),
+                    );
                   },
-                  splashColor: Colors.transparent,
-                  contentPadding: const EdgeInsets.all(10),
-                  leading: Icon(
-                    Icons.language,
-                    color: Colors.white,
-                    size: 24.sp,
-                  ),
-                  title: Text(
-                    '${getLang(context, 'Change Language')}',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white
-                    ),
-                  ),
-                ),
-                ListTile(
-                  onTap: (){},
                   splashColor: Colors.transparent,
                   contentPadding: EdgeInsets.all(10),
                   leading: Icon(
-                    FontAwesomeIcons.car,
+                    CupertinoIcons.exclamationmark_bubble,
                     color: Colors.white,
                     size: 24.sp,
                   ),
                   title: Text(
-                    '${getLang(context, 'Change my car info')}',
+                    'أرسال شكوي',
                     style: TextStyle(
                         fontSize: 18.sp,
                         color: Colors.white
@@ -113,7 +100,7 @@ class SettingsScreen extends StatelessWidget {
                     size: 24.sp,
                   ),
                   title: Text(
-                    '${getLang(context, 'Contact us')}',
+                    'أتصل بنا',
                     style: TextStyle(
                         fontSize: 18.sp,
                         color: Colors.white
@@ -122,19 +109,16 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () async {
-                    await FirebaseAuth.instance.signOut();
-                     CacheHelper.removeData(
-                        key: 'uId'
-                    )?.then((value) {
-                      if (value) {
-                        Navigator.pushReplacement(context, PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const BlurHomeScreen(),
-                            duration: const Duration(milliseconds: 500)
-                        ),
-                        );
-                      }
-                    });
+                    showDialog(
+                      context: context,
+                      builder: (context) =>  MyAlertDialog(
+                        onTapYes: (){
+                          logOut(context);
+                        },
+                        isFailed: true,
+                        title: 'هل انت متأكد من تسجيل الخروج ؟',
+                      ),
+                    );
                   },
                   splashColor: Colors.transparent,
                   contentPadding: const EdgeInsets.all(10),
@@ -144,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
                     size: 24.sp,
                   ),
                   title: Text(
-                    '${getLang(context, 'Log out')}',
+                    'تسجيل الخروج',
                     style: TextStyle(
                         fontSize: 18.sp,
                         color: Colors.red
@@ -157,5 +141,20 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+  Future<void> logOut(context) async {
+    await FirebaseAuth.instance.signOut();
+    CacheHelper.removeData(
+        key: 'uId'
+    )?.then((value) {
+      if (value) {
+        Navigator.pushReplacement(context, PageTransition(
+            type: PageTransitionType.fade,
+            child: const BlurHomeScreen(),
+            duration: const Duration(milliseconds: 500)
+        ),
+        );
+      }
+    });
   }
 }

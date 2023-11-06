@@ -1,5 +1,5 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
+import 'package:bebo_auto_service/components/components.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/offers_screens/offers_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 
+import '../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import '../../components/app_locale.dart';
 
 class AppLayout extends StatefulWidget {
@@ -23,7 +25,10 @@ class _AppLayoutState extends State<AppLayout> {
       if (value != null) {
         for (var key in value.data.keys) {
           if (key == 'newOffer') {
-            CarCubit.get(context).changeBottomNav(3);
+            navigateTo(
+              context: context,
+              widget: const OffersScreen(),
+            );
           }
         }
       }
@@ -37,7 +42,10 @@ class _AppLayoutState extends State<AppLayout> {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       for (var key in event.data.keys) {
         if (key == 'newOffer') {
-          CarCubit.get(context).changeBottomNav(3);
+          navigateTo(
+            context: context,
+            widget: const OffersScreen(),
+          );
         }
       }
     });
@@ -46,25 +54,25 @@ class _AppLayoutState extends State<AppLayout> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: BlocProvider.of<CarCubit>(context),
-      child: BlocConsumer<CarCubit, CarStates>(
+      value: BlocProvider.of<MainAppCubit>(context),
+      child: BlocConsumer<MainAppCubit, MainAppStates>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
-            body: CarCubit.get(context)
-                .screens[CarCubit.get(context).currentIndex],
+            body: MainAppCubit.get(context)
+                .screens[MainAppCubit.get(context).currentIndex],
             bottomNavigationBar: SizedBox(
               height: 65.h,
               child: BottomNavigationBar(
                 backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
-                selectedItemColor: Color.fromRGBO(210, 29, 29, 1.0),
+                selectedItemColor: const Color.fromRGBO(210, 29, 29, 1.0),
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.white54,
                 elevation: 20,
                 unselectedFontSize: 11.sp,
-                currentIndex: CarCubit.get(context).currentIndex,
+                currentIndex: MainAppCubit.get(context).currentIndex,
                 onTap: (index) {
-                  CarCubit.get(context).changeBottomNav(index);
+                  MainAppCubit.get(context).changeBottomNav(index);
                 },
                 items: [
                    BottomNavigationBarItem(
@@ -95,26 +103,23 @@ class _AppLayoutState extends State<AppLayout> {
                     label: 'قطع الغيار',
                   ),
                   BottomNavigationBarItem(
-                    icon:  Padding(
-                      padding: EdgeInsets.only(bottom: 0.0),
-                      child: ImageIcon(
-                        size: 28.sp,
-                        AssetImage(
-                          'assets/icons/carSell.png'
-                        ),
+                    icon:  ImageIcon(
+                      size: 28.sp,
+                      const AssetImage(
+                        'assets/icons/carSell.png'
                       ),
                     ),
                     label: 'سيارات للبيع',
                   ),
                   BottomNavigationBarItem(
                     icon:  Padding(
-                      padding: EdgeInsets.only(bottom: 6.0),
+                      padding: const EdgeInsets.only(bottom: 6.0),
                       child: Icon(
                         FontAwesomeIcons.gear,
                         size: 19.sp,
                       ),
                     ),
-                    label: '${getLang(context, 'Settings')}',
+                    label: 'المزيد',
                   ),
                 ],
               ),

@@ -4,19 +4,18 @@ import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 
-import '../../../business_logic_layer/app_cubit/app_cubit.dart';
-import '../../../business_logic_layer/app_cubit/app_states.dart';
-
-class RpmLoadingScreen extends StatelessWidget {
-  const RpmLoadingScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: BlocProvider.of<CarCubit>(context)..getUserData(),
-      child: BlocConsumer<CarCubit, CarStates>(
+      value: BlocProvider.of<MainAppCubit>(context)..getUserData(),
+      child: BlocConsumer<MainAppCubit, MainAppStates>(
         listener: (context, state) async {
           if (state is GetUserDataSuccessState && myUid != null) {
             await precacheImage(
@@ -38,13 +37,9 @@ class RpmLoadingScreen extends StatelessWidget {
             body: Container(
               width: displayWidth(context),
               height: displayHeight(context),
-              decoration: BoxDecoration(color: defaultBackgroundColor),
-              child: Lottie.asset(
-                'assets/images/carLoading.json',
-                height : 50,
-                width: 50,
-
-              ),
+              padding: const EdgeInsets.all(60).h,
+              decoration: const BoxDecoration(color: defaultBackgroundColor),
+              child: Image.asset('assets/images/logo.png')
             ),
           );
         },

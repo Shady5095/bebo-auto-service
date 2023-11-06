@@ -1,9 +1,6 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
-import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,9 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
+import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 import '../../../../components/constans.dart';
-import '../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
-import '../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 
 class SparePartsDetailsScreen extends StatefulWidget {
   final SparePartsModel sparePartsModel;
@@ -191,13 +189,13 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
   }
 
   Widget priceText(String priceType) {
-    if (widget.snapshot['${CarCubit.get(context).userData!.carModel}'
+    if (widget.snapshot['${MainAppCubit.get(context).userData!.carModel}'
                     .removeSpaceAndToLowercase()]
-                ['${CarCubit.get(context).userData!.year}'] ==
+                ['${MainAppCubit.get(context).userData!.year}'] ==
             null ||
-        widget.snapshot['${CarCubit.get(context).userData!.carModel}'
+        widget.snapshot['${MainAppCubit.get(context).userData!.carModel}'
                     .removeSpaceAndToLowercase()]
-                ['${CarCubit.get(context).userData!.year}'][priceType] ==
+                ['${MainAppCubit.get(context).userData!.year}'][priceType] ==
             null) {
       return Text(
         'غير متوفر',
@@ -210,7 +208,7 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
     } else {
       if ((widget.sparePartsModel.isShowPriceToCustomer!)) {
         return Text(
-          '${widget.snapshot['${CarCubit.get(context).userData!.carModel}'.removeSpaceAndToLowercase()]['${CarCubit.get(context).userData!.year}'][priceType]}'
+          '${widget.snapshot['${MainAppCubit.get(context).userData!.carModel}'.removeSpaceAndToLowercase()]['${MainAppCubit.get(context).userData!.year}'][priceType]}'
               .addCommaToString(),
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -297,9 +295,9 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
                   constraints: BoxConstraints(
                       minHeight:
                       displayHeight(context) * 0.14),
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(2, 0, 0, 0.3),
+                    color: const Color.fromRGBO(2, 0, 0, 0.3),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
@@ -324,9 +322,9 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
                   constraints: BoxConstraints(
                       minHeight:
                       displayHeight(context) * 0.14),
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(2, 0, 0, 0.3),
+                    color: const Color.fromRGBO(2, 0, 0, 0.3),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
@@ -353,9 +351,9 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
                 width: displayWidth(context) * 0.40,
                 constraints: BoxConstraints(
                     minHeight: displayHeight(context) * 0.14),
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(2, 0, 0, 0.3),
+                  color: const Color.fromRGBO(2, 0, 0, 0.3),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(

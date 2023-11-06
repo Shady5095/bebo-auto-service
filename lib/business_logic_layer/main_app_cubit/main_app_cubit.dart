@@ -16,13 +16,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data_layer/local/cache_helper.dart';
 import '../../presentation_layer/screens/car_sell_screens/listed_cars_screen.dart';
 import '../../presentation_layer/screens/offers_screens/offers_screen.dart';
-import '../../presentation_layer/screens/spare_parts_categories_screen/spare_parts_categories_screen.dart';
-import 'app_states.dart';
+import '../../presentation_layer/screens/spare_parts_screens/spare_parts_categories_screen/spare_parts_categories_screen.dart';
+import 'main_app_states.dart';
 
-class CarCubit extends Cubit<CarStates> {
-  CarCubit() : super(IntStateCar());
+class MainAppCubit extends Cubit<MainAppStates> {
+  MainAppCubit() : super(IntStateCar());
 
-  static CarCubit get(context) => BlocProvider.of(context);
+  static MainAppCubit get(context) => BlocProvider.of(context);
 
 
   int currentIndex = 0 ;
@@ -120,4 +120,17 @@ class CarCubit extends Cubit<CarStates> {
 
   }
 
+  Future<void> sendComplaint(String complaint) async {
+    emit(SendComplaintLoadingState());
+    await db.collection('complaints').doc(myUid).set({
+      'complaint' : complaint ,
+      'addedTime' : FieldValue.serverTimestamp(),
+      'userName' : '${userData!.firstName}' ' ${userData!.lastName}',
+      'uId' : myUid
+    }).then((value) {
+      emit(SendComplaintSuccessState());
+    }).catchError((error){
+      emit(SendComplaintErrorState());
+    });
+  }
 }

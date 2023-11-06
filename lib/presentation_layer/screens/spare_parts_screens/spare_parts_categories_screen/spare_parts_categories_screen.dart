@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,10 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
+import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
+import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 import '../../../../components/app_locale.dart';
 import '../../../../data_layer/models/spare_parts_model.dart';
-import '../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
-import '../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 import '../spare_parts_details_screen/spare_parts_details_screen.dart';
 import '../specific_category_screen/specific_category_screen.dart';
 
@@ -86,9 +85,9 @@ class _SparePartsCategoriesScreenState
           navigateToAnimated(
             context: context,
             widget: SpecificCategoryScreen(
-              category: CarCubit.get(context).categoriesGrid[index]['name'],
-              categoryAr: CarCubit.get(context).categoriesGrid[index]['nameAr'],
-              categoryImage: CarCubit.get(context).categoriesGrid[index]
+              category: MainAppCubit.get(context).categoriesGrid[index]['name'],
+              categoryAr: MainAppCubit.get(context).categoriesGrid[index]['nameAr'],
+              categoryImage: MainAppCubit.get(context).categoriesGrid[index]
                   ['assetImage'],
             ),
           );
@@ -111,7 +110,7 @@ class _SparePartsCategoriesScreenState
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: Image.asset(
-                            CarCubit.get(context).categoriesGrid[index]
+                            MainAppCubit.get(context).categoriesGrid[index]
                                 ['assetImage'],
                             height: 40,
                             width: 40,
@@ -121,7 +120,7 @@ class _SparePartsCategoriesScreenState
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(
-                          CarCubit.get(context).categoriesGrid[index]['nameAr'],
+                          MainAppCubit.get(context).categoriesGrid[index]['nameAr'],
                           style: const TextStyle(
                             fontSize: 12,
                             overflow: TextOverflow.ellipsis,
@@ -263,7 +262,7 @@ class _SparePartsCategoriesScreenState
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 0,
                   children: List.generate(
-                    CarCubit.get(context).categoriesGrid.length,
+                    MainAppCubit.get(context).categoriesGrid.length,
                     (int index) {
                       return AnimationConfiguration.staggeredGrid(
                         position: index,

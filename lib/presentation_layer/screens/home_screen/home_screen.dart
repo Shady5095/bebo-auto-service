@@ -1,21 +1,15 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/offers_screens/offers_screen.dart';
-import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:countup/countup.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:math' as math;
-
+import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import '../../../components/app_locale.dart';
 
 
@@ -59,10 +53,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CarCubit,CarStates>(
+    return BlocConsumer<MainAppCubit,MainAppStates>(
       listener: (context,state){},
       builder: (context,state){
-        UserModel? userData = CarCubit.get(context).userData ;
+        UserModel? userData = MainAppCubit.get(context).userData ;
         return Scaffold(
           backgroundColor: defaultBackgroundColor,
           body: Column(
@@ -99,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   return SlideTransition(
                                     position: helloTextSlidingAnimation,
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 10).w,
+                                      padding: const EdgeInsets.only(left: 10).w,
                                       child: Text(
                                         'أهلا,${userData!.firstName}',
                                         style: TextStyle(
@@ -120,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   return SlideTransition(
                                     position: pointsTextSlidingAnimation,
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 10).w,
+                                      padding: const EdgeInsets.only(left: 10).w,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
@@ -140,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             height: 10.h,
                                           ),
                                           Text(
-                                            '${getLang(context, 'POINTS')}',
+                                            'نقاط',
                                             style: GoogleFonts.dosis(
                                                 color: Colors.white,
                                                 fontSize: 60.sp,
@@ -175,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       },
                                       child: Image(
                                         width: displayWidth(context) <= 385 ? 330.w : 350.w,
-                                        image: CachedNetworkImageProvider(
+                                        image: const CachedNetworkImageProvider(
                                           'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a',
                                         ),
                                       ),
@@ -239,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 isUppercase: false,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: Color.fromRGBO(49, 47, 47, 1.0)
+                                    color: const Color.fromRGBO(49, 47, 47, 1.0)
                                 ),
                               ),
                             );
@@ -259,9 +253,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initCarAnimation(){
     carAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
-    carSlidingAnimation = Tween<Offset>(begin: Offset(5 , 0) , end:  Offset(0 , 0)).animate(
+    carSlidingAnimation = Tween<Offset>(begin: const Offset(5 , 0) , end:  const Offset(0 , 0)).animate(
       CurvedAnimation(
           parent: carAnimationController,
           curve: Curves.fastLinearToSlowEaseIn
@@ -273,15 +267,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> initPointsTextAnimation() async {
     pointsTextAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
-    pointsTextSlidingAnimation = Tween<Offset>(begin: Offset(-2 , 0) , end:  Offset(0 , 0)).animate(
+    pointsTextSlidingAnimation = Tween<Offset>(begin: const Offset(-2 , 0) , end:  const Offset(0 , 0)).animate(
       CurvedAnimation(
           parent: pointsTextAnimationController,
           curve: Curves.fastLinearToSlowEaseIn,
       ),
     );
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     if(mounted){
       pointsTextAnimationController.forward();
     }
@@ -290,9 +284,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initHelloTextAnimation(){
     helloTextAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     );
-    helloTextSlidingAnimation = Tween<Offset>(begin: Offset(-5 , 0) , end:  Offset(0 , 0)).animate(
+    helloTextSlidingAnimation = Tween<Offset>(begin: const Offset(-5 , 0) , end:  const Offset(0 , 0)).animate(
       CurvedAnimation(
           parent: helloTextAnimationController,
           curve: Curves.fastLinearToSlowEaseIn,
@@ -304,9 +298,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> initButtonsAnimation() async {
     button1AnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     );
-    button1Animation = Tween<Offset>(begin: Offset(0 , 7) , end:  Offset(0 , 0)).animate(
+    button1Animation = Tween<Offset>(begin: const Offset(0 , 7) , end:  const Offset(0 , 0)).animate(
       CurvedAnimation(
           parent: button1AnimationController,
           curve: Curves.fastLinearToSlowEaseIn,
@@ -317,15 +311,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     ///button2
     button2AnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     );
-    button2Animation = Tween<Offset>(begin: Offset(0 , 7) , end:  Offset(0 , 0)).animate(
+    button2Animation = Tween<Offset>(begin: const Offset(0 , 7) , end:  const Offset(0 , 0)).animate(
       CurvedAnimation(
         parent: button2AnimationController,
         curve: Curves.fastLinearToSlowEaseIn,
       ),
     );
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     button2AnimationController.forward();
   }
 }

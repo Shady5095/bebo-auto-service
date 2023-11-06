@@ -1,5 +1,3 @@
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/invoices_screen/invoices_screen.dart';
@@ -9,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../components/app_locale.dart';
+import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import '../../../data_layer/models/user_model.dart';
 
 class MyCarScreen extends StatelessWidget {
@@ -19,22 +18,22 @@ class MyCarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List menuItemsDetails = [
       {
-        'title': '${getLang(context, 'Maintenance reports and receipts')}',
-        'description': '${getLang(context, 'Maintenance reports and receipts..')}'
+        'title': 'الفواتير والصيانات السابقه',
+        'description': 'أحصل علي كل الفواتير السابقه ومواعيدها'
       },
       {
-        'title': '${getLang(context, 'Maintenance schedule')}',
-        'description': '${getLang(context, 'Maintenance schedule..')}'
+        'title': 'جدول الصيانة',
+        'description': 'أحصل على جدول الصيانة وموعد الصيانة التالي'
       },
       {
-        'title': '${getLang(context, 'Report on my car')}',
-        'description': '${getLang(context, 'Report on my car..')}'
+        'title': 'تقرير عن سيارتي',
+        'description': 'أحصل على تقرير مفصل عن كل قطعة وحالتها '
       },
     ];
-    return BlocConsumer<CarCubit,CarStates>(
+    return BlocConsumer<MainAppCubit,MainAppStates>(
       listener: (context,state){},
       builder: (context,state){
-        UserModel? userData = CarCubit.get(context).userData ;
+        UserModel? userData = MainAppCubit.get(context).userData ;
         return Scaffold(
           backgroundColor: defaultBackgroundColor,
           appBar: AppBar(

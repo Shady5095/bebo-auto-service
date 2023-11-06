@@ -2,16 +2,14 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:onboarding/onboarding.dart';
 
+import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
+import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 import '../../../../components/constans.dart';
-import '../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
-import '../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 import '../spare_parts_details_screen/spare_parts_details_screen.dart';
 
 class SpecificCategoryScreen extends StatelessWidget {
@@ -129,7 +127,7 @@ class SpecificCategoryScreen extends StatelessWidget {
             height: 80.h,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Color.fromRGBO(2, 0, 0, 0.3),
+                color: const Color.fromRGBO(2, 0, 0, 0.3),
                 borderRadius: BorderRadius.circular(20).r),
             child: Row(
               children: [
@@ -199,7 +197,7 @@ class SpecificCategoryScreen extends StatelessWidget {
                 SizedBox(
                   width: 10.w,
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: Colors.white,
                 ),

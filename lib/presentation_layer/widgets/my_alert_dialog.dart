@@ -30,6 +30,7 @@ class MyAlertDialog extends StatelessWidget {
               backgroundColor: isFailed! ? Colors.red : Colors.green,
               child: Icon(
                 isFailed! ? Icons.close : Icons.check,
+                size: 27.sp,
               ),
             )
           : null,

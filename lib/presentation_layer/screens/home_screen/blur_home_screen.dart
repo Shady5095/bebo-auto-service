@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_cubit.dart';
-import 'package:bebo_auto_service/business_logic_layer/app_cubit/app_states.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/register_screen/register_screen.dart';
@@ -12,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import '../login_screen/login_screen.dart';
 
 class BlurHomeScreen extends StatefulWidget {
@@ -85,7 +85,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CarCubit, CarStates>(
+    return BlocConsumer<MainAppCubit, MainAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
         return Stack(

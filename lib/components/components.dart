@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,8 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../styles/icon_broken.dart';
 import 'constans.dart';
 
 
@@ -17,7 +14,7 @@ void navigateToAnimated({context , widget , animation=PageTransitionType.leftToR
   child: widget,
   curve: Curves.fastOutSlowIn,
   duration: const Duration(
-    milliseconds: 400
+    milliseconds: 250
   )
 ),
 );
@@ -29,7 +26,7 @@ void navigateAndFinish({required context ,required widget,animation=PageTransiti
      PageTransition(
   type: animation,
   child: widget,
-  duration: Duration(milliseconds: 500)
+  duration: const Duration(milliseconds: 500)
 ),
     (route) => false
 );
@@ -38,7 +35,7 @@ void navigateAndFinish({required context ,required widget,animation=PageTransiti
 Widget defaultButton({
   double width=double.infinity,
   Color? background ,
-  double height = 60,
+  double? height ,
   required Function() onTap,
   String? text ,
   Widget? child ,
@@ -49,7 +46,7 @@ Widget defaultButton({
   double? fontSize ,
 }) => Container(
   width: width,
-  height: height,
+  height: height??40.h,
   color: background,
   decoration: decoration?? BoxDecoration(
     borderRadius: BorderRadius.circular(15),
@@ -213,7 +210,11 @@ Widget colorPicker({
 
 
 
-Widget myCircularProgressIndicator() => LoadingAnimationWidget.threeRotatingDots(color: defaultColor, size: 40 ,) ;
+Widget myCircularProgressIndicator({double? size}) =>
+    LoadingAnimationWidget.threeRotatingDots(
+      color: defaultColor,
+      size: size ?? 40,
+    );
 
 void unFocusKeyboard(BuildContext context) {
   FocusScopeNode currentFocus = FocusScope.of(context);
@@ -267,9 +268,9 @@ String myTimeLeft(BuildContext context ,DateTime datetime, {bool full = true}) {
   DateTime ago = datetime;
   Duration dur = now.difference(ago);
   int days = dur.inDays;
-  int years = (days / 365).toInt();
-  int months =  ((days - (years * 365)) / 30).toInt();
-  int weeks = ((days - (years * 365 + months * 30)) / 7).toInt();
+  int years = days ~/ 365;
+  int months =  (days - (years * 365)) ~/ 30;
+  int weeks = (days - (years * 365 + months * 30)) ~/ 7;
   int rdays = days - (years * 365 + months * 30 + weeks * 7).toInt();
   int hours = (dur.inHours % 24).toInt();
   int minutes = (dur.inMinutes % 60).toInt();
@@ -296,7 +297,7 @@ String myTimeLeft(BuildContext context ,DateTime datetime, {bool full = true}) {
 
   str.forEach((k, v){
     if (diff[k]! < 0) {
-      str[k] = diff[k].toString()  +  '' + v.toString() +  (diff[k]! < 1 ? '' : '');
+      str[k] = '${diff[k]}$v${diff[k]! < 1 ? '' : ''}';
     } else {
       str[k] = "";
     }
@@ -307,9 +308,9 @@ String myTimeLeft(BuildContext context ,DateTime datetime, {bool full = true}) {
     tlist.add(v);
   });
   if(full){
-    return str.length > 0?tlist.join(", ") + "":"Just Now";
+    return str.isNotEmpty?tlist.join(", "):"Just Now";
   }else{
-    return str.length > 0?tlist[0] + "":"Just Now";
+    return str.isNotEmpty?tlist[0]:"Just Now";
   }
 }
 
