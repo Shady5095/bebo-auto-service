@@ -1,17 +1,10 @@
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
-import 'package:bebo_auto_service/presentation_layer/screens/home_screen/home_screen.dart';
-import 'package:bebo_auto_service/presentation_layer/screens/login_screen/login_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../components/app_locale.dart';
 import '../../../components/components.dart';
 import '../../../data_layer/local/cache_helper.dart';
 
@@ -36,6 +29,8 @@ class BoardingModel {
 }
 
 class OnBoarding extends StatefulWidget {
+  const OnBoarding({super.key});
+
   @override
   State<OnBoarding> createState() => _OnBoardingState();
 }
@@ -122,7 +117,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   }
                 });
               },
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               controller: boarderController,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => buildScreenItem(boarding[index]),
@@ -190,7 +185,7 @@ class _OnBoardingState extends State<OnBoarding> {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Padding(

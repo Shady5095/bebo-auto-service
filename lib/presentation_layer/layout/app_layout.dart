@@ -1,7 +1,7 @@
 import 'package:bebo_auto_service/components/components.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/offers_screens/offers_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,6 @@ import 'package:flutter_social_button/flutter_social_button.dart';
 
 import '../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../business_logic_layer/main_app_cubit/main_app_states.dart';
-import '../../components/app_locale.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
@@ -30,6 +29,12 @@ class _AppLayoutState extends State<AppLayout> {
               widget: const OffersScreen(),
             );
           }
+          if (key == 'newMessage') {
+            navigateTo(
+              context: context,
+              widget: const ChatsDetailsScreen(),
+            );
+          }
         }
       }
       return null;
@@ -47,8 +52,15 @@ class _AppLayoutState extends State<AppLayout> {
             widget: const OffersScreen(),
           );
         }
+        if (key == 'newMessage') {
+          navigateTo(
+            context: context,
+            widget: const ChatsDetailsScreen(),
+          );
+        }
       }
     });
+    getInit();
   }
 
   @override
@@ -77,7 +89,7 @@ class _AppLayoutState extends State<AppLayout> {
                 items: [
                    BottomNavigationBarItem(
                     icon: Padding(
-                      padding: EdgeInsets.only(bottom: 6.0),
+                      padding: const EdgeInsets.only(bottom: 6.0),
                       child: Icon(
                         FontAwesomeIcons.houseChimney,
                         size: 19.sp,
@@ -115,7 +127,7 @@ class _AppLayoutState extends State<AppLayout> {
                     icon:  Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Icon(
-                        FontAwesomeIcons.gear,
+                        Icons.more_horiz_outlined,
                         size: 19.sp,
                       ),
                     ),

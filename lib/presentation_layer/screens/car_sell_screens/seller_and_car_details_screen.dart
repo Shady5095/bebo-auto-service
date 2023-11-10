@@ -1,11 +1,13 @@
 import 'package:bebo_auto_service/components/components.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/widgets/image_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:intl/intl.dart' as dateTimeIntl;
 import '../../../components/constans.dart';
 import '../../../data_layer/models/car_sell_models/seller_and_car_info_model.dart';
@@ -227,18 +229,52 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                             TextStyle(color: defaultColor, fontSize: 22.sp),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            callDial('01150959505');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Icon(
-                              Icons.call,
-                              color: Colors.green,
-                              size: 30.sp,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                callDial('01150959505');
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Icon(
+                                  Icons.call,
+                                  color: Colors.green,
+                                  size: 30.sp,
+                                ),
+                              ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () {
+                                openWhatsapp(phoneNumber: '+201118977990', text: '');
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Icon(
+                                  FontAwesomeIcons.whatsapp,
+                                  color: Colors.green,
+                                  size: 30.sp,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                navigateToAnimated(
+                                  context: context,
+                                  widget: const ChatsDetailsScreen()
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Icon(
+                                  CupertinoIcons.chat_bubble_2,
+                                  color: defaultColor,
+                                  size: 30.sp,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -251,14 +287,4 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
       ),
     );
   }
-
-  Widget myDivider(context) => Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.70,
-          margin: const EdgeInsets.all(7),
-          height: 1,
-          color: defaultColor,
-        ),
-      );
-
 }

@@ -1,20 +1,20 @@
+import 'package:bebo_auto_service/business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_profile_screen/my_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
-
 import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
-import '../../../components/app_locale.dart';
 import '../../../components/components.dart';
 import '../../../data_layer/local/cache_helper.dart';
 import '../../widgets/my_alert_dialog.dart';
 import '../complaint_screen/complaint_screen.dart';
-import '../login_screen/login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -91,6 +91,28 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: (){
+                    navigateToAnimated(
+                      context: context,
+                      widget: const ChatsDetailsScreen(),
+                    );
+                  },
+                  splashColor: Colors.transparent,
+                  contentPadding: EdgeInsets.all(10),
+                  leading: Icon(
+                    CupertinoIcons.chat_bubble_2,
+                    color: Colors.white,
+                    size: 24.sp,
+                  ),
+                  title: Text(
+                    'تواصل معنا',
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: (){
                   },
                   splashColor: Colors.transparent,
                   contentPadding: EdgeInsets.all(10),
@@ -100,7 +122,7 @@ class SettingsScreen extends StatelessWidget {
                     size: 24.sp,
                   ),
                   title: Text(
-                    'أتصل بنا',
+                    'ارقام التليفون و العناوين',
                     style: TextStyle(
                         fontSize: 18.sp,
                         color: Colors.white
@@ -144,10 +166,13 @@ class SettingsScreen extends StatelessWidget {
   }
   Future<void> logOut(context) async {
     await FirebaseAuth.instance.signOut();
+    FirebaseMessaging.instance.unsubscribeFromTopic('all');
+    FirebaseMessaging.instance.unsubscribeFromTopic(myUid!);
     CacheHelper.removeData(
         key: 'uId'
     )?.then((value) {
       if (value) {
+        myUid = null ;
         Navigator.pushReplacement(context, PageTransition(
             type: PageTransitionType.fade,
             child: const BlurHomeScreen(),

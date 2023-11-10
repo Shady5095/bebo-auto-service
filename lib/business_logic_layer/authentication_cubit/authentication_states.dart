@@ -8,6 +8,8 @@ class RegisterLoadingState extends AuthStates {}
 
 class RegisterSuccessState extends AuthStates {}
 
+class ChassisNoExistsBeforeState extends AuthStates {}
+
 class RegisterErrorState extends AuthStates {}
 
 class UserCreateSuccessState extends AuthStates {}

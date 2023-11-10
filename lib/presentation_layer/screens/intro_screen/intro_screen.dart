@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -36,7 +35,7 @@ class _IntroScreenState extends State<IntroScreen> {
             Colors.white.withOpacity(0.25),
             Colors.black.withOpacity(0.01),
           ],
-          stops: [
+          stops: const [
             0.25,
             0.5,
             0.75,
@@ -47,40 +46,45 @@ class _IntroScreenState extends State<IntroScreen> {
         ),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          if(displayAspectRatio(context) >= 0.7)
+          /*if(displayAspectRatio(context) >= 0.7)
             SizedBox(
               height: 30.h,
             ),
           if(displayAspectRatio(context) <= 0.7)
           SizedBox(
             height: (displayHeight(context) >= 775 && displayAspectRatio(context) <= 0.6 ) ? 115.h : 75.h,
+          ),*/
+          Column(
+            children: [
+              Text(
+                  'Bebo Auto Service',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.rubik(
+                  decoration: TextDecoration.none,
+                  color: Colors.white,
+                  fontSize: 27.sp,
+                  fontWeight: FontWeight.w600
+                )
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Text(
+                  'مفهوم جديد لصيانه السيارات في مصر',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.almarai(
+                  decoration: TextDecoration.none,
+                  color: Colors.white54,
+                  fontSize: 14.sp,
+                )
+              ),
+            ],
           ),
-          Text(
-              'Bebo Auto Service',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.rubik(
-              decoration: TextDecoration.none,
-              color: Colors.white,
-              fontSize: 27.sp,
-              fontWeight: FontWeight.w600
-            )
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Text(
-              'مفهوم جديد لصيانه السيارات في مصر',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.almarai(
-              decoration: TextDecoration.none,
-              color: Colors.white54,
-              fontSize: 14.sp,
-            )
-          ),
-          SizedBox(
+          /*SizedBox(
               height: (displayHeight(context) >= 775 && displayAspectRatio(context) <= 0.6 ) ? 75.h : 30.h,
-          ),
+          ),*/
           Transform(
             alignment: Alignment.center,
             transform: Matrix4.rotationY(math.pi),
@@ -91,112 +95,15 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
           ),
-          Directionality(
-            textDirection: TextDirection.ltr,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 200.w,
-                  height: 50.h,
-                  child: Card(
-                    color: Colors.transparent,
-                    elevation: 0,
-                    child: InkWell(
-                      onTap: (){
-                        setState(() {
-                          isEnglish = true ;
-                        });
-                      },
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      child: ListTile(
-                        minLeadingWidth: 10.w,
-                        titleAlignment: ListTileTitleAlignment.center,
-                        contentPadding: const EdgeInsets.only(left: 42).w,
-                        horizontalTitleGap: 10.w,
-                        enabled: true,
-                        leading: CircleAvatar(
-                          radius: 11.r,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            radius: 10.r,
-                            backgroundColor: Colors.black,
-                            child: CircleAvatar(
-                              radius: 7.r,
-                              backgroundColor: isEnglish ? defaultColor : Colors.transparent,
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          'English',
-                          style: TextStyle(
-                              color: Colors.grey[400],
-                              decoration: TextDecoration.none,
-                              fontSize: 22.sp
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 200.w,
-                  height: 50.h,
-                  child: Card(
-                    color: Colors.transparent,
-                    elevation: 0,
-                    child: InkWell(
-                      onTap: (){
-                        setState(() {
-                          isEnglish = false ;
-                        });
-                      },
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      child: ListTile(
-                        minLeadingWidth: 10.w,
-                        titleAlignment: ListTileTitleAlignment.center,
-                        contentPadding: const EdgeInsets.only(left: 42).w,
-                        horizontalTitleGap: 18.w,
-                        enabled: true,
-                        leading: CircleAvatar(
-                          radius: 11.r,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            radius: 10.r,
-                            backgroundColor: Colors.black,
-                            child: CircleAvatar(
-                              radius: 7.r,
-                              backgroundColor: !isEnglish ? defaultColor : Colors.transparent,
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          'العربية',
-                          style: GoogleFonts.cairo(
-                              color: Colors.grey[400],
-                              decoration: TextDecoration.none,
-                              fontSize: 22.sp
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
+          /*SizedBox(
             height: 25.h,
-          ),
+          ),*/
           defaultButton(
             onTap: (){
               navigateToAnimated(
                 context: context,
                 widget: OnBoarding(),
-                animation: PageTransitionType.rightToLeftWithFade
+                animation: PageTransitionType.leftToRightWithFade
               );
             },
             decoration: BoxDecoration(

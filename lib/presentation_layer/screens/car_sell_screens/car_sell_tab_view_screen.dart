@@ -26,7 +26,7 @@ class CarSellTabViewScreen extends StatelessWidget {
           context: context,
           tabs: [
             const Tab(
-              text: 'تفاصيل السياره والبائع',
+              text: 'تفاصيل السيارة',
             ),
             const Tab(
               text: 'حالة السيارة',

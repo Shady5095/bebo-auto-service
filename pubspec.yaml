@@ -52,6 +52,7 @@ dependencies:
   flutter_custom_clippers: ^2.1.0
   salomon_bottom_bar: ^3.3.2
   image_picker: ^1.0.1
+  image_cropper: ^4.0.1
   restart_app: ^1.1.2
   photo_view: ^0.14.0
   intl: ^0.18.0

@@ -58,7 +58,6 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
         });
       }
     });
-    FirebaseMessaging.instance.subscribeToTopic('admin');
     getInit();
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
 

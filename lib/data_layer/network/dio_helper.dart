@@ -40,10 +40,8 @@ class DioHelper {
          '/fcm/send',
          data: data,
      ).then((value) {
-       print(value.data) ;
        return null;
      }).catchError((error){
-       print(error);
      });
    }
 

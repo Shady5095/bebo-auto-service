@@ -45,55 +45,81 @@ class AuthCubit extends Cubit<AuthStates> {
     required String plate,
     required String transmission,
     required String bodyType,
-    required String km,
+    required int km,
     required String chassisNo,
     required String engineNo,
     required BuildContext context,
   }) async {
     emit(RegisterLoadingState());
-    UserModel userModel = UserModel(
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      phone: phone,
-      uId: null,
-      points: 200,
-      carModel: carModel,
-      year: year,
-      color: color,
-      plate: plate,
-      transmission: transmission,
-      bodyType: bodyType,
-      km: km,
-      chassisNo: chassisNo,
-      engineNo: engineNo,
-    );
-    await db.collection('unverifiedUsers').add(userModel.toMap()).then((value) {
-      emit(RegisterSuccessState());
-      db.collection('unverifiedUsers').doc(value.id).update(
-          {'newUserId': value.id, 'time': FieldValue.serverTimestamp()});
-      DioHelper.pushNotification(data: {
-        'to': '/topics/admin',
-        'notification': {
-          "title": "عميل جديد بأنتظار الموافقة",
-          "body": '$firstName $lastName ($carModel $year)',
-          "sound": "default",
-        },
-        'data': {
-          "newUserDocId": value.id,
-          "click_action": "FLUTTER_NOTIFICATION_CLICK"
-        },
+    bool isChassisNoExists = await isChassisNoExistsBefore(chassisNo);
+    if(isChassisNoExists){
+      emit(ChassisNoExistsBeforeState());
+    }
+    else{
+      UserModel userModel = UserModel(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        phone: phone,
+        uId: null,
+        points: 200,
+        carModel: carModel,
+        year: year,
+        color: color,
+        plate: plate,
+        transmission: transmission,
+        bodyType: bodyType,
+        km: km,
+        chassisNo: chassisNo,
+        engineNo: engineNo,
+      );
+      await db.collection('unverifiedUsers').add(userModel.toMap()).then((value) {
+        emit(RegisterSuccessState());
+        db.collection('unverifiedUsers').doc(value.id).update(
+            {'newUserId': value.id, 'time': FieldValue.serverTimestamp()});
+        DioHelper.pushNotification(data: {
+          'to': '/topics/admin',
+          'notification': {
+            "title": "عميل جديد بأنتظار الموافقة",
+            "body": '$firstName $lastName ($carModel $year)',
+            "sound": "default",
+          },
+          'data': {
+            "newUserDocId": value.id,
+            "click_action": "FLUTTER_NOTIFICATION_CLICK"
+          },
+        });
+        FirebaseMessaging.instance.subscribeToTopic(chassisNo); // to send to customer notification when he accepted
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(error.toString()),
+          backgroundColor: Colors.red,
+        ));
+        emit(RegisterErrorState());
       });
-      FirebaseMessaging.instance.subscribeToTopic(chassisNo); // to send to customer notification when he accepted
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(error.toString()),
-        backgroundColor: Colors.red,
-      ));
-      emit(RegisterErrorState());
-      print(error);
+    }
+  }
+
+  Future<bool> isChassisNoExistsBefore(String chassisNo) async {
+    bool isExists = false ;
+    await db.collection('unverifiedUsers').get().then((value) {
+      for(var doc in value.docs){
+        if(doc.data()['chassisNo'] == chassisNo){
+          isExists =  true ;
+        }
+      }
     });
+    if(!isExists){
+      await db.collection('verifiedUsers').get().then((value) {
+        for(var doc in value.docs){
+          if(doc.data()['chassisNo'] == chassisNo){
+            isExists =  true ;
+          }
+        }
+      });
+    }
+    return isExists ;
   }
 
   Future<void> userLogin({
@@ -125,6 +151,7 @@ class AuthCubit extends Cubit<AuthStates> {
                 animation: PageTransitionType.leftToRight,
               );
               FirebaseMessaging.instance.subscribeToTopic('all');
+              FirebaseMessaging.instance.subscribeToTopic(myUid!);
             });
           });
         });

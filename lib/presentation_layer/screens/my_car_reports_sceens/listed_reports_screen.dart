@@ -5,13 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../components/constans.dart';
 import '../../widgets/image_viewer.dart';
 import 'package:intl/intl.dart' as dateTimeIntl;
 
-class InvoicesScreen extends StatelessWidget {
-  const InvoicesScreen({
+class ListedReportsScreen extends StatelessWidget {
+  const ListedReportsScreen({
     Key? key,
   }) : super(key: key);
 
@@ -20,22 +21,22 @@ class InvoicesScreen extends StatelessWidget {
     return Scaffold(
       appBar: defaultAppbar(
         context: context,
-        title: 'جميع الفواتير',
+        title: 'تقارير الفحص السابقه',
       ),
       body: FutureBuilder(
           future: FirebaseFirestore.instance
               .collection('verifiedUsers')
               .doc(myUid)
               .collection('invoices')
-              .orderBy('addedTime',descending: true)
+              .orderBy('addedTime', descending: true)
               .get(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return  Center(
+              return const Center(
                 child: Icon(
                   Icons.warning_amber,
                   color: Colors.red,
-                  size: 90.sp,
+                  size: 100,
                 ),
               );
             }
@@ -57,8 +58,16 @@ class InvoicesScreen extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      'لا يوجد فواتير',
+                      'لا يوجد تقارير حتي الأن ....',
                       style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'أذهب الي المركز الان لفحص كل قطعه في السياره واحصل علي تقرير مفصل عن حاله جزء',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: defaultColor, fontSize: 15.sp),
+                      ),
                     ),
                   ],
                 ),
@@ -75,9 +84,9 @@ class InvoicesScreen extends StatelessWidget {
                     child: SlideAnimation(
                       verticalOffset: 50.0,
                       child: FadeInAnimation(
-                        child: buildInvoiceItems(
-                          context :context,
-                          index:index,
+                        child: buildReportItems(
+                          context: context,
+                          index: index,
                           invoiceMap: snapshot.data!.docs[index].data(),
                         ),
                       ),
@@ -90,7 +99,7 @@ class InvoicesScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInvoiceItems({
+  Widget buildReportItems({
     required BuildContext context,
     required int index,
     required Map<String, dynamic> invoiceMap,
@@ -99,7 +108,7 @@ class InvoicesScreen extends StatelessWidget {
         onTap: () {
           navigateTo(
               context: context,
-              widget:  ImageViewer(
+              widget: ImageViewer(
                 isNetworkImage: true,
                 photoUrlToSaveImage: '${invoiceMap['image']}',
                 photo: NetworkImage(
@@ -111,79 +120,80 @@ class InvoicesScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Container(
             width: double.infinity,
-            height: 80.h,
+            height: 100.h,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: const Color.fromRGBO(2, 0, 0, 0.3),
                 borderRadius: BorderRadius.circular(20).r),
             child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 8.w,
-                  height: 70.h,
-                  decoration: BoxDecoration(
-                    color: defaultColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.zero,
-                      bottomLeft: Radius.zero,
-                      bottomRight: const Radius.circular(20).r,
-                      topRight: const Radius.circular(20).r,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SleekCircularSlider(
+                      appearance: CircularSliderAppearance(
+                        angleRange: 240,
+                        size: 50.sp,
+                        infoProperties: InfoProperties(
+                          mainLabelStyle:
+                              TextStyle(color: Colors.white, fontSize: 15.sp),
+                        ),
+                        customColors: CustomSliderColors(
+                            dotColor: Colors.black,
+                            trackColors: [
+                              Colors.grey[800]!,
+                              Colors.grey[600]!,
+                              Colors.grey[200]!,
+                            ],
+                            progressBarColors: [
+                              const Color.fromRGBO(0, 255, 0, 1),
+                              const Color.fromRGBO(255, 255, 0, 1),
+                            ]),
+                      ),
+                      initialValue: 80,
                     ),
-                  ),
+                    Text(
+                      'التقييم النهائي للفحص',
+                      maxLines: 1,
+                      style: GoogleFonts.dosis(
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                const Spacer(),
+                Align(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Expanded(
-                        child: Text(
-                          '${invoiceMap['totalPrice']}'.addCommaToString(),
-                          style: GoogleFonts.dosis(
-                            color: Colors.white,
-                            height: 1.h,
-                            fontSize: 25.sp,
-                          ),
+                      Text(
+                        dateTimeIntl.DateFormat.yMMMd('ar')
+                            .format(invoiceMap['addedTime'].toDate()),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13.sp,
                         ),
                       ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
                       Text(
-                        'جنيه',
-                        style: GoogleFonts.dosis(
+                        dateTimeIntl.DateFormat.jm('ar')
+                            .format(invoiceMap['addedTime'].toDate()),
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20.sp,
+                          fontSize: 13.sp,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        dateTimeIntl.DateFormat.yMMMd('ar').format(invoiceMap['addedTime'].toDate()),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                      Text(
-                        dateTimeIntl.DateFormat.jm('ar').format(invoiceMap['addedTime'].toDate()),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    'عرض صوره الفاتوره',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 14.sp,
-                    ),
-                  ),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
                 ),
               ],
             ),

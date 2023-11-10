@@ -12,7 +12,7 @@ class UserModel {
   String? plate;
   String? transmission;
   String? bodyType;
-  String? km;
+  int? km;
   String? chassisNo;
   String? engineNo;
 

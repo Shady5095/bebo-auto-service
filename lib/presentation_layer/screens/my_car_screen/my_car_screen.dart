@@ -1,6 +1,7 @@
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/invoices_screen/invoices_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/my_car_reports_sceens/listed_reports_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -107,7 +108,7 @@ class MyCarScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${userData.km!.addCommaToString()} كم ',
+                                  '${userData.km!.addCommaToInt()} كم ',
                                   style: TextStyle(
                                     color: defaultColor,
                                     fontSize: 14.sp,
@@ -180,7 +181,10 @@ class MyCarScreen extends StatelessWidget {
         break ;
         case  2 :
         {
-
+          navigateToAnimated(
+            context: context,
+            widget: const ListedReportsScreen()
+          );
         }
         break ;
       }

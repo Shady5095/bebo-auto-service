@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -246,6 +249,117 @@ extension ReformatString on String {
   }
 }
 
+
+extension ReformatInt on int {
+  String addCommaToInt() {
+    var numFormat = NumberFormat.decimalPattern('en_us');
+    return numFormat.format(this);
+  }
+}
+
+void imagePickDialog({
+  required BuildContext context,
+  Function()? galleryOnTap,
+  Function()? cameraOnTap,
+}) =>
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (_, __, ___) {
+        return Center(
+          child: Container(
+            height: 180,
+            width: 280,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(40)),
+            child: SizedBox.expand(
+              child: Material(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(20),
+                child: Center(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          onTap: galleryOnTap,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.image_outlined,
+                                color: Colors.green,
+                                size: 50,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'المعرض',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          onTap: cameraOnTap,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.camera_alt_outlined,
+                                color: Colors.blue,
+                                size: 50,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'الكاميرا',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        Tween<Offset> tween;
+        if (anim.status == AnimationStatus.reverse) {
+          tween = Tween(begin: const Offset(-1, 0), end: Offset.zero);
+        } else {
+          tween = Tween(begin: const Offset(1, 0), end: Offset.zero);
+        }
+
+        return SlideTransition(
+          position: tween.animate(anim),
+          child: FadeTransition(
+            opacity: anim,
+            child: child,
+          ),
+        );
+      },
+    );
+
 Future<DateTime> getServerTimeNow() async {
   late DateTime dateTime;
   await FirebaseFirestore.instance.collection('timeNow').doc('time').set(
@@ -317,6 +431,25 @@ String myTimeLeft(BuildContext context ,DateTime datetime, {bool full = true}) {
 void callDial(String phoneNumber) async {
   Uri uri = Uri(scheme: 'tel', path: phoneNumber);
   await launchUrl(uri);
+}
+void openWhatsapp({
+  required String phoneNumber,
+  required String text,
+}) async{
+  var contact = phoneNumber;
+  var androidUrl = "whatsapp://send?phone=$contact&text=$text";
+  var iosUrl = "https://wa.me/$contact?text=${Uri.parse(text)}";
+
+  try{
+    if(Platform.isIOS){
+      await launchUrl(Uri.parse(iosUrl));
+    }
+    else{
+      await launchUrl(Uri.parse(androidUrl));
+    }
+  } on Exception{
+    null ;
+  }
 }
 
 

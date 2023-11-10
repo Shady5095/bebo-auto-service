@@ -51,5 +51,9 @@
           <string>sms</string>
           <string>tel</string>
         </array>
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>whatsapp</string>
+        </array>
 	</dict>
 </plist>

@@ -1,24 +1,16 @@
 import 'package:bebo_auto_service/business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/presentation_layer/screens/login_screen/login_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/widgets/dropdown_buttom.dart';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import '../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../components/components.dart';
 import '../../widgets/my_alert_dialog.dart';
-import '../../widgets/my_circular_progress_indicator.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -29,9 +21,6 @@ class RegisterScreen extends StatefulWidget {
 var firstNameController = TextEditingController();
 var lastNameController = TextEditingController();
 var phoneController = TextEditingController();
-var emailController = TextEditingController();
-var passwordController = TextEditingController();
-var confirmPasswordController = TextEditingController();
 var kiloMeterCount = TextEditingController();
 var engineNo = TextEditingController();
 var chassisNo = TextEditingController();
@@ -132,7 +121,87 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit,AuthStates>(
-        listener: (context, state){},
+        listener: (context, state){
+          if(state is ChassisNoExistsBeforeState){
+            showDialog(context: context, builder: (context)=>const MyAlertDialog(
+              isFailed: true,
+              title: 'رقم الشاسيه مسجل من قبل',
+              actions: [],
+            ));
+          }
+          if(state is RegisterSuccessState){
+            Navigator.pop(context);
+            showDialog(
+              context: context,
+              builder: (context) => MyAlertDialog(
+                isFailed: false,
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'تم التسجيل بنجاح ... برجاء الانتظار قليلا لحين تفعيل الحساب من قبل المركز ثم عد لتسجيل الدخول بهذه البيانات',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.sp
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'البريد الألكتروني : ',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                            Text(
+                              '${chassisNo.text}@gmail.com',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'كلمه السر : ',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                            Text(
+                              chassisNo.text,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                actions: const [],
+              ),
+            );
+          }
+        },
         builder: (context, state){
           var cubit = AuthCubit.get(context);
           return Scaffold(
@@ -148,7 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Center(
+                        const Center(
                           child: Image(
                             width: 160,
                             height: 160,
@@ -157,7 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        Text(
+                        const Text(
                             'البيانات الشخصية',
                           style: TextStyle(
                             color: Colors.white,
@@ -252,41 +321,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 12.h,
                         ),
-                        TextFormField(
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
-                              fontSize: 13.sp
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(5),
-                            labelStyle: TextStyle(
-                              color: Theme.of(context).hintColor,
-                            ),
-                            prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                            suffixIconColor: Theme.of(context).secondaryHeaderColor,
-                            labelText: 'البريد الألكتروني',
-                            prefixIcon: const Icon(
-                                Icons.email_outlined
-                            ),
-
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-
-                            ),
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value){
-                            if (value==null || value.isEmpty){
-                              return 'برجاء ادخال البيانات';
-                            }
-                            else if(!EmailValidator.validate(value, true)){
-                              return 'البريد الألكتروني غير صالح';
-                            }
-                            return null;
-                          },
-                        ),
                         SizedBox(
                           height: 12.h,
                         ),
@@ -321,105 +355,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                             else if(value.length < 11) {
                               return 'رقم الهاتف غير صالح';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        TextFormField(
-                          controller: passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: cubit.isPassword,
-                          style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
-                              fontSize: 13.sp
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(5),
-                            labelStyle: TextStyle(
-                              color: Theme.of(context).hintColor,
-                            ),
-                            prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                            suffixIconColor: Theme.of(context).secondaryHeaderColor,
-                            labelText: 'كلمه السر',
-                            suffixIcon: IconButton(
-                              onPressed: (){
-                                cubit.changeSuffixIcon();
-                              },
-                              icon: Icon(
-                                cubit.suffix,
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                                CupertinoIcons.lock
-                            ),
-
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-
-                            ),
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value){
-                            if (value==null || value.isEmpty){
-                              return 'برجاء ادخال البيانات';
-                            }
-                            else if(value.length < 8) {
-                              return 'كلمه السر قصيره';
-                            }
-                            null;
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        TextFormField(
-                          controller: confirmPasswordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: cubit.isPassword,
-                          style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor,
-                              fontSize: 13.sp
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(5),
-                            labelStyle: TextStyle(
-                              color: Theme.of(context).hintColor,
-                            ),
-                            prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                            suffixIconColor: Theme.of(context).secondaryHeaderColor,
-                            labelText: 'تأكيد كلمه السر',
-                            suffixIcon: IconButton(
-                              onPressed: (){
-                                cubit.changeSuffixIcon();
-                              },
-                              icon: Icon(
-                                cubit.suffix,
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                                Icons.lock
-                            ),
-
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-
-                            ),
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value){
-                            if (value==null || value.isEmpty){
-                              return 'برجاء ادخال البيانات';
-                            }
-                            else if(value.length < 8) {
-                              return 'كلمه السر قصيره';
-                            }
-                            else if(passwordController.text!=confirmPasswordController.text)
-                            {
-                              return 'كلمه السر غير متطابقه';
                             }
                             return null;
                           },
@@ -897,7 +832,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'برجاء تذكر البريد الأليكتروني وكلمه السر للتسجيل بهما بعد قبول حسابك ',
+                                    'برجاء التأكد من رقم الشاسيه جيدا لانه لن يتم قبول السياره اذا كان الرقم غير صحيح ',
                                     style: TextStyle(
                                       color: Colors.white54
                                     ),
@@ -935,8 +870,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 }
                                 else {
                                   cubit.userRegister(
-                                      email: emailController.text,
-                                      password: passwordController.text,
+                                      email: '${chassisNo.text}@gmail.com',
+                                      password: chassisNo.text,
                                       firstName: firstNameController.text,
                                       lastName: lastNameController.text,
                                       carModel: carModelSelected!,
@@ -944,21 +879,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       transmission: transmissionSelected!,
                                       color: carColorSelected!,
                                       bodyType: bodyTypeSelected!,
-                                      km: kiloMeterCount.text,
+                                      km: kiloMeterCount.text.toInt(),
                                       chassisNo: chassisNo.text,
                                       engineNo: engineNo.text,
                                       plate: '$firstLetter $secondLetter ${thirdLetter??''}  ${plateNo.text}',
                                       phone: phoneController.text,
                                       context: context
                                   ).then((value) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => const MyAlertDialog(
-                                        isFailed: false,
-                                        title: 'تم التسجيل بنجاح ... برجاء الانتظار قليلا لحين تفعيل الحساب من قبل المركز ثم عد لتسجيل الدخول',
-                                        actions: [],
-                                      ),
-                                    );
+
                                   });
                                 }
                               }

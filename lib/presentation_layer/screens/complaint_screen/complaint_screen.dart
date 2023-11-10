@@ -93,7 +93,9 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                       unFocusKeyboard(context);
                       if (formKey.currentState!.validate()) {
                         MainAppCubit.get(context)
-                            .sendComplaint(complaintController.text)
+                            .sendComplaint(
+                          complaint: complaintController.text
+                        )
                             .then((value) {
                               Navigator.pop(context);
                           showDialog(

@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,13 +45,6 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
     false,
     false,
     false,
-  ];
-  List<String> carModels = [
-    'Mazda 3',
-    'Mazda 2',
-    'Mazda 6',
-    'Mazda Cx3',
-    'Mazda Cx5',
   ];
 
   @override
@@ -227,12 +221,22 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
                 fontSize: 24.sp,
               ),
             ),
-            Text(
-              'تواصل معنا لمعرفة السعر',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white54,
-                fontSize: 10.sp,
+            InkWell(
+              onTap: (){
+                navigateTo(
+                  context: context,
+                  widget: ChatsDetailsScreen(
+                    fromSpareParts: 'سعر ${widget.sparePartsModel.name} لعربية ${MainAppCubit.get(context).userData!.carModel} ${MainAppCubit.get(context).userData!.year} ؟ ',
+                  ),
+                );
+              },
+              child: Text(
+                'ارسال رساله لمعرفة السعر',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: defaultColor,
+                  fontSize: 14.sp,
+                ),
               ),
             ),
           ],
@@ -269,12 +273,22 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
                   fontSize: 29.sp,
                 ),
               ),
-              Text(
-                'تواصل معنا لمعرفة السعر',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white54,
-                  fontSize: 14.sp,
+              InkWell(
+                onTap: (){
+                  navigateTo(
+                    context: context,
+                    widget: ChatsDetailsScreen(
+                      fromSpareParts: 'سعر ${widget.sparePartsModel.name} لعربية ${MainAppCubit.get(context).userData!.carModel} ${MainAppCubit.get(context).userData!.year} ؟ ',
+                    ),
+                  );
+                },
+                child: Text(
+                  'ارسال رساله لمعرفة السعر',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: defaultColor,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
             ],
