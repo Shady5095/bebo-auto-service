@@ -103,6 +103,9 @@ class MainAppCubit extends Cubit<MainAppStates> {
     await FirebaseAuth.instance.currentUser!
         .reauthenticateWithCredential(credential)
         .then((value) {
+          db.collection('verifiedUsers').doc(value.user!.uid).update({
+            'password' : newPassword,
+          });
       // updatePassword
       FirebaseAuth.instance.currentUser
           ?.updatePassword(newPassword)

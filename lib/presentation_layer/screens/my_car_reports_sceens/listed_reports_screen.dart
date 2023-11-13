@@ -1,4 +1,5 @@
 import 'package:bebo_auto_service/components/components.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/my_car_reports_sceens/report_details_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,8 +28,8 @@ class ListedReportsScreen extends StatelessWidget {
           future: FirebaseFirestore.instance
               .collection('verifiedUsers')
               .doc(myUid)
-              .collection('invoices')
-              .orderBy('addedTime', descending: true)
+              .collection('reports')
+              .orderBy('dateTime', descending: true)
               .get(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -84,11 +85,7 @@ class ListedReportsScreen extends StatelessWidget {
                     child: SlideAnimation(
                       verticalOffset: 50.0,
                       child: FadeInAnimation(
-                        child: buildReportItems(
-                          context: context,
-                          index: index,
-                          invoiceMap: snapshot.data!.docs[index].data(),
-                        ),
+                        child: BuildReportItem(context: context, index: index, reportMap: snapshot.data!.docs[index].data()),
                       ),
                     ),
                   );
@@ -99,22 +96,30 @@ class ListedReportsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildReportItems({
-    required BuildContext context,
-    required int index,
-    required Map<String, dynamic> invoiceMap,
-  }) =>
-      InkWell(
+}
+
+class BuildReportItem extends StatelessWidget {
+  const BuildReportItem({
+    super.key,
+    required this.context,
+    required this.index,
+    required this.reportMap,
+  });
+
+  final BuildContext context;
+  final int index;
+  final Map<String, dynamic> reportMap;
+
+  @override
+  Widget build(BuildContext context) {
+    late double newValue = (reportMap['overallRating']).toDouble();
+    late int green = ((newValue * 2.55)).toInt();
+    late int red = ((255 - (newValue * 2.55 * 0.5))).toInt();
+    return InkWell(
         onTap: () {
           navigateTo(
               context: context,
-              widget: ImageViewer(
-                isNetworkImage: true,
-                photoUrlToSaveImage: '${invoiceMap['image']}',
-                photo: NetworkImage(
-                  '${invoiceMap['image']}',
-                ),
-              ));
+              widget: ReportDetailsScreen(customerDocId: myUid!, reportDocId: reportMap['docId'],));
         },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -147,11 +152,13 @@ class ListedReportsScreen extends StatelessWidget {
                               Colors.grey[200]!,
                             ],
                             progressBarColors: [
-                              const Color.fromRGBO(0, 255, 0, 1),
-                              const Color.fromRGBO(255, 255, 0, 1),
+                              Color.fromRGBO(red, green,0, 1),
+                              Color.fromRGBO(red, green, 0, 1),
+                              Color.fromRGBO(
+                                  (red - reportMap['overallRating']).toInt(), (green - reportMap['overallRating']).toInt(), 0, 1),
                             ]),
                       ),
-                      initialValue: 80,
+                      initialValue: reportMap['overallRating'].toDouble(),
                     ),
                     Text(
                       'التقييم النهائي للفحص',
@@ -171,7 +178,7 @@ class ListedReportsScreen extends StatelessWidget {
                     children: [
                       Text(
                         dateTimeIntl.DateFormat.yMMMd('ar')
-                            .format(invoiceMap['addedTime'].toDate()),
+                            .format(reportMap['dateTime'].toDate()),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13.sp,
@@ -182,7 +189,7 @@ class ListedReportsScreen extends StatelessWidget {
                       ),
                       Text(
                         dateTimeIntl.DateFormat.jm('ar')
-                            .format(invoiceMap['addedTime'].toDate()),
+                            .format(reportMap['dateTime'].toDate()),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13.sp,
@@ -200,4 +207,5 @@ class ListedReportsScreen extends StatelessWidget {
           ),
         ),
       );
+  }
 }

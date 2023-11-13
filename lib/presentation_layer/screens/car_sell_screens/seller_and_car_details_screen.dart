@@ -14,7 +14,6 @@ import '../../../data_layer/models/car_sell_models/seller_and_car_info_model.dar
 
 class SellerAndCarDetailsScreen extends StatefulWidget {
   final CarSellModel carSellModel;
-
   const SellerAndCarDetailsScreen({
     Key? key,
     required this.carSellModel,
@@ -26,7 +25,6 @@ class SellerAndCarDetailsScreen extends StatefulWidget {
 }
 
 class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
-
   int carouselIndex = 0;
 
   @override
@@ -59,45 +57,45 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                       items: widget.carSellModel.images
                           ?.map(
                             (e) => Image(
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          errorBuilder: (BuildContext? context,
-                              Object? exception, StackTrace? stackTrace) {
-                            return const Center(
-                              child: Icon(
-                                Icons.warning_amber,
-                                color: Colors.red,
-                                size: 100,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              errorBuilder: (BuildContext? context,
+                                  Object? exception, StackTrace? stackTrace) {
+                                return const Center(
+                                  child: Icon(
+                                    Icons.warning_amber,
+                                    color: Colors.red,
+                                    size: 100,
+                                  ),
+                                );
+                              },
+                              loadingBuilder: (BuildContext? context,
+                                  Widget? child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) return child!;
+                                return Center(
+                                  child: SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(
+                                      color: defaultColor,
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  ),
+                                );
+                              },
+                              image: CachedNetworkImageProvider(
+                                e,
                               ),
-                            );
-                          },
-                          loadingBuilder: (BuildContext? context,
-                              Widget? child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) return child!;
-                            return Center(
-                              child: SizedBox(
-                                width: 30,
-                                height: 30,
-                                child: CircularProgressIndicator(
-                                  color: defaultColor,
-                                  value: loadingProgress
-                                      .expectedTotalBytes !=
-                                      null
-                                      ? loadingProgress
-                                      .cumulativeBytesLoaded /
-                                      loadingProgress
-                                          .expectedTotalBytes!
-                                      : null,
-                                ),
-                              ),
-                            );
-                          },
-                          image: CachedNetworkImageProvider(
-                            e,
-                          ),
-                        ),
-                      )
+                            ),
+                          )
                           .toList(),
                       options: CarouselOptions(
                           initialPage: carouselIndex,
@@ -151,7 +149,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                 children: [
                   Text(
                     '${widget.carSellModel.carName}',
-                    style:  TextStyle(color: Colors.white, fontSize: 23.sp),
+                    style: TextStyle(color: Colors.white, fontSize: 23.sp),
                   ),
                   SizedBox(
                     height: 5.h,
@@ -161,11 +159,11 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                       Text(
                         'موديل :  ',
                         style:
-                        TextStyle(color: Colors.white54, fontSize: 16.sp),
+                            TextStyle(color: Colors.white54, fontSize: 16.sp),
                       ),
                       Text(
                         '${widget.carSellModel.carYear}',
-                        style:  TextStyle(color: Colors.white, fontSize: 17.sp),
+                        style: TextStyle(color: Colors.white, fontSize: 17.sp),
                       ),
                     ],
                   ),
@@ -177,11 +175,11 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                       Text(
                         'عداد :  ',
                         style:
-                        TextStyle(color: Colors.white54, fontSize: 16.sp),
+                            TextStyle(color: Colors.white54, fontSize: 16.sp),
                       ),
                       Text(
-                        '${widget.carSellModel.km}'.addCommaToString() + ' كم' ,
-                        style:  TextStyle(color: defaultColor, fontSize: 17.sp),
+                        '${widget.carSellModel.km}'.addCommaToString() + ' كم',
+                        style: TextStyle(color: defaultColor, fontSize: 17.sp),
                       ),
                     ],
                   ),
@@ -190,10 +188,10 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                   ),
                   Row(
                     children: [
-                       Text(
+                      Text(
                         'تاريخ أضافة السياره :  ',
                         style:
-                        TextStyle(color: Colors.white54, fontSize: 16.sp),
+                            TextStyle(color: Colors.white54, fontSize: 16.sp),
                       ),
                       Expanded(
                         child: Text(
@@ -217,7 +215,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                         Text(
                           'لمعرفة السعر وباقي التفاصيل تواصل معنا :- ',
                           style:
-                          TextStyle(color: Colors.white, fontSize: 16.sp),
+                              TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
                         InkWell(
                           onTap: () {
@@ -226,7 +224,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                           child: Text(
                             '01150959505',
                             style:
-                            TextStyle(color: defaultColor, fontSize: 22.sp),
+                                TextStyle(color: defaultColor, fontSize: 22.sp),
                           ),
                         ),
                         Row(
@@ -247,7 +245,8 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                             ),
                             InkWell(
                               onTap: () {
-                                openWhatsapp(phoneNumber: '+201118977990', text: '');
+                                openWhatsapp(
+                                    phoneNumber: '+201118977990', text: '');
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
@@ -261,9 +260,8 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                             InkWell(
                               onTap: () {
                                 navigateToAnimated(
-                                  context: context,
-                                  widget: const ChatsDetailsScreen()
-                                );
+                                    context: context,
+                                    widget: const ChatsDetailsScreen());
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
