@@ -452,5 +452,46 @@ void openWhatsapp({
   }
 }
 
+Future<void> openFacebook() async {
+  String fbProtocolUrl;
+  if (Platform.isIOS) {
+    fbProtocolUrl = 'fb://profile/1644608649141872';
+  } else {
+    fbProtocolUrl = 'fb://page/1644608649141872';
+  }
+
+  String fallbackUrl = 'https://www.facebook.com/BeBo.Auto.Service2';
+
+  try {
+    Uri fbBundleUri = Uri.parse(fbProtocolUrl);
+    var canLaunchNatively = await canLaunchUrl(fbBundleUri);
+
+    if (canLaunchNatively) {
+      launchUrl(fbBundleUri);
+    } else {
+      await launchUrl(Uri.parse(fallbackUrl),
+          mode: LaunchMode.externalApplication);
+    }
+  } catch (e, st) {
+    // Handle this as you prefer
+  }
+}
+
+class MapUtils {
+
+  MapUtils._();
+
+  static Future<void> openMap(String url) async {
+    String googleUrl = url;
+    if (await canLaunchUrl(Uri.parse(googleUrl))) {
+      await launchUrl(Uri.parse(googleUrl));
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+}
+
+
+
 
 

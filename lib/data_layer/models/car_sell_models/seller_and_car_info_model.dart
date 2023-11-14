@@ -15,6 +15,7 @@ class CarSellModel {
   List<dynamic>? images ;
   List<dynamic>? imagesPath ;
   Timestamp? addedTime;
+  int? overAllRating ;
 
   CarSellModel({
     this.docId,
@@ -31,6 +32,7 @@ class CarSellModel {
     this.images,
     this.imagesPath,
     this.addedTime,
+    this.overAllRating,
   });
 
   CarSellModel.fromJson(Map<String,dynamic> json){
@@ -48,6 +50,7 @@ class CarSellModel {
     images = json['images'];
     imagesPath = json['imagesPath'];
     addedTime = json['addedTime'];
+    overAllRating = json['overAllRating'];
   }
 
   Map<String,dynamic> toMap()
@@ -68,6 +71,7 @@ class CarSellModel {
         'images' : images ,
         'imagesPath' : imagesPath ,
         'addedTime' : addedTime ,
+        'overAllRating' : overAllRating ,
       };
   }
 }

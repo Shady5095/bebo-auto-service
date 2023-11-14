@@ -197,7 +197,26 @@ class _CustomerReportsExpandableWidgetState
                   return Center(child: myCircularProgressIndicator());
                 }
                 if (snapshot.data!.docs.isEmpty) {
-                  return Center(child: myCircularProgressIndicator());
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.data_saver_off,
+                          size: 70.sp,
+                          color: Theme.of(context).secondaryHeaderColor,
+                        ),
+                        SizedBox(
+                          height: 13.h,
+                        ),
+                        Text(
+                          'لا توجد معلومات',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+                  );
                 }
                 return Column(
                   children: [

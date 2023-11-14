@@ -55,5 +55,18 @@
         <array>
             <string>whatsapp</string>
         </array>
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>googlechromes</string>
+            <string>comgooglemaps</string>
+        </array>
+        <array>
+                <dict>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>fb[1644608649141872]</string>
+                    </array>
+                </dict>
+            </array>
 	</dict>
 </plist>

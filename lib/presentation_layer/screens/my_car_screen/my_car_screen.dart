@@ -115,6 +115,51 @@ class MyCarScreen extends StatelessWidget {
                                     height: 1.2.h,
                                   ),
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'شاسيه : ',
+                                          style: TextStyle(
+                                            color: Colors.white54,
+                                            fontSize: 12.sp,
+                                            height: 1.2.h,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${MainAppCubit.get(context).userData!.chassisNo}',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14.sp,
+                                            height: 1.2.h,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'ماتور : ',
+                                          style: TextStyle(
+                                            color: Colors.white54,
+                                            fontSize: 12.sp,
+                                            height: 1.2.h,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${MainAppCubit.get(context).userData!.engineNo}',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14.sp,
+                                            height: 1.2.h,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),

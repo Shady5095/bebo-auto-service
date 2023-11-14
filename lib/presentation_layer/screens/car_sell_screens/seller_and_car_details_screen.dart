@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:intl/intl.dart' as dateTimeIntl;
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import '../../../components/constans.dart';
 import '../../../data_layer/models/car_sell_models/seller_and_car_info_model.dart';
 
@@ -26,6 +27,9 @@ class SellerAndCarDetailsScreen extends StatefulWidget {
 
 class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
   int carouselIndex = 0;
+  late double newValue = (widget.carSellModel.overAllRating)!.toDouble();
+  late int green = ((newValue * 2.55)).toInt();
+  late int red = ((255 - (newValue * 2.55 * 0.5))).toInt();
 
   @override
   Widget build(BuildContext context) {
@@ -207,6 +211,41 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                   ),
                   SizedBox(
                     height: 5.h,
+                  ),
+                  Center(
+                    child: SleekCircularSlider(
+                      appearance: CircularSliderAppearance(
+                        angleRange: 240,
+                        size: 50.sp,
+                        infoProperties: InfoProperties(
+                          mainLabelStyle:
+                          TextStyle(color: Colors.white, fontSize: 15.sp),
+                        ),
+                        customColors: CustomSliderColors(
+                            dotColor: Colors.black,
+                            trackColors: [
+                              Colors.grey[800]!,
+                              Colors.grey[600]!,
+                              Colors.grey[200]!,
+                            ],
+                            progressBarColors: [
+                              Color.fromRGBO(red, green,0, 1),
+                              Color.fromRGBO(red, green, 0, 1),
+                              Color.fromRGBO(
+                                  (red - widget.carSellModel.overAllRating!.toInt()).toInt(), (green - widget.carSellModel.overAllRating!.toInt()).toInt(), 0, 1),
+                            ]),
+                      ),
+                      initialValue: widget.carSellModel.overAllRating!.toDouble(),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'التقييم النهائى',
+                      style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 7.h,
                   ),
                   Center(
                     child: Column(

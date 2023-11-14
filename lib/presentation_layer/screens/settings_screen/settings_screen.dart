@@ -3,6 +3,7 @@ import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_profile_screen/my_profile_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/phone_numbers_screen/phone_numbers_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -113,6 +114,10 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: (){
+                    navigateToAnimated(
+                      context: context,
+                      widget: const PhoneNumbersScreen(),
+                    );
                   },
                   splashColor: Colors.transparent,
                   contentPadding: EdgeInsets.all(10),
