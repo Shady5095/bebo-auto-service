@@ -1,9 +1,9 @@
-import 'package:bebo_auto_service/business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_profile_screen/my_profile_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/phone_numbers_screen/phone_numbers_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,134 +35,198 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: AnimationLimiter(
-          child: Column(
-            children: AnimationConfiguration.toStaggeredList(
-              duration: const Duration(milliseconds: 500),
-              childAnimationBuilder: (widget) => SlideAnimation(
-                horizontalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: widget,
-                ),
-              ),
-              children: [
-                ListTile(
-                  onTap: (){
-                    navigateToAnimated(
-                      context: context,
-                      widget:  MyProfileScreen(userData: (MainAppCubit.get(context).userData)!),
-                      animation: PageTransitionType.leftToRight
-                    );
-                  },
-                  splashColor: Colors.transparent,
-                  contentPadding: const EdgeInsets.all(10),
-                  leading: Icon(
-                    CupertinoIcons.person,
-                    color: Colors.white,
-                    size: 24.sp,
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              children: AnimationConfiguration.toStaggeredList(
+                duration: const Duration(milliseconds: 500),
+                childAnimationBuilder: (widget) => SlideAnimation(
+                  horizontalOffset: 50.0,
+                  child: FadeInAnimation(
+                    child: widget,
                   ),
-                  title: Text(
-                    'تعديل الملف الشخصي',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white
+                ),
+                children: [
+                  ListTile(
+                    onTap: (){
+                      navigateToAnimated(
+                        context: context,
+                        widget:  MyProfileScreen(userData: (MainAppCubit.get(context).userData)!),
+                        animation: PageTransitionType.leftToRight
+                      );
+                    },
+                    splashColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: Icon(
+                      CupertinoIcons.person,
+                      color: Colors.white,
+                      size: 24.sp,
                     ),
-                  ),
-                ),
-                ListTile(
-                  onTap: (){
-                    navigateToAnimated(
-                      context: context,
-                      widget: const ComplaintScreen(),
-                    );
-                  },
-                  splashColor: Colors.transparent,
-                  contentPadding: EdgeInsets.all(10),
-                  leading: Icon(
-                    CupertinoIcons.exclamationmark_bubble,
-                    color: Colors.white,
-                    size: 24.sp,
-                  ),
-                  title: Text(
-                    'أرسال شكوي',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white
-                    ),
-                  ),
-                ),
-                ListTile(
-                  onTap: (){
-                    navigateToAnimated(
-                      context: context,
-                      widget: const ChatsDetailsScreen(),
-                    );
-                  },
-                  splashColor: Colors.transparent,
-                  contentPadding: EdgeInsets.all(10),
-                  leading: Icon(
-                    CupertinoIcons.chat_bubble_2,
-                    color: Colors.white,
-                    size: 24.sp,
-                  ),
-                  title: Text(
-                    'تواصل معنا',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white
-                    ),
-                  ),
-                ),
-                ListTile(
-                  onTap: (){
-                    navigateToAnimated(
-                      context: context,
-                      widget: const PhoneNumbersScreen(),
-                    );
-                  },
-                  splashColor: Colors.transparent,
-                  contentPadding: EdgeInsets.all(10),
-                  leading: Icon(
-                    CupertinoIcons.phone,
-                    color: Colors.white,
-                    size: 24.sp,
-                  ),
-                  title: Text(
-                    'ارقام التليفون و العناوين',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white
-                    ),
-                  ),
-                ),
-                ListTile(
-                  onTap: () async {
-                    showDialog(
-                      context: context,
-                      builder: (context) =>  MyAlertDialog(
-                        onTapYes: (){
-                          logOut(context);
-                        },
-                        isFailed: true,
-                        title: 'هل انت متأكد من تسجيل الخروج ؟',
+                    title: Text(
+                      'تعديل الملف الشخصي',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.white
                       ),
-                    );
-                  },
-                  splashColor: Colors.transparent,
-                  contentPadding: const EdgeInsets.all(10),
-                  leading: Icon(
-                    Icons.logout_sharp,
-                    color: Colors.red,
-                    size: 24.sp,
-                  ),
-                  title: Text(
-                    'تسجيل الخروج',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.red
                     ),
                   ),
-                ),
-              ],
+                  ListTile(
+                    onTap: (){
+                      navigateToAnimated(
+                        context: context,
+                        widget: const ComplaintScreen(),
+                      );
+                    },
+                    splashColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: Icon(
+                      CupertinoIcons.exclamationmark_bubble,
+                      color: Colors.white,
+                      size: 24.sp,
+                    ),
+                    title: Text(
+                      'أرسال شكوي',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: (){
+                      navigateToAnimated(
+                        context: context,
+                        widget: const ChatsDetailsScreen(),
+                      );
+                    },
+                    splashColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: Stack(
+                      alignment: Alignment.topLeft,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0,top: 12),
+                          child: Icon(
+                            CupertinoIcons.chat_bubble_2,
+                            color: Colors.white,
+                            size: 24.sp,
+                          ),
+                        ),
+                        StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection('chats').doc(myUid).collection('messages').where('isSeen',isEqualTo: false).where('senderId',isEqualTo: 'admin').snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return const Center(
+                                  child: Icon(
+                                    Icons.warning_amber,
+                                    color: Colors.red,
+                                    size: 10,
+                                  ),
+                                );
+                              }
+                              if (!snapshot.hasData) {
+                                return const SizedBox();
+                              }
+                              if ((snapshot.data?.docs.isEmpty)!) {
+                                return const SizedBox();
+                              }
+                              return CircleAvatar(
+                                backgroundColor: snapshot.data!.docs.isEmpty ? Colors.transparent : defaultColor,
+                                radius: 8.r,
+                                child: Center(
+                                  child: Text(
+                                    '${snapshot.data?.docs.length}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 11.sp,
+                                        height: 1.15.h,
+                                        color: snapshot.data!.docs.isEmpty ? Colors.transparent : Colors.white
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                        ),
+                      ],
+                    ),
+                    title: Text(
+                      'تواصل معنا',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: (){
+                      navigateToAnimated(
+                        context: context,
+                        widget: const PhoneNumbersScreen(),
+                      );
+                    },
+                    splashColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: Icon(
+                      CupertinoIcons.phone,
+                      color: Colors.white,
+                      size: 24.sp,
+                    ),
+                    title: Text(
+                      'ارقام التليفون و العناوين',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: (){
+                    },
+                    splashColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: Icon(
+                      Icons.info_outlined,
+                      color: Colors.white,
+                      size: 24.sp,
+                    ),
+                    title: Text(
+                      'عن المركز',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: () async {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>  MyAlertDialog(
+                          onTapYes: (){
+                            logOut(context);
+                          },
+                          isFailed: true,
+                          title: 'هل انت متأكد من تسجيل الخروج ؟',
+                        ),
+                      );
+                    },
+                    splashColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: Icon(
+                      Icons.logout_sharp,
+                      color: Colors.red,
+                      size: 24.sp,
+                    ),
+                    title: Text(
+                      'تسجيل الخروج',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.red
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -4,9 +4,10 @@ class CarSellModel {
   String? docId ;
   String? sellerName ;
   String? sellerPhone;
+  String? otherNotes;
   String? carName;
-  String? carYear;
-  String? km;
+  int? carYear;
+  int? km;
   String? plate;
   String? chassisNo;
   String? engineNo;
@@ -21,6 +22,7 @@ class CarSellModel {
     this.docId,
     this.sellerName,
     this.sellerPhone,
+    this.otherNotes,
     this.carName,
     this.carYear,
     this.km,
@@ -41,6 +43,7 @@ class CarSellModel {
     sellerPhone = json['sellerPhone'];
     carName = json['carName'];
     carYear = json['carYear'];
+    otherNotes = json['otherNotes'];
     km = json['km'];
     plate = json['plate'];
     chassisNo = json['chassisNo'];
@@ -60,6 +63,7 @@ class CarSellModel {
         'docId' : docId ,
         'sellerName' : sellerName ,
         'sellerPhone' : sellerPhone ,
+        'otherNotes' : otherNotes ,
         'carName' : carName ,
         'carYear' : carYear ,
         'km' : km ,

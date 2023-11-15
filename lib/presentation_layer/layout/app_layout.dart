@@ -1,6 +1,8 @@
 import 'package:bebo_auto_service/components/components.dart';
+import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/offers_screens/offers_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +83,7 @@ class _AppLayoutState extends State<AppLayout> {
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.white54,
                 elevation: 20,
-                unselectedFontSize: 11.sp,
+                unselectedFontSize: 10.sp,
                 currentIndex: MainAppCubit.get(context).currentIndex,
                 onTap: (index) {
                   MainAppCubit.get(context).changeBottomNav(index);
@@ -89,7 +91,7 @@ class _AppLayoutState extends State<AppLayout> {
                 items: [
                    BottomNavigationBarItem(
                     icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
+                      padding: const EdgeInsets.only(bottom: 0.0),
                       child: Icon(
                         FontAwesomeIcons.houseChimney,
                         size: 19.sp,
@@ -100,13 +102,13 @@ class _AppLayoutState extends State<AppLayout> {
                    BottomNavigationBarItem(
                     icon: Icon(
                       CupertinoIcons.car_detailed,
-                      size: 21.sp,
+                      size: 19.sp,
                     ),
                     label: 'سيارتي',
                   ),
                   BottomNavigationBarItem(
                     icon:  Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
+                      padding: const EdgeInsets.only(bottom: 0.0),
                       child: Icon(
                         FontAwesomeIcons.list,
                         size: 19.sp,
@@ -116,7 +118,7 @@ class _AppLayoutState extends State<AppLayout> {
                   ),
                   BottomNavigationBarItem(
                     icon:  ImageIcon(
-                      size: 28.sp,
+                      size: 21.sp,
                       const AssetImage(
                         'assets/icons/carSell.png'
                       ),
@@ -124,12 +126,41 @@ class _AppLayoutState extends State<AppLayout> {
                     label: 'سيارات للبيع',
                   ),
                   BottomNavigationBarItem(
-                    icon:  Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
-                      child: Icon(
-                        Icons.more_horiz_outlined,
-                        size: 19.sp,
-                      ),
+                    icon:  Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Icon(
+                            Icons.more_horiz_outlined,
+                            size: 19.sp,
+                          ),
+                        ),
+                        StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection('chats').doc(myUid).collection('messages').where('isSeen',isEqualTo: false).where('senderId',isEqualTo: 'admin').snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return const Center(
+                                  child: Icon(
+                                    Icons.warning_amber,
+                                    color: Colors.red,
+                                    size: 10,
+                                  ),
+                                );
+                              }
+                              if (!snapshot.hasData) {
+                                return const SizedBox();
+                              }
+                              if ((snapshot.data?.docs.isEmpty)!) {
+                                return const SizedBox();
+                              }
+                              return CircleAvatar(
+                                backgroundColor: snapshot.data!.docs.isEmpty ? Colors.transparent : defaultColor,
+                                radius: 5.r,
+                              );
+                            }
+                        ),
+                      ],
                     ),
                     label: 'المزيد',
                   ),

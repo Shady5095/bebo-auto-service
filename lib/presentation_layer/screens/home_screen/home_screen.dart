@@ -2,8 +2,10 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/offers_screens/offers_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/points_screen/points_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:countup/countup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -214,8 +216,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             return SlideTransition(
                               position: button2Animation,
                               child: defaultButton(
-                                onTap: (){},
-                                text: 'أستبدال النقاط',
+                                onTap: (){
+                                  navigateToAnimated(
+                                    context: context,
+                                    widget: const PointsScreen(),
+                                  );
+                                },
+                                text: 'تقدم النقاط',
                                 width: double.infinity,
                                 height: 37.h,
                                 textColor: Colors.white,

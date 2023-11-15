@@ -1,5 +1,7 @@
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
+import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -12,9 +14,47 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../../data_layer/models/car_sell_models/seller_and_car_info_model.dart';
 import 'car_sell_tab_view_screen.dart';
 
-class ListedCarsForSaleScreen extends StatelessWidget {
+class ListedCarsForSaleScreen extends StatefulWidget {
   const ListedCarsForSaleScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ListedCarsForSaleScreen> createState() => _ListedCarsForSaleScreenState();
+}
+
+class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
+      if(CacheHelper.getBool(key: 'carSellDialogSeen')==null){
+        await showDialog(context: context, builder: (context)=> MyAlertDialog(
+          actions: const [],
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: ImageIcon(
+                  size: 95.sp,color: defaultColor,
+                  const AssetImage(
+                      'assets/icons/carSellDialog.png'
+                  ),
+                ),
+              ),
+              Text(
+                'من انهارده متشيلش هم بيع عربيتك ... تقدر تيجي مركز بيبو اوتو تفحص عربيتك بالكامل بضمان المركز وعربيتك هتنزل علي التطبيق بتقرير الفحص بحيث ان المشتري يكون عارف كل تفاصيل العربية لعدم اضاعه الوقت',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.sp
+                ),
+              ),
+            ],
+          ),
+        ));
+        CacheHelper.putBool(key: 'carSellDialogSeen', value: true);
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,111 +154,117 @@ class ListedCarsForSaleScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: const Color.fromRGBO(2, 0, 0, 0.3),
                 borderRadius: BorderRadius.circular(20).r),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Stack(
+              alignment: Alignment.topLeft,
               children: [
-                SizedBox(
-                  width: displayWidth(context) * 0.30,
-                  child: carSellModel.images == null || carSellModel.images!.isEmpty
-                      ? const Icon(
-                          FluentIcons.image_off_24_regular,
-                          color: Colors.white54,
-                          size: 37,
-                        )
-                      : Hero(
-                          tag: '${carSellModel.docId}',
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image(
-                              fit: BoxFit.cover,
-                              errorBuilder: (BuildContext? context,
-                                  Object? exception, StackTrace? stackTrace) {
-                                return const Center(
-                                  child: Icon(
-                                    Icons.warning_amber,
-                                    color: Colors.red,
-                                    size: 100,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: displayWidth(context) * 0.30,
+                      child: carSellModel.images == null || carSellModel.images!.isEmpty
+                          ? const Icon(
+                              FluentIcons.image_off_24_regular,
+                              color: Colors.white54,
+                              size: 37,
+                            )
+                          : Hero(
+                              tag: '${carSellModel.docId}',
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image(
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext? context,
+                                      Object? exception, StackTrace? stackTrace) {
+                                    return const Center(
+                                      child: Icon(
+                                        Icons.warning_amber,
+                                        color: Colors.red,
+                                        size: 100,
+                                      ),
+                                    );
+                                  },
+                                  loadingBuilder: (BuildContext? context,
+                                      Widget? child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child!;
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 30,
+                                        height: 30,
+                                        child: CircularProgressIndicator(
+                                          color: defaultColor,
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  image: CachedNetworkImageProvider(
+                                    carSellModel.images![0],
                                   ),
-                                );
-                              },
-                              loadingBuilder: (BuildContext? context,
-                                  Widget? child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child!;
-                                return Center(
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: CircularProgressIndicator(
-                                      color: defaultColor,
-                                      value: loadingProgress
-                                                  .expectedTotalBytes !=
-                                              null
-                                          ? loadingProgress
-                                                  .cumulativeBytesLoaded /
-                                              loadingProgress
-                                                  .expectedTotalBytes!
-                                          : null,
-                                    ),
-                                  ),
-                                );
-                              },
-                              image: CachedNetworkImageProvider(
-                                carSellModel.images![0],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Text(
-                              carSellModel.carName ?? '-----',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 15.sp),
-                            ),
+                          Text(
+                            carSellModel.carName ?? '-----',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 15.sp),
                           ),
-                          if (carSellModel.isSold!)
-                            RotationTransition(
-                              turns: const AlwaysStoppedAnimation(340 / 360),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    CupertinoIcons.checkmark_seal,
-                                    color: defaultColor,
-                                    size: 25.sp,
-                                  ),
-                                  Text(
-                                    'مباعه',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 13.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          if(carSellModel.otherNotes != null)
+                          Text(
+                            '${carSellModel.otherNotes}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white54, fontSize: 11.sp),
+                          ),
+                          Text(
+                            '${carSellModel.carYear}' ?? '-----',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                          ),
                         ],
                       ),
-                      Text(
-                        carSellModel.carYear ?? '-----',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white, fontSize: 14.sp),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                if (carSellModel.isSold!)
+                  RotationTransition(
+                    turns: const AlwaysStoppedAnimation(340 / 360),
+                    child: Column(
+                      children: [
+                        Icon(
+                          CupertinoIcons.checkmark_seal,
+                          color: defaultColor,
+                          size: 20.sp,
+                        ),
+                        Text(
+                          'مباعه',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 13.sp),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),

@@ -7,7 +7,7 @@ class UserModel {
   int? points;
   String? uId;
   String? carModel ;
-  String? year;
+  int? year;
   String? color;
   String? plate;
   String? transmission;
@@ -15,6 +15,7 @@ class UserModel {
   int? km;
   String? chassisNo;
   String? engineNo;
+  int? serviceStreak;
 
   UserModel({
     this.firstName,
@@ -33,6 +34,7 @@ class UserModel {
     this.km,
     this.chassisNo,
     this.engineNo,
+    this.serviceStreak,
   });
 
   UserModel.fromJson(Map<String,dynamic> json){
@@ -52,6 +54,7 @@ class UserModel {
     km = json['km'];
     chassisNo = json['chassisNo'];
     engineNo = json['engineNo'];
+    serviceStreak = json['serviceStreak'];
 
   }
 
@@ -75,6 +78,7 @@ class UserModel {
         'km' : km ,
         'chassisNo' : chassisNo ,
         'engineNo' : engineNo ,
+        'serviceStreak' : serviceStreak ,
     };
   }
 }

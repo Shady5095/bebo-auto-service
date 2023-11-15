@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthStates> {
     required String password,
     required String phone,
     required String carModel,
-    required String year,
+    required int year,
     required String color,
     required String plate,
     required String transmission,
@@ -63,7 +63,7 @@ class AuthCubit extends Cubit<AuthStates> {
         password: password,
         phone: phone,
         uId: null,
-        points: 200,
+        points: 100,
         carModel: carModel,
         year: year,
         color: color,
@@ -73,6 +73,7 @@ class AuthCubit extends Cubit<AuthStates> {
         km: km,
         chassisNo: chassisNo,
         engineNo: engineNo,
+        serviceStreak: 0,
       );
       await db.collection('unverifiedUsers').add(userModel.toMap()).then((value) {
         emit(RegisterSuccessState());

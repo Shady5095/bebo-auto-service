@@ -246,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 keyboardType: TextInputType.name,
                                 textCapitalization: TextCapitalization.words,
                                 inputFormatters: [
-                                  LengthLimitingTextInputFormatter(9),
+                                  LengthLimitingTextInputFormatter(14),
                                 ],
                                 style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
@@ -287,7 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 keyboardType: TextInputType.name,
                                 textCapitalization: TextCapitalization.words,
                                 inputFormatters: [
-                                  LengthLimitingTextInputFormatter(9),
+                                  LengthLimitingTextInputFormatter(14),
                                 ],
                                 style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
@@ -329,6 +329,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextFormField(
                           controller: phoneController,
                           keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(11),
+                          ],
                           style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
                               fontSize: 13.sp
@@ -490,7 +493,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 13),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
-                                    fontSize: 13.sp,
+                                    fontSize: 12.sp,
                                   ),
                                   prefixIconColor: Theme.of(context).secondaryHeaderColor,
                                   labelText: 'عداد الكيلومتر',
@@ -528,11 +531,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 13),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
+                                    fontSize: 12.sp
                                   ),
                                   prefixIconColor: Theme.of(context).secondaryHeaderColor,
                                   suffixIconColor: Theme.of(context).secondaryHeaderColor,
-                                  labelText: 'رقم الشاسيه',
-
+                                  labelText: 'رقم الشاسيه (من الرخصة)',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
 
@@ -566,9 +569,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 13),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
+                                    fontSize: 12.sp,
                                   ),
                                   prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                                  labelText: 'رقم الماتور',
+                                  labelText: 'رقم الماتور (من الرخصة)',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
 
@@ -853,10 +857,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onTap: (){
                               if(formKey.currentState!.validate()){
                                 if(carModelSelected == null
-                                    && carYearSelected == null
-                                    && carColorSelected == null
-                                    && bodyTypeSelected == null
-                                    && transmissionSelected == null
+                                    || carYearSelected == null
+                                    || carColorSelected == null
+                                    || bodyTypeSelected == null
+                                    || transmissionSelected == null
                                 ){
                                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                     content: Text('برجاء ادخال جميع البيانات '),
@@ -877,7 +881,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       firstName: firstNameController.text,
                                       lastName: lastNameController.text,
                                       carModel: carModelSelected!,
-                                      year: carYearSelected!,
+                                      year: carYearSelected!.toInt(),
                                       transmission: transmissionSelected!,
                                       color: carColorSelected!,
                                       bodyType: bodyTypeSelected!,

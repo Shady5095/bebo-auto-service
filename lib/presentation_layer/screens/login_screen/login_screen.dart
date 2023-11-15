@@ -1,4 +1,5 @@
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -203,21 +204,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ],
-                          ),
-                          Center(
-                            child: TextButton(
-                              onPressed: () {
-                                cubit.resetPassword(
-                                    email: emailController.text,
-                                    context: context);
-                              },
-                              child:  Text(
-                                'نسيت كلمه السر ؟',
-                                style: TextStyle(
-                                    fontSize: 13.sp
-                                ),
-                              ),
-                            ),
                           ),
                         ],
                       ),

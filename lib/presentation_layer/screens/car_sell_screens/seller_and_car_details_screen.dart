@@ -155,6 +155,13 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                     '${widget.carSellModel.carName}',
                     style: TextStyle(color: Colors.white, fontSize: 23.sp),
                   ),
+                  if(widget.carSellModel.otherNotes != null)
+                    Text(
+                      '${widget.carSellModel.otherNotes}',
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.white54, fontSize: 14.sp),
+                    ),
                   SizedBox(
                     height: 5.h,
                   ),
@@ -182,7 +189,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                             TextStyle(color: Colors.white54, fontSize: 16.sp),
                       ),
                       Text(
-                        '${widget.carSellModel.km}'.addCommaToString() + ' كم',
+                        '${'${widget.carSellModel.km}'.addCommaToString()} كم',
                         style: TextStyle(color: defaultColor, fontSize: 17.sp),
                       ),
                     ],
@@ -258,10 +265,10 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            callDial('01150959505');
+                            callDial('01009109792');
                           },
                           child: Text(
-                            '01150959505',
+                            '01009109792',
                             style:
                                 TextStyle(color: defaultColor, fontSize: 22.sp),
                           ),
@@ -271,7 +278,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                callDial('01150959505');
+                                callDial('01009109792');
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
@@ -285,7 +292,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                             InkWell(
                               onTap: () {
                                 openWhatsapp(
-                                    phoneNumber: '+201118977990', text: '');
+                                    phoneNumber: '+201009109792', text: '');
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
@@ -296,6 +303,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                                 ),
                               ),
                             ),
+                            if(myUid !=null)
                             InkWell(
                               onTap: () {
                                 navigateToAnimated(

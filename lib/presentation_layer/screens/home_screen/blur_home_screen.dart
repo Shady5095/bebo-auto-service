@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/car_sell_screens/car_sell_tab_view_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/car_sell_screens/listed_cars_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/phone_numbers_screen/phone_numbers_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/register_screen/register_screen.dart';
 import 'package:countup/countup.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -221,7 +224,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                   position: button2Animation,
                                   child: defaultButton(
                                     onTap: () {},
-                                    text: 'أستبدال النقط',
+                                    text: 'تقدم النقط',
                                     width: double.infinity,
                                     height: 37.h,
                                     textColor: Colors.white,
@@ -263,10 +266,10 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
                       //crossAxisAlignment: CrossAxisAlignment.center,
-                      //mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: displayHeight(context) * 0.30,
+                          height: displayHeight(context)*0.22,
                         ),
                         Expanded(
                           child: Column(
@@ -275,7 +278,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                 tween: Tween<double>(begin: 0.0, end: 1.0),
                                 duration: const Duration(seconds: 2),
                                 builder: (_, value, child) {
-                                  Future.delayed(Duration(seconds: 1), () {
+                                  Future.delayed(const Duration(seconds: 1), () {
                                     if (!isShowSecondText) {
                                       setState(() {
                                         isShowSecondText = true;
@@ -304,7 +307,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                         opacity: value, child: child);
                                   },
                                   child: Text(
-                                    'سجل عربيتك دلوقتي للاستمتاع بجميع خدمات الأبلكيشن',
+                                    'سجل عربيتك دلوقتي للاستمتاع بجميع خدمات التطبيق',
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.cairo(
                                       color: Colors.grey[500],
@@ -344,11 +347,11 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            20),
+                                                            15),
                                                     color: defaultColor),
                                               ),
                                               SizedBox(
-                                                height: 15.h,
+                                                height: 10.h,
                                               ),
                                               defaultButton(
                                                 onTap: () {},
@@ -360,13 +363,59 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                 isUppercase: false,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(20),
+                                                      BorderRadius.circular(15),
                                                   color: const Color.fromRGBO(
                                                       49, 47, 47, 1.0),
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: 15.h,
+                                                height: 10.h,
+                                              ),
+                                              defaultButton(
+                                                onTap: () {
+                                                  navigateTo(
+                                                    context: context,
+                                                    widget: const PhoneNumbersScreen(),
+                                                  );
+                                                },
+                                                text: 'ارقام التليفون والعناوين',
+                                                width: displayWidth(context) *
+                                                    0.70,
+                                                height: 37.h,
+                                                textColor: Colors.white,
+                                                isUppercase: false,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color: const Color.fromRGBO(
+                                                      49, 47, 47, 1.0),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                              defaultButton(
+                                                onTap: () {
+                                                  navigateTo(
+                                                    context: context,
+                                                    widget: const ListedCarsForSaleScreen()
+                                                  );
+                                                },
+                                                text: 'سيارات للبيع بضمان المركز',
+                                                width: displayWidth(context) *
+                                                    0.70,
+                                                height: 37.h,
+                                                textColor: Colors.white,
+                                                isUppercase: false,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color: const Color.fromRGBO(
+                                                      49, 47, 47, 1.0),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10.h,
                                               ),
                                               Row(
                                                 mainAxisAlignment:

@@ -134,7 +134,7 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                     Row(
                       children: [
                         Icon(
-                          CupertinoIcons.pin,
+                          CupertinoIcons.location_solid,
                           color: defaultColor,
                           size: 22.sp,
                         ),
@@ -271,7 +271,7 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                     Row(
                       children: [
                         Icon(
-                          CupertinoIcons.pin,
+                          CupertinoIcons.location_solid,
                           color: defaultColor,
                           size: 22.sp,
                         ),

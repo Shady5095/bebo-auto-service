@@ -69,7 +69,8 @@ class MyCarScreen extends StatelessWidget {
                           ),
                           Container(
                             width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.25,
+                            //height: MediaQuery.of(context).size.height * 0.25,
+                            padding: const EdgeInsets.only(bottom: 10),
                             decoration: const BoxDecoration(
                               color: Color.fromRGBO(2, 0, 0, 0.3),
                               borderRadius: BorderRadius.only(
@@ -243,7 +244,7 @@ class MyCarScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: const Color.fromRGBO(2, 0, 0, 0.3),
-                borderRadius: BorderRadius.circular(20).r
+                borderRadius: BorderRadius.circular(15).r
             ),
             child: Row(
               children: [
