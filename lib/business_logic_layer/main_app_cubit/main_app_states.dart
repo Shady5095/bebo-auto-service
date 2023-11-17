@@ -24,3 +24,5 @@ class SendComplaintSuccessState extends MainAppStates {}
 
 class SendComplaintErrorState extends MainAppStates {}
 
+class SelectRatingState extends MainAppStates {}
+

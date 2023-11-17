@@ -146,13 +146,25 @@ class AuthCubit extends Cubit<AuthStates> {
               context,
             ).then((value) {
               emit(LoginSuccessState());
-              navigateAndFinish(
-                context: context,
-                widget: const AppLayout(),
-                animation: PageTransitionType.leftToRight,
-              );
-              FirebaseMessaging.instance.subscribeToTopic('all');
-              FirebaseMessaging.instance.subscribeToTopic(myUid!);
+              db.collection('verifiedUsers').doc(userCredential.user!.uid).get().then((value) {
+                if(value.exists){
+                  navigateAndFinish(
+                    context: context,
+                    widget: const AppLayout(),
+                    animation: PageTransitionType.leftToRight,
+                  );
+                  FirebaseMessaging.instance.subscribeToTopic('all');
+                  FirebaseMessaging.instance.subscribeToTopic(myUid!);
+                }
+                else{
+                  myUid = null ;
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('تم حذف حسابك'),
+                    backgroundColor: Colors.red,
+                  ));
+                  userCredential.user!.delete();
+                }
+              });
             });
           });
         });
