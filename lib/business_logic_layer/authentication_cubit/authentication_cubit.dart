@@ -158,6 +158,7 @@ class AuthCubit extends Cubit<AuthStates> {
                 }
                 else{
                   myUid = null ;
+                  FirebaseMessaging.instance.unsubscribeFromTopic('all');
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('تم حذف حسابك'),
                     backgroundColor: Colors.red,

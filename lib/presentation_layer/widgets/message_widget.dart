@@ -169,7 +169,7 @@ class MessageWidget extends StatelessWidget {
                                               messageModel.isSeen!
                                                   ? Icons.done_all
                                                   : Icons.done,
-                                              color: Colors.white54,
+                                              color: messageModel.isSeen! ? Colors.blueAccent :  Colors.white54,
                                               size: 15.sp,
                                             ),
                                           Text(

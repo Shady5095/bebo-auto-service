@@ -217,7 +217,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               position: button2Animation,
                               child: defaultButton(
                                 onTap: (){
-                                  print(FirebaseAuth.instance.currentUser!.uid);
                                   navigateToAnimated(
                                     context: context,
                                     widget: const PointsScreen(),

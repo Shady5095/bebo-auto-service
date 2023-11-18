@@ -136,7 +136,7 @@ class _PointsScreenState extends State<PointsScreen> {
                         ]),
                         barRadius: const Radius.circular(15),
                         lineHeight: 14.0,
-                        percent: (MainAppCubit.get(context).userData!.serviceStreak??0/3).toDouble(),
+                        percent: (MainAppCubit.get(context).userData!.serviceStreak!/3).toDouble(),
                         backgroundColor: Colors.grey[800],
                         //progressColor: defaultColor,
                       );

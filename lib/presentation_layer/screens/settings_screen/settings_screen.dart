@@ -182,10 +182,10 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   ListTile(
                     onTap: (){
-                      navigateTo(
+                      /*navigateAndFinish(
                         context: context,
                         widget: RatingScreen()
-                      );
+                      );*/
                     },
                     splashColor: Colors.transparent,
                     contentPadding: const EdgeInsets.all(10),

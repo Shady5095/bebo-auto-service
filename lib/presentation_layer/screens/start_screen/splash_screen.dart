@@ -1,8 +1,11 @@
+import 'package:bebo_auto_service/business_logic_layer/rating_cubit/rating_cubit.dart';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/layout/app_layout.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/rating_screen/rating_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,10 +29,20 @@ class SplashScreen extends StatelessWidget {
             ).then(
               (value) {
                 if(MainAppCubit.get(context).userData!.email != null){
-                  navigateAndFinish(
-                    context: context,
-                    widget: const AppLayout(),
-                  );
+                  RatingCubit.get(context).isLastServiceRated().then((value) {
+                    if(value == null){
+                      navigateAndFinish(
+                        context: context,
+                        widget: const AppLayout(),
+                      );
+                    }
+                    else{
+                      navigateAndFinish(
+                        context: context,
+                        widget: RatingScreen(serviceDocId: value),
+                      );
+                    }
+                  });
                 }
                 else{
                   navigateAndFinish(

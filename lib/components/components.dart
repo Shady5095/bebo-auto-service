@@ -29,7 +29,7 @@ void navigateAndFinish({required context ,required widget,animation=PageTransiti
      PageTransition(
   type: animation,
   child: widget,
-  duration: const Duration(milliseconds: 500)
+  duration: const Duration(milliseconds: 200)
 ),
     (route) => false
 );

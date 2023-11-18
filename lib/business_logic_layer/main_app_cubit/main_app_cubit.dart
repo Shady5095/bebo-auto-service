@@ -161,23 +161,4 @@ class MainAppCubit extends Cubit<MainAppStates> {
       emit(SendComplaintErrorState());
     });
   }
-  List<int> selectedRatingsIndex = [];
-
-  void selectRating(int index){
-    if(selectedRatingsIndex.contains(index)){
-      selectedRatingsIndex.remove(index);
-    }
-    else{
-      selectedRatingsIndex.add(index);
-    }
-    emit(SelectRatingState());
-  }
-
-  bool isRatingSelected(index){
-    return selectedRatingsIndex.contains(index);
-  }
-
-  void emitChange(){
-    emit(SelectRatingState());
-  }
 }
