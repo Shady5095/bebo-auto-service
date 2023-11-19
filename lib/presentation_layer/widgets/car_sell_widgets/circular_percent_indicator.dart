@@ -38,7 +38,7 @@ class _CircularPercentIndicatorWidgetState extends State<CircularPercentIndicato
           children: [
             SleekCircularSlider(
               appearance: CircularSliderAppearance(
-                size: 60,
+                size: 52.sp,
                 infoProperties: InfoProperties(
                   mainLabelStyle:
                   TextStyle(color: Colors.white, fontSize: 15.sp),

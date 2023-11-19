@@ -75,97 +75,95 @@ class _AppLayoutState extends State<AppLayout> {
           return Scaffold(
             body: MainAppCubit.get(context)
                 .screens[MainAppCubit.get(context).currentIndex],
-            bottomNavigationBar: SizedBox(
-              height: 65.h,
-              child: BottomNavigationBar(
-                backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
-                selectedItemColor: const Color.fromRGBO(210, 29, 29, 1.0),
-                type: BottomNavigationBarType.fixed,
-                unselectedItemColor: Colors.white54,
-                elevation: 20,
-                unselectedFontSize: 10.sp,
-                currentIndex: MainAppCubit.get(context).currentIndex,
-                onTap: (index) {
-                  MainAppCubit.get(context).changeBottomNav(index);
-                },
-                items: [
-                   BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 0.0),
-                      child: Icon(
-                        FontAwesomeIcons.houseChimney,
-                        size: 19.sp,
-                      ),
-                    ),
-                    label: 'الرئيسية',
-                  ),
-                   BottomNavigationBarItem(
-                    icon: Icon(
-                      CupertinoIcons.car_detailed,
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
+              selectedItemColor: const Color.fromRGBO(210, 29, 29, 1.0),
+              type: BottomNavigationBarType.fixed,
+              unselectedItemColor: Colors.white54,
+              elevation: 20,
+              selectedFontSize: 12.sp,
+              unselectedFontSize: 10.sp,
+              currentIndex: MainAppCubit.get(context).currentIndex,
+              onTap: (index) {
+                MainAppCubit.get(context).changeBottomNav(index);
+              },
+              items: [
+                 BottomNavigationBarItem(
+                  icon: Padding(
+                    padding: const EdgeInsets.only(bottom: 0.0),
+                    child: Icon(
+                      FontAwesomeIcons.houseChimney,
                       size: 19.sp,
                     ),
-                    label: 'سيارتي',
                   ),
-                  BottomNavigationBarItem(
-                    icon:  Padding(
-                      padding: const EdgeInsets.only(bottom: 0.0),
-                      child: Icon(
-                        FontAwesomeIcons.list,
-                        size: 19.sp,
-                      ),
+                  label: 'الرئيسية',
+                ),
+                 BottomNavigationBarItem(
+                  icon: Icon(
+                    CupertinoIcons.car_detailed,
+                    size: 19.sp,
+                  ),
+                  label: 'سيارتي',
+                ),
+                BottomNavigationBarItem(
+                  icon:  Padding(
+                    padding: const EdgeInsets.only(bottom: 0.0),
+                    child: Icon(
+                      FontAwesomeIcons.list,
+                      size: 19.sp,
                     ),
-                    label: 'قطع الغيار',
                   ),
-                  BottomNavigationBarItem(
-                    icon:  ImageIcon(
-                      size: 21.sp,
-                      const AssetImage(
-                        'assets/icons/carSell.png'
-                      ),
+                  label: 'قطع الغيار',
+                ),
+                BottomNavigationBarItem(
+                  icon:  ImageIcon(
+                    size: 21.sp,
+                    const AssetImage(
+                      'assets/icons/carSell.png'
                     ),
-                    label: 'سيارات للبيع',
                   ),
-                  BottomNavigationBarItem(
-                    icon:  Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Icon(
-                            Icons.more_horiz_outlined,
-                            size: 19.sp,
-                          ),
+                  label: 'سيارات للبيع',
+                ),
+                BottomNavigationBarItem(
+                  icon:  Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Icon(
+                          Icons.more_horiz_outlined,
+                          size: 19.sp,
                         ),
-                        StreamBuilder(
-                            stream: FirebaseFirestore.instance.collection('chats').doc(myUid).collection('messages').where('isSeen',isEqualTo: false).where('senderId',isEqualTo: 'admin').snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasError) {
-                                return const Center(
-                                  child: Icon(
-                                    Icons.warning_amber,
-                                    color: Colors.red,
-                                    size: 10,
-                                  ),
-                                );
-                              }
-                              if (!snapshot.hasData) {
-                                return const SizedBox();
-                              }
-                              if ((snapshot.data?.docs.isEmpty)!) {
-                                return const SizedBox();
-                              }
-                              return CircleAvatar(
-                                backgroundColor: snapshot.data!.docs.isEmpty ? Colors.transparent : defaultColor,
-                                radius: 5.r,
+                      ),
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance.collection('chats').doc(myUid).collection('messages').where('isSeen',isEqualTo: false).where('senderId',isEqualTo: 'admin').snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Center(
+                                child: Icon(
+                                  Icons.warning_amber,
+                                  color: Colors.red,
+                                  size: 10,
+                                ),
                               );
                             }
-                        ),
-                      ],
-                    ),
-                    label: 'المزيد',
+                            if (!snapshot.hasData) {
+                              return const SizedBox();
+                            }
+                            if ((snapshot.data?.docs.isEmpty)!) {
+                              return const SizedBox();
+                            }
+                            return CircleAvatar(
+                              backgroundColor: snapshot.data!.docs.isEmpty ? Colors.transparent : defaultColor,
+                              radius: 5.r,
+                            );
+                          }
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                  label: 'المزيد',
+                ),
+              ],
             ) /*BottomBarDoubleBullet(
               color: Color.fromRGBO(210, 29, 29, 1.0),
               selectedIndex: CarCubit.get(context).currentIndex,

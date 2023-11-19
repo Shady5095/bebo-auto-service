@@ -5,6 +5,7 @@ import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_car_screen/my_car_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/settings_screen/settings_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -111,9 +112,11 @@ class MainAppCubit extends Cubit<MainAppStates> {
           ?.updatePassword(newPassword)
           .then((value) {
         emit(UpdateUserDataSuccessState());
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('تم تغيير كلمه السر بنجاح'),
-          backgroundColor: Colors.green,
+        Navigator.pop(context);
+        showDialog(context: context, builder: (context)=>const MyAlertDialog(
+          isFailed: false,
+          actions: [],
+          title: 'تم تغيير كلمه السر بنجاح',
         ));
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

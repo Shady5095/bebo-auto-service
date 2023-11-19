@@ -53,6 +53,7 @@ class _SparePartsCategoriesScreenState
                         padding: const EdgeInsets.only(right: 15.0),
                         child: Icon(
                           Icons.arrow_back_ios,
+                          size: 21.sp,
                           color: Theme.of(context).secondaryHeaderColor,
                         ),
                       ),
@@ -65,7 +66,7 @@ class _SparePartsCategoriesScreenState
                   icon: Icon(
                     isSearching ? Icons.close : Icons.search,
                     color: Colors.white,
-                    size: 27,
+                    size: 22.sp,
                   ),
                   onPressed: () {
                     isSearching = !isSearching;
@@ -147,7 +148,6 @@ class _SparePartsCategoriesScreenState
         keyboardType: TextInputType.text,
         onChanged: (String text) {
           setState(() {});
-          print(searchController.text);
         },
         style: TextStyle(
           color: Theme.of(context).secondaryHeaderColor,
@@ -165,8 +165,11 @@ class _SparePartsCategoriesScreenState
         ),
       );
     } else {
-      return const Text(
+      return  Text(
         'قطع الغيار',
+        style: TextStyle(
+          fontSize: 22.sp
+        ),
       );
     }
   }

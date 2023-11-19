@@ -35,6 +35,7 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: AnimationLimiter(
           child: Padding(
             padding: const EdgeInsets.all(5.0),

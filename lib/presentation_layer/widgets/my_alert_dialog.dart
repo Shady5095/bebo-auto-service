@@ -68,7 +68,7 @@ class MyAlertDialog extends StatelessWidget {
                 },
                 text: 'لا',
                 width: displayWidth(context) * 0.23,
-                height: 35,
+                height: 28.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: Colors.grey[800],
@@ -81,7 +81,7 @@ class MyAlertDialog extends StatelessWidget {
                 onTap: onTapYes!,
                 text: 'نعم',
                 width: displayWidth(context) * 0.23,
-                height: 35,
+                height: 28.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: defaultColor,

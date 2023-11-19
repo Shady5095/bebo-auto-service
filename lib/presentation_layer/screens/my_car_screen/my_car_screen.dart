@@ -1,8 +1,12 @@
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/invoices_screen/invoices_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/maintenance_schedule_screen/maintenance_schedule_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_car_reports_sceens/listed_reports_screen.dart';
+import 'package:bottom_bar_matu/utils/app_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -11,29 +15,39 @@ import 'package:page_transition/page_transition.dart';
 import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import '../../../data_layer/models/user_model.dart';
+import '../../widgets/my_alert_dialog.dart';
 
-class MyCarScreen extends StatelessWidget {
+class MyCarScreen extends StatefulWidget {
   const MyCarScreen({Key? key}) : super(key: key);
 
   @override
+  State<MyCarScreen> createState() => _MyCarScreenState();
+}
+
+class _MyCarScreenState extends State<MyCarScreen> {
+  List menuItemsDetails = [
+    {
+      'title': 'الفواتير والصيانات السابقه',
+      'description': 'أحصل علي كل الفواتير السابقه ومواعيدها'
+    },
+    {
+      'title': 'جدول الصيانة',
+      'description': 'أحصل على جدول الصيانة وموعد الصيانة التالي'
+    },
+    {
+      'title': 'تقرير عن سيارتي',
+      'description': 'أحصل على تقرير مفصل عن كل قطعة وحالتها '
+    },
+  ];
+  var formKey = GlobalKey<FormState>();
+  var kmController = TextEditingController();
+  double oldKm =0;
+  @override
   Widget build(BuildContext context) {
-    List menuItemsDetails = [
-      {
-        'title': 'الفواتير والصيانات السابقه',
-        'description': 'أحصل علي كل الفواتير السابقه ومواعيدها'
-      },
-      {
-        'title': 'جدول الصيانة',
-        'description': 'أحصل على جدول الصيانة وموعد الصيانة التالي'
-      },
-      {
-        'title': 'تقرير عن سيارتي',
-        'description': 'أحصل على تقرير مفصل عن كل قطعة وحالتها '
-      },
-    ];
     return BlocConsumer<MainAppCubit,MainAppStates>(
       listener: (context,state){},
       builder: (context,state){
+        oldKm = MainAppCubit.get(context).userData!.km!.toDouble() ;
         UserModel? userData = MainAppCubit.get(context).userData ;
         return Scaffold(
           backgroundColor: defaultBackgroundColor,
@@ -83,13 +97,13 @@ class MyCarScreen extends StatelessWidget {
                             child: Column(
                               children: [
                                 SizedBox(
-                                  height: 48.h,
+                                  height: 28.h,
                                 ),
                                 Text(
                                   '${userData!.carModel} ${userData.year}',
                                   style: TextStyle(
                                       color: Colors.white,
-                                      height: 0.5.h,
+                                      //height: 0.5.h,
                                       fontSize: 22.sp),
                                 ),
                                 Text(
@@ -97,7 +111,7 @@ class MyCarScreen extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.white54,
                                     fontSize: 14.sp,
-                                    height: 1.4.sp,
+                                    //height: 1.4.sp,
                                   ),
                                 ),
                                 Text(
@@ -105,7 +119,7 @@ class MyCarScreen extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.white54,
                                     fontSize: 14.sp,
-                                    height: 1.4.sp,
+                                    //height: 1.4.sp,
                                   ),
                                 ),
                                 Text(
@@ -113,7 +127,7 @@ class MyCarScreen extends StatelessWidget {
                                   style: TextStyle(
                                     color: defaultColor,
                                     fontSize: 14.sp,
-                                    height: 1.2.h,
+                                    //height: 1.2.h,
                                   ),
                                 ),
                                 Row(
@@ -206,8 +220,6 @@ class MyCarScreen extends StatelessWidget {
     );
   }
 
-
-
   Widget buildMenuItems(Map<String,dynamic> menuModel , BuildContext context , int index) => InkWell(
     onTap: (){
       switch(index) {
@@ -222,7 +234,7 @@ class MyCarScreen extends StatelessWidget {
         break ;
         case  1 :
         {
-
+          showDialog(context: context, builder: (context)=>updateKmDialog());
         }
         break ;
         case  2 :
@@ -294,5 +306,94 @@ class MyCarScreen extends StatelessWidget {
             ),
           ),
         ),
+  );
+
+  Widget updateKmDialog()=> MyAlertDialog(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'برجاء ادخال عداد الكيلومتر الحالي لعرض معاد الصيانة القادم',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white, fontSize: 15.sp),
+        ),
+        SizedBox(
+          height: 10.h,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Form(
+              key: formKey,
+              child: TextFormField(
+                controller: kmController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(6),
+                ],
+                style: TextStyle(
+                    color: Theme.of(context)
+                        .secondaryHeaderColor,
+                    fontSize: 13.sp),
+                decoration: InputDecoration(
+                    contentPadding:
+                    const EdgeInsets.all(5),
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).hintColor,
+                    ),
+                    prefixIconColor: Theme.of(context)
+                        .secondaryHeaderColor,
+                    suffixIconColor: Theme.of(context)
+                        .secondaryHeaderColor,
+                    labelText: 'عداد الكيلومتر الحالي',
+                    prefixIcon: const Icon(
+                        CupertinoIcons.speedometer),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context)
+                              .secondaryHeaderColor,
+                        ))),
+                autovalidateMode:
+                AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'برجاء ادخال البيانات';
+                  }
+                  if (value != '' &&
+                      value.toDouble() < oldKm) {
+                    return 'العداد الحالي اقل من العداد السابق';
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: defaultButton(
+          onTap: () {
+            if (formKey.currentState!.validate()) {
+              navigateToAnimated(
+                context: context,
+                widget: MaintenanceScheduleScreen(km: kmController.text.toInt()),
+              );
+            }
+          },
+          text: 'تم',
+          width: displayWidth(context) * 0.23,
+          height: 30,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: defaultColor,
+          ),
+        ),
+      ),
+    ],
   );
 }
