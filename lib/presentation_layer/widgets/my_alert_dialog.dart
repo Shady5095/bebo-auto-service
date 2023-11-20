@@ -26,7 +26,7 @@ class MyAlertDialog extends StatelessWidget {
     return AlertDialog(
       icon: isFailed != null
           ? CircleAvatar(
-              radius: 32,
+              radius: 25.r,
               backgroundColor: isFailed! ? Colors.red : Colors.green,
               child: Icon(
                 isFailed! ? Icons.close : Icons.check,

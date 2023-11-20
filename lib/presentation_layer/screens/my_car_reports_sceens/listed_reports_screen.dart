@@ -125,7 +125,6 @@ class BuildReportItem extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Container(
             width: double.infinity,
-            height: 100.h,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: const Color.fromRGBO(2, 0, 0, 0.3),
@@ -197,10 +196,6 @@ class BuildReportItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
                 ),
               ],
             ),

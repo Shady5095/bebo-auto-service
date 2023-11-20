@@ -387,7 +387,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
           },
           text: 'تم',
           width: displayWidth(context) * 0.23,
-          height: 30,
+          height: 28.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
             color: defaultColor,

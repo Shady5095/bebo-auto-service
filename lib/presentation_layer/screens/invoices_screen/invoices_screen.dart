@@ -111,12 +111,13 @@ class InvoicesScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Container(
             width: double.infinity,
-            height: 80.h,
+            //height: 80.h,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: const Color.fromRGBO(2, 0, 0, 0.3),
                 borderRadius: BorderRadius.circular(20).r),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   width: 8.w,
@@ -131,58 +132,50 @@ class InvoicesScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '${invoiceMap['totalPrice']}'.addCommaToString(),
-                          style: GoogleFonts.dosis(
-                            color: Colors.white,
-                            height: 1.h,
-                            fontSize: 25.sp,
-                          ),
-                        ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${invoiceMap['totalPrice']}'.addCommaToString(),
+                      style: GoogleFonts.dosis(
+                        color: Colors.white,
+                        height: 1.h,
+                        fontSize: 25.sp,
                       ),
-                      Text(
-                        'جنيه',
-                        style: GoogleFonts.dosis(
-                          color: Colors.white,
-                          fontSize: 20.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        dateTimeIntl.DateFormat.yMMMd('ar').format(invoiceMap['addedTime'].toDate()),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                      Text(
-                        dateTimeIntl.DateFormat.jm('ar').format(invoiceMap['addedTime'].toDate()),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    'عرض صوره الفاتوره',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 14.sp,
                     ),
+                    Text(
+                      'جنيه',
+                      style: GoogleFonts.dosis(
+                        color: Colors.white,
+                        fontSize: 20.sp,
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      dateTimeIntl.DateFormat.yMMMd('ar').format(invoiceMap['addedTime'].toDate()),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15.sp,
+                      ),
+                    ),
+                    Text(
+                      dateTimeIntl.DateFormat.jm('ar').format(invoiceMap['addedTime'].toDate()),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15.sp,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  'عرض صوره الفاتوره',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 14.sp,
                   ),
                 ),
               ],

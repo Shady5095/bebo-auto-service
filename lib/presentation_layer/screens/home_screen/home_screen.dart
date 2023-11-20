@@ -5,14 +5,12 @@ import 'package:bebo_auto_service/presentation_layer/screens/offers_screens/offe
 import 'package:bebo_auto_service/presentation_layer/screens/points_screen/points_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:countup/countup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
-import '../../../components/app_locale.dart';
 
 
 class HomeScreen extends StatefulWidget {

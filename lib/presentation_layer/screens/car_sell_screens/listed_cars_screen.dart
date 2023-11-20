@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -235,7 +234,7 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
                             style: TextStyle(color: Colors.white54, fontSize: 11.sp),
                           ),
                           Text(
-                            '${carSellModel.carYear}' ?? '-----',
+                            '${carSellModel.carYear}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(color: Colors.white, fontSize: 14.sp),
