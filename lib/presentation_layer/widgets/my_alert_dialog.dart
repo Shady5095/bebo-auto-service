@@ -35,11 +35,11 @@ class MyAlertDialog extends StatelessWidget {
               ),
             )
           : null,
-      contentPadding: const EdgeInsets.only(
-        bottom: 5,
-        top: 15,
-        right: 15,
-        left: 15,
+      contentPadding: EdgeInsets.only(
+        bottom: 4.h,
+        top: 12.h,
+        right: 12.w,
+        left: 12.w,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       backgroundColor: defaultBackgroundColor,

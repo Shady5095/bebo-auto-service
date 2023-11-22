@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data_layer/local/cache_helper.dart';
 import '../../data_layer/network/dio_helper.dart';
 import '../../presentation_layer/screens/car_sell_screens/listed_cars_screen.dart';
 import '../../presentation_layer/screens/spare_parts_screens/spare_parts_categories_screen/spare_parts_categories_screen.dart';
@@ -108,6 +109,7 @@ class MainAppCubit extends Cubit<MainAppStates> {
           .then((value) {
         emit(UpdateUserDataSuccessState());
         Navigator.pop(context);
+        CacheHelper.putString(key: 'password', value: newPassword);
         showDialog(context: context, builder: (context)=>const MyAlertDialog(
           isFailed: false,
           actions: [],

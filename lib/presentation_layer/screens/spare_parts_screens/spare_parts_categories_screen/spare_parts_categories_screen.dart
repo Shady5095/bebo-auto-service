@@ -60,6 +60,7 @@ class _SparePartsCategoriesScreenState
                     )
                   : null,
               elevation: 0,
+              toolbarHeight: 45.h,
               title: titleWidget(),
               actions: [
                 IconButton(
@@ -260,7 +261,7 @@ class _SparePartsCategoriesScreenState
                 child: GridView.count(
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
-                  crossAxisCount: 2,
+                  crossAxisCount: MediaQuery.of(context).size.shortestSide > 600 ? 3 : 2,
                   childAspectRatio: 1 / 0.85,
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 0,
@@ -310,7 +311,7 @@ class _SparePartsCategoriesScreenState
             height: 80.h,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Color.fromRGBO(2, 0, 0, 0.3),
+                color: const Color.fromRGBO(2, 0, 0, 0.3),
                 borderRadius: BorderRadius.circular(20).r),
             child: Row(
               children: [
@@ -380,7 +381,7 @@ class _SparePartsCategoriesScreenState
                 SizedBox(
                   width: 10.w,
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   color: Colors.white,
                 ),

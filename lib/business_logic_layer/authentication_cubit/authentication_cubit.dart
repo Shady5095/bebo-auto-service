@@ -136,6 +136,7 @@ class AuthCubit extends Cubit<AuthStates> {
         password: password,
       )
           .then((userCredential) async {
+        await CacheHelper.putString(key: 'password', value: password);
         await CacheHelper.putString(key: 'uId', value: userCredential.user!.uid)
             .then((value) async {
           myUid = userCredential.user?.uid;

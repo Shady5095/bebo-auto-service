@@ -72,6 +72,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 child: TextFormField(
                                   style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
+                                      fontSize: 13.sp
                                   ),
                                   controller: firstNameController,
                                   inputFormatters: [
@@ -80,8 +81,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   textCapitalization: TextCapitalization.words,
                                   decoration: InputDecoration(
                                       contentPadding: const EdgeInsets.symmetric(horizontal: 7),
-                                      label: const Text(
-                                          'الأسم الأول'
+                                      label:  Text(
+                                          'الأسم الأول',
+                                        style: TextStyle(
+                                            fontSize: 13.sp
+                                        ),
                                       ),
                                       prefixIcon: const Icon(
                                         CupertinoIcons.person,
@@ -111,6 +115,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 child: TextFormField(
                                   style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
+                                      fontSize: 13.sp
                                   ),
                                   controller: lastNameController,
                                   textCapitalization: TextCapitalization.words,
@@ -119,14 +124,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   ],
                                   decoration: InputDecoration(
                                       contentPadding: const EdgeInsets.symmetric(horizontal: 7),
-                                      label: const Text(
-                                          'الأسم الأخير'
+                                      label: Text(
+                                          'الأسم الأخير',
                                       ),
                                       prefixIcon: const Icon(
                                         CupertinoIcons.person,
                                       ),
                                       labelStyle: TextStyle(
-                                          color: Colors.grey[500]
+                                          color: Colors.grey[500],
+                                          fontSize: 13.sp
                                       ),
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -153,11 +159,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             keyboardType: TextInputType.phone,
                             style:  TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
+                                  fontSize: 13.sp,
                             ),
                             decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 7),
-                                label: const Text(
-                                    'رقم الهاتف'
+                                label:  Text(
+                                    'رقم الهاتف',
+                                  style: TextStyle(
+                                      fontSize: 13.sp
+                                  ),
                                 ),
                                 labelStyle: TextStyle(
                                     color: Colors.grey[500]
@@ -196,7 +206,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   }
                                 },
                               text: 'تحديث',
-                              height: 40,
+                              height: 36.h,
                               width: MediaQuery.of(context).size.width * 0.70
                             ),
                           ),
@@ -388,7 +398,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               }
                             },
                             text: 'تغيير كلمه السر',
-                            height: 40,
+                            height: 36.h,
                             width: MediaQuery.of(context).size.width * 0.70
                         ),
                       ),

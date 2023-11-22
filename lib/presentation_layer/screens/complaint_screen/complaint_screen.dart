@@ -39,8 +39,8 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                   Image.asset(
                     'assets/images/sadCar.png',
                     color: defaultColor,
-                    height: 120,
-                    width: 120,
+                    height: 100.h,
+                    width: 100.h,
                   ),
                   Center(
                     child: Text(

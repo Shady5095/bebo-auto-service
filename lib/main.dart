@@ -1,7 +1,6 @@
 import 'package:bebo_auto_service/business_logic_layer/my_bloc_providers/my_bloc_providers.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/start_screen/start_screen.dart';
 import 'package:bebo_auto_service/styles/themes.dart';
-import 'package:bloc/bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -29,7 +28,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await CacheHelper.init();
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => const MyApp(), // Wrap your app
+  ),);
 }
 
 class MyApp extends StatelessWidget {
@@ -49,7 +51,6 @@ class MyApp extends StatelessWidget {
             builder: (_ , child) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                useInheritedMediaQuery: true,
                 localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,

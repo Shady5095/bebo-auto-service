@@ -25,11 +25,13 @@ class CarSellTabViewScreen extends StatelessWidget {
         appBar: defaultAppbar(
           context: context,
           tabs: [
-            const Tab(
-              text: 'تفاصيل السيارة',
+            Tab(
+              height: 37.h,
+              child: Text('تفاصيل السيارة', style: TextStyle(fontSize: 14.sp)),
             ),
-            const Tab(
-              text: 'حالة السيارة',
+            Tab(
+              height: 37.h,
+              child: Text('حالة السيارة', style: TextStyle(fontSize: 14.sp)),
             ),
           ],
         ),

@@ -27,6 +27,7 @@ class SettingsScreen extends StatelessWidget {
       backgroundColor: defaultBackgroundColor,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 45.h,
         title: Text(
           'المزيد',
           style: TextStyle(
@@ -141,7 +142,7 @@ class SettingsScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 11.sp,
-                                        height: 1.15.h,
+                                        height: 1.2,
                                         color: snapshot.data!.docs.isEmpty ? Colors.transparent : Colors.white
                                     ),
                                   ),

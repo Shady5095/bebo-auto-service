@@ -34,8 +34,8 @@ class MessageWidget extends StatelessWidget {
         children: [
           Padding(
             padding: isUserMessage
-                ? EdgeInsets.only(left: haveNip ? 8.0 : 15)
-                : EdgeInsets.only(right: haveNip ? 8.0 : 15),
+                ? EdgeInsets.only(left: haveNip ? 7.0.w : 12.w, bottom: 4.h)
+                : EdgeInsets.only(right: haveNip ? 7.0.w : 12.w, bottom: 4.h),
             child: Stack(
               alignment: Alignment.centerRight,
               children: [
@@ -50,9 +50,9 @@ class MessageWidget extends StatelessWidget {
                               isUserMessage
                                   ? MessageType.receive
                                   : MessageType.send,
-                              nipWidth: 6,
-                              nipHeight: 10,
-                              bubbleRadius: haveNip ? 12 : 0,
+                              nipWidth: 5.w,
+                              nipHeight: 9.h,
+                              bubbleRadius: haveNip ? 11.r : 0,
                             )
                           : null,
                       child: Container(
@@ -68,17 +68,17 @@ class MessageWidget extends StatelessWidget {
                           padding: messageModel.image != null
                               ? EdgeInsets.only(
                                   bottom: 0,
-                                  right: haveNip && !isUserMessage ? 9 : 4,
-                                  left: isUserMessage && haveNip ? 9 : 4,
+                                  right: haveNip && !isUserMessage ? 8.w : 3.w,
+                                  left: isUserMessage && haveNip ? 8.w : 4.w,
                                   top: 4)
-                              : const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 10),
+                              : EdgeInsets.symmetric(
+                                  vertical: 3.h, horizontal: 9.w),
                           decoration: BoxDecoration(
                               color: isUserMessage
                                   ? Colors.grey[800]
-                                  : defaultColor,
+                                  : const Color.fromRGBO(166, 30, 30, 1.0),
                               borderRadius:
-                                  haveNip ? null : BorderRadius.circular(12)),
+                                  haveNip ? null : BorderRadius.circular(11).r),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -88,7 +88,7 @@ class MessageWidget extends StatelessWidget {
                                       bottom: messageModel.text != '' ? 5 : 0),
                                   child: SizedBox(
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(12).r,
                                       child: Image(
                                         errorBuilder: (BuildContext? context,
                                             Object? exception,
@@ -160,7 +160,7 @@ class MessageWidget extends StatelessWidget {
                                     ),
                                     Positioned(
                                       bottom:
-                                          messageModel.image != null ? 0 : -3,
+                                          messageModel.image != null ? 0 : -5,
                                       right: 1,
                                       child: Row(
                                         children: [
@@ -169,7 +169,9 @@ class MessageWidget extends StatelessWidget {
                                               messageModel.isSeen!
                                                   ? Icons.done_all
                                                   : Icons.done,
-                                              color: messageModel.isSeen! ? Colors.blueAccent :  Colors.white54,
+                                              color: messageModel.isSeen!
+                                                  ? Colors.blueAccent
+                                                  : Colors.white54,
                                               size: 15.sp,
                                             ),
                                           Text(

@@ -35,21 +35,20 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
           var chatCubit = ChatCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-              toolbarHeight: 55.h,
+              toolbarHeight: 60.h,
               leadingWidth: double.infinity,
+              titleSpacing: 12.w,
               leading: Row(
                 children: [
                   IconButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 15).w,
                     onPressed: () async {
                       Navigator.pop(context);
                     },
-                    padding: EdgeInsets.zero,
-                    icon: Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Theme.of(context).secondaryHeaderColor,
-                      ),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Theme.of(context).secondaryHeaderColor,
+                      size: 20.sp,
                     ),
                   ),
                   SizedBox(
@@ -61,8 +60,8 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                       image: const AssetImage('assets/images/logo.png'),
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
+                   SizedBox(
+                    width: 8.w,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,14 +71,17 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                         'الدعم الفني',
                         style: TextStyle(
                           fontSize: 17.sp,
-                          height: 1.8,
+                          height: 1,
                           color: Theme.of(context).secondaryHeaderColor,
                         ),
+                      ),
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Text(
                         'مركز بيبو اوتو في خدمتكم',
                         style: TextStyle(
-                            height: 1.1,
+                            height: 1,
                             fontSize: 14.sp,
                             color: Colors.grey[500]),
                       ),
@@ -212,18 +214,19 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                             children: [
                               if (isShowDateCard)
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 8.0, top: 3.0),
+                                  padding:  EdgeInsets.only(
+                                      bottom: 7.0.h, top: 2.0.h),
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 10),
+                                        vertical: 4, horizontal: 7).w,
                                     decoration: BoxDecoration(
                                       color: Colors.grey[800],
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(10).r,
                                     ),
                                     child: Text(
                                       dateCardText(),
                                       style: TextStyle(
+                                        fontSize: 13.sp,
                                         color: Theme.of(context)
                                             .secondaryHeaderColor,
                                       ),
@@ -287,7 +290,9 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                               style: TextStyle(
                                   color: Theme.of(context).secondaryHeaderColor,
                                   decoration: TextDecoration.none,
-                                  height: 1.5),
+                                  fontSize: 14.sp,
+                                  //height: 1.15.h,
+                              ),
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(9),
                                 isDense: true,
@@ -296,21 +301,21 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                                     borderSide: BorderSide(
                                       color: Colors.grey[800]!,
                                     ),
-                                    borderRadius: BorderRadius.circular(20)),
+                                    borderRadius: BorderRadius.circular(16).r),
                                 fillColor: Colors.grey[800],
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(16).r,
                                     borderSide: BorderSide(
                                       color: Colors.grey[800]!,
                                     )),
                                 hintStyle: TextStyle(
                                   color: Colors.grey[500],
-                                  fontSize: 16,
+                                  fontSize: 13.sp,
                                   height: 0.8,
                                 ),
                                 hintText: 'أرسال رساله',
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(16).r,
                                 ),
                               ),
                             ),

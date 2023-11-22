@@ -130,10 +130,11 @@ PreferredSizeWidget defaultAppbar({
           child: Icon(
             Icons.arrow_back_ios,
             color: Theme.of(context).secondaryHeaderColor,
+            size: 19.sp,
           ),
         ),
       ),
-      titleSpacing: 5,
+      titleSpacing: 12.w,
       bottom: tabs == null
           ? null
           : TabBar(
@@ -216,7 +217,7 @@ Widget colorPicker({
 Widget myCircularProgressIndicator({double? size}) =>
     LoadingAnimationWidget.threeRotatingDots(
       color: defaultColor,
-      size: size ?? 40,
+      size: size ?? 35.sp,
     );
 
 void unFocusKeyboard(BuildContext context) {
@@ -271,16 +272,16 @@ void imagePickDialog({
       pageBuilder: (_, __, ___) {
         return Center(
           child: Container(
-            height: 180,
-            width: 280,
+            height: 150.h,
+            width: 230.w,
             margin: const EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(
                 color: Colors.grey[900],
-                borderRadius: BorderRadius.circular(40)),
+                borderRadius: BorderRadius.circular(32).r),
             child: SizedBox.expand(
               child: Material(
                 color: Colors.grey[900],
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16).r,
                 child: Center(
                   child: Row(
                     children: [
@@ -288,22 +289,22 @@ void imagePickDialog({
                         child: InkWell(
                           splashColor: Colors.transparent,
                           onTap: galleryOnTap,
-                          child: const Column(
+                          child:  Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.image_outlined,
                                 color: Colors.green,
-                                size: 50,
+                                size: 40.sp,
                               ),
                               SizedBox(
-                                height: 10,
+                                height: 8.h,
                               ),
                               Text(
                                 'المعرض',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15,
+                                  fontSize: 13.sp,
                                 ),
                               ),
                             ],
@@ -314,21 +315,21 @@ void imagePickDialog({
                         child: InkWell(
                           splashColor: Colors.transparent,
                           onTap: cameraOnTap,
-                          child: const Column(
+                          child:  Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.camera_alt_outlined,
                                 color: Colors.blue,
-                                size: 50,
+                                size: 40.sp,
                               ),
                               SizedBox(
-                                height: 10,
+                                height: 8.h,
                               ),
                               Text(
                                 'الكاميرا',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                                    color: Colors.white, fontSize: 13.sp,),
                               ),
                             ],
                           ),

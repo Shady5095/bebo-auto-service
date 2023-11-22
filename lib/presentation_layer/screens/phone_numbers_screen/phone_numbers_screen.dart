@@ -23,11 +23,13 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
             context: context,
             title: 'ارقام التليفون و العناوين',
             tabs: [
-              const Tab(
-                text: 'فرع العبور',
+              Tab(
+                height: 37.h,
+                child: Text('فرع العبور', style: TextStyle(fontSize: 14.sp)),
               ),
-              const Tab(
-                text: 'فرع أكتوبر',
+              Tab(
+                height: 37.h,
+                child: Text('فرع أكتوبر', style: TextStyle(fontSize: 14.sp)),
               ),
             ]),
         body: TabBarView(
@@ -155,12 +157,12 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                       height: 15.h,
                     ),
                     InkWell(
-                      onTap: (){
-                        MapUtils.openMap('https://www.google.com/maps/place/%D8%A8%D9%8A%D8%A8%D9%88+AUTO%E2%80%AD/@30.180788,31.4713093,15.25z/data=!4m6!3m5!1s0x14581bee8d826819:0x1292287cc984eab7!8m2!3d30.1811667!4d31.4651143!16s%2Fg%2F11jkv1hzjk?entry=ttu');
+                      onTap: () {
+                        MapUtils.openMap(
+                            'https://www.google.com/maps/place/%D8%A8%D9%8A%D8%A8%D9%88+AUTO%E2%80%AD/@30.180788,31.4713093,15.25z/data=!4m6!3m5!1s0x14581bee8d826819:0x1292287cc984eab7!8m2!3d30.1811667!4d31.4651143!16s%2Fg%2F11jkv1hzjk?entry=ttu');
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-
                         child: const Image(
                           image: AssetImage('assets/images/obourLocation.jpg'),
                         ),
@@ -283,7 +285,7 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                             'المنطقه الصناعيه التانيه - خلف توكيل رينو',
                             maxLines: 3,
                             style:
-                            TextStyle(color: Colors.white, fontSize: 14.sp),
+                                TextStyle(color: Colors.white, fontSize: 14.sp),
                           ),
                         ),
                       ],
@@ -292,14 +294,15 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                       height: 15.h,
                     ),
                     InkWell(
-                      onTap: (){
-                        MapUtils.openMap('https://www.google.com/maps/place/BEBO+AUTO/@29.9141728,30.9117395,17z/data=!3m1!4b1!4m6!3m5!1s0x145855dcf1db4505:0xcec024978bb5a630!8m2!3d29.9141728!4d30.9091699!16s%2Fg%2F11ty0jplh2?entry=ttu');
+                      onTap: () {
+                        MapUtils.openMap(
+                            'https://www.google.com/maps/place/BEBO+AUTO/@29.9141728,30.9117395,17z/data=!3m1!4b1!4m6!3m5!1s0x145855dcf1db4505:0xcec024978bb5a630!8m2!3d29.9141728!4d30.9091699!16s%2Fg%2F11ty0jplh2?entry=ttu');
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-
                         child: const Image(
-                          image: AssetImage('assets/images/octoberLocation.jpg'),
+                          image:
+                              AssetImage('assets/images/octoberLocation.jpg'),
                         ),
                       ),
                     ),
@@ -338,23 +341,25 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
             onPressed: () {
               callDial(phoneMap['phone']);
             },
+            padding: EdgeInsets.symmetric(horizontal: 8).w,
             icon: Icon(
               Icons.call,
               color: defaultColor,
               size: 21.sp,
             ),
           ),
-          if('${phoneMap['phone']}'.length == 11)
-          IconButton(
-            onPressed: () {
-              openWhatsapp(phoneNumber: '+2${phoneMap['phone']}', text: '');
-            },
-            icon: Icon(
-              FontAwesomeIcons.whatsapp,
-              color: Colors.green,
-              size: 21.sp,
+          if ('${phoneMap['phone']}'.length == 11)
+            IconButton(
+              onPressed: () {
+                openWhatsapp(phoneNumber: '+2${phoneMap['phone']}', text: '');
+              },
+              padding: EdgeInsets.symmetric(horizontal: 8).w,
+              icon: Icon(
+                FontAwesomeIcons.whatsapp,
+                color: Colors.green,
+                size: 21.sp,
+              ),
             ),
-          ),
         ],
       );
 }

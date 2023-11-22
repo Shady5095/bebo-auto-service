@@ -96,8 +96,9 @@ class _PointsScreenState extends State<PointsScreen> {
                 ],
               ),
             ));
-          }, icon: const Icon(
+          }, icon:  Icon(
             CupertinoIcons.info,
+            size: 20.sp,
           ))
         ]
       ),
@@ -136,7 +137,7 @@ class _PointsScreenState extends State<PointsScreen> {
                         ]),
                         barRadius: const Radius.circular(15),
                         lineHeight: 14.0,
-                        percent: (MainAppCubit.get(context).userData!.serviceStreak!/3).toDouble(),
+                        percent: MainAppCubit.get(context).userData!.serviceStreak == null ? 0 : (MainAppCubit.get(context).userData!.serviceStreak!/3).toDouble(),
                         backgroundColor: Colors.grey[800],
                         //progressColor: defaultColor,
                       );
@@ -147,7 +148,7 @@ class _PointsScreenState extends State<PointsScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Text(
-                        '${MainAppCubit.get(context).userData!.serviceStreak}/3',
+                        MainAppCubit.get(context).userData!.serviceStreak == null ? '0/3' : '${MainAppCubit.get(context).userData!.serviceStreak}/3',
                         style: TextStyle(
                           fontSize: 15.sp,
                           color: Colors.white54,

@@ -54,6 +54,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
           appBar: AppBar(
             backgroundColor: defaultBackgroundColor,
             elevation: 0,
+            toolbarHeight: 45.h,
             title: Text(
               'سيارتي',
               style: TextStyle(

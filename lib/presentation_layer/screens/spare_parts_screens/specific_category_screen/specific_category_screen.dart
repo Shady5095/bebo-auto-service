@@ -72,6 +72,7 @@ class SpecificCategoryScreen extends StatelessWidget {
                         Text(
                           'لا يوجد قطع غيار في هذا القسم',
                           style: Theme.of(context).textTheme.bodyLarge,
+                          
                         ),
                       ],
                     ),

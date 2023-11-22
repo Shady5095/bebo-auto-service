@@ -149,7 +149,7 @@ class ChatCubit extends Cubit<ChatStates> {
     if (pickedFile != null) {
       var croppedFile = await ImageCropper().cropImage(
         sourcePath: pickedFile.path,
-        compressQuality: 100,
+        compressQuality: 90,
         compressFormat: ImageCompressFormat.jpg,
         uiSettings: [
           AndroidUiSettings(
