@@ -1,11 +1,6 @@
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
@@ -13,7 +8,6 @@ import 'package:page_transition/page_transition.dart';
 import '../../../business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import '../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../components/components.dart';
-import '../../widgets/dropdown_buttom.dart';
 import '../register_screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,7 +17,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 final passController = TextEditingController();
-final emailController = TextEditingController();
+final chassisNoController = TextEditingController();
 final formKey = GlobalKey<FormState>();
 final focusNode = FocusNode();
 
@@ -69,8 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 40.h,
                           ),
                           TextFormField(
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
+                            controller: chassisNoController,
+                            keyboardType: TextInputType.text,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .secondaryHeaderColor,
@@ -81,9 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Theme.of(context)
                                     .secondaryHeaderColor,
                               ),
-                              labelText: 'البريد الألكتروني',
-                              prefixIcon:
-                              const Icon(Icons.email_outlined),
+                              labelText: 'رقم الشاسيه (من الرخصه)',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -93,9 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'برجاء ادخال البيانات';
-                              } else if (!EmailValidator.validate(
-                                  value, true)) {
-                                return 'البريد الألكتروني غير صالح';
+                              } else if (value.length < 8) {
+                                return 'رقم الشاسيه يجب ان لا يقل عن 8 ارقام';
                               }
                               return null;
                             },
@@ -156,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 unFocusKeyboard(context);
                                 if (formKey.currentState!.validate()) {
                                   cubit.userLogin(
-                                      email: emailController.text,
+                                      email: chassisNoController.text,
                                       password: passController.text.trim(),
                                       context: context
                                   );

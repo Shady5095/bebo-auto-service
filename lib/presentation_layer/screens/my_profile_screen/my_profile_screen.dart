@@ -11,7 +11,8 @@ import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 
 class MyProfileScreen extends StatefulWidget {
-  final UserModel userData ;
+  final UserModel userData;
+
   const MyProfileScreen({Key? key, required this.userData}) : super(key: key);
 
   @override
@@ -19,8 +20,10 @@ class MyProfileScreen extends StatefulWidget {
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
-  late var firstNameController = TextEditingController(text: widget.userData.firstName);
-  late var lastNameController = TextEditingController(text: widget.userData.lastName);
+  late var firstNameController =
+      TextEditingController(text: widget.userData.firstName);
+  late var lastNameController =
+      TextEditingController(text: widget.userData.lastName);
   late var phoneController = TextEditingController(text: widget.userData.phone);
   var currentPasswordController = TextEditingController();
   var passwordController = TextEditingController();
@@ -30,27 +33,27 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   IconData suffix = Icons.visibility_off_outlined;
   bool isPassword = true;
+
   void changeSuffixIcon() {
     isPassword = !isPassword;
     suffix =
-    isPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined;
-    setState(() {
-
-    });
+        isPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined;
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MainAppCubit,MainAppStates>(
-      listener: (context,state){},
-      builder: (context,state){
+    return BlocConsumer<MainAppCubit, MainAppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
         return GestureDetector(
-          onTap: (){
+          onTap: () {
             unFocusKeyboard(context);
           },
           child: Scaffold(
             appBar: defaultAppbar(
-                context: context,
-              title:'تعديل الملف الشخصي',
+              context: context,
+              title: 'تعديل الملف الشخصي',
             ),
             body: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -71,41 +74,40 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                      fontSize: 13.sp
-                                  ),
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                      fontSize: 13.sp),
                                   controller: firstNameController,
                                   inputFormatters: [
                                     LengthLimitingTextInputFormatter(14),
                                   ],
                                   textCapitalization: TextCapitalization.words,
                                   decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(horizontal: 7),
-                                      label:  Text(
-                                          'الأسم الأول',
-                                        style: TextStyle(
-                                            fontSize: 13.sp
-                                        ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 7),
+                                      label: Text(
+                                        'الأسم الأول',
+                                        style: TextStyle(fontSize: 13.sp),
                                       ),
                                       prefixIcon: const Icon(
                                         CupertinoIcons.person,
                                       ),
-                                      labelStyle: TextStyle(
-                                          color: Colors.grey[500]
-                                      ),
+                                      labelStyle:
+                                          TextStyle(color: Colors.grey[500]),
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Theme.of(context).secondaryHeaderColor,
-                                          )
-                                      )
-                                  ),
-                                  validator: (value){
-                                    if (value==null || value.isEmpty){
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ))),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'برجاء أدخال البيانات';
                                     }
                                     return null;
                                   },
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                 ),
                               ),
                               SizedBox(
@@ -114,39 +116,40 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                      fontSize: 13.sp
-                                  ),
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                      fontSize: 13.sp),
                                   controller: lastNameController,
                                   textCapitalization: TextCapitalization.words,
                                   inputFormatters: [
                                     LengthLimitingTextInputFormatter(14),
                                   ],
                                   decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(horizontal: 7),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 7),
                                       label: Text(
-                                          'الأسم الأخير',
+                                        'الأسم الأخير',
                                       ),
                                       prefixIcon: const Icon(
                                         CupertinoIcons.person,
                                       ),
                                       labelStyle: TextStyle(
                                           color: Colors.grey[500],
-                                          fontSize: 13.sp
-                                      ),
+                                          fontSize: 13.sp),
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Theme.of(context).secondaryHeaderColor,
-                                          )
-                                      )
-                                  ),
-                                  validator: (value){
-                                    if (value==null || value.isEmpty){
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ))),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'برجاء أدخال البيانات';
                                     }
                                     return null;
                                   },
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                 ),
                               ),
                             ],
@@ -157,46 +160,42 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           TextFormField(
                             controller: phoneController,
                             keyboardType: TextInputType.phone,
-                            style:  TextStyle(
+                            style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
-                                  fontSize: 13.sp,
+                              fontSize: 13.sp,
                             ),
                             decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 7),
-                                label:  Text(
-                                    'رقم الهاتف',
-                                  style: TextStyle(
-                                      fontSize: 13.sp
-                                  ),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 7),
+                                label: Text(
+                                  'رقم الهاتف',
+                                  style: TextStyle(fontSize: 13.sp),
                                 ),
-                                labelStyle: TextStyle(
-                                    color: Colors.grey[500]
-                                ),
+                                labelStyle: TextStyle(color: Colors.grey[500]),
                                 prefixIcon: const Icon(
                                   CupertinoIcons.phone,
                                 ),
-                                enabledBorder:  UnderlineInputBorder(
+                                enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Theme.of(context).secondaryHeaderColor,
-                                    )
-                                )
-                            ),
-                            validator: (value){
-                              if (value==null || value.isEmpty){
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ))),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
                                 return 'Phone must not be empty';
                               }
                               return null;
                             },
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                           ),
                           SizedBox(
                             height: 15.h,
                           ),
                           Center(
                             child: defaultButton(
-                                onTap: (){
+                                onTap: () {
                                   unFocusKeyboard(context);
-                                  if ((formKey.currentState?.validate())!){
+                                  if ((formKey.currentState?.validate())!) {
                                     MainAppCubit.get(context).updateUserData(
                                       context: context,
                                       firstName: firstNameController.text,
@@ -205,10 +204,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     );
                                   }
                                 },
-                              text: 'تحديث',
-                              height: 36.h,
-                              width: MediaQuery.of(context).size.width * 0.70
-                            ),
+                                text: 'تحديث',
+                                height: 36.h,
+                                width:
+                                    MediaQuery.of(context).size.width * 0.70),
                           ),
                         ],
                       ),
@@ -218,10 +217,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     ),
                     Text(
                       'تغيير كلمه السر :',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 16.sp),
                     ),
                     SizedBox(
                       height: 16.h,
@@ -236,40 +232,36 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             obscureText: isPassword,
                             style: TextStyle(
                                 color: Theme.of(context).secondaryHeaderColor,
-                                fontSize: 13.sp
-                            ),
+                                fontSize: 13.sp),
                             decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(5),
-                              labelStyle: TextStyle(
-                                color: Theme.of(context).hintColor,
-                              ),
-                              prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                              suffixIconColor: Theme.of(context).secondaryHeaderColor,
-                              labelText: 'كلمه السر الحالية',
-                              suffixIcon: IconButton(
-                                onPressed: (){
-                                  changeSuffixIcon();
-                                },
-                                icon: Icon(
-                                  suffix,
+                                contentPadding: const EdgeInsets.all(5),
+                                labelStyle: TextStyle(
+                                  color: Theme.of(context).hintColor,
                                 ),
-                              ),
-                              prefixIcon: const Icon(
-                                  CupertinoIcons.lock
-                              ),
-
-                                enabledBorder:  UnderlineInputBorder(
+                                prefixIconColor:
+                                    Theme.of(context).secondaryHeaderColor,
+                                suffixIconColor:
+                                    Theme.of(context).secondaryHeaderColor,
+                                labelText: 'كلمه السر الحالية',
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    changeSuffixIcon();
+                                  },
+                                  icon: Icon(
+                                    suffix,
+                                  ),
+                                ),
+                                prefixIcon: const Icon(CupertinoIcons.lock),
+                                enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Theme.of(context).secondaryHeaderColor,
-                                    )
-                                )
-                            ),
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (value){
-                              if (value==null || value.isEmpty){
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ))),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
                                 return 'برجاء ادخال البيانات';
-                              }
-                              else if(value.length < 8) {
+                              } else if (value.length < 8) {
                                 return 'كلمه السر غير صالحه';
                               }
                               null;
@@ -285,40 +277,36 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             obscureText: isPassword,
                             style: TextStyle(
                                 color: Theme.of(context).secondaryHeaderColor,
-                                fontSize: 13.sp
-                            ),
+                                fontSize: 13.sp),
                             decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(5),
-                              labelStyle: TextStyle(
-                                color: Theme.of(context).hintColor,
-                              ),
-                              prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                              suffixIconColor: Theme.of(context).secondaryHeaderColor,
-                              labelText: 'كلمه السر الجديده',
-                              suffixIcon: IconButton(
-                                onPressed: (){
-                                  changeSuffixIcon();
-                                },
-                                icon: Icon(
-                                  suffix,
+                                contentPadding: const EdgeInsets.all(5),
+                                labelStyle: TextStyle(
+                                  color: Theme.of(context).hintColor,
                                 ),
-                              ),
-                              prefixIcon: const Icon(
-                                  CupertinoIcons.lock
-                              ),
-
-                                enabledBorder:  UnderlineInputBorder(
+                                prefixIconColor:
+                                    Theme.of(context).secondaryHeaderColor,
+                                suffixIconColor:
+                                    Theme.of(context).secondaryHeaderColor,
+                                labelText: 'كلمه السر الجديده',
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    changeSuffixIcon();
+                                  },
+                                  icon: Icon(
+                                    suffix,
+                                  ),
+                                ),
+                                prefixIcon: const Icon(CupertinoIcons.lock),
+                                enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Theme.of(context).secondaryHeaderColor,
-                                    )
-                                )
-                            ),
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (value){
-                              if (value==null || value.isEmpty){
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ))),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
                                 return 'برجاء ادخال البيانات';
-                              }
-                              else if(value.length < 8) {
+                              } else if (value.length < 8) {
                                 return 'كلمه السر قصيره';
                               }
                               null;
@@ -334,44 +322,39 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             obscureText: isPassword,
                             style: TextStyle(
                                 color: Theme.of(context).secondaryHeaderColor,
-                                fontSize: 13.sp
-                            ),
+                                fontSize: 13.sp),
                             decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(5),
                                 labelStyle: TextStyle(
                                   color: Theme.of(context).hintColor,
                                 ),
-                                prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                                suffixIconColor: Theme.of(context).secondaryHeaderColor,
+                                prefixIconColor:
+                                    Theme.of(context).secondaryHeaderColor,
+                                suffixIconColor:
+                                    Theme.of(context).secondaryHeaderColor,
                                 labelText: 'تأكيد كلمه السر الجديده',
                                 suffixIcon: IconButton(
-                                  onPressed: (){
+                                  onPressed: () {
                                     changeSuffixIcon();
                                   },
                                   icon: Icon(
                                     suffix,
                                   ),
                                 ),
-                                prefixIcon: const Icon(
-                                    CupertinoIcons.lock
-                                ),
-
-                                enabledBorder:  UnderlineInputBorder(
+                                prefixIcon: const Icon(CupertinoIcons.lock),
+                                enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Theme.of(context).secondaryHeaderColor,
-                                    )
-                                )
-                            ),
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (value){
-                              if (value==null || value.isEmpty){
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ))),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
                                 return 'برجاء ادخال البيانات';
-                              }
-                              else if(value.length < 8) {
+                              } else if (value.length < 8) {
                                 return 'كلمه السر قصيره';
-                              }
-                              else if(passwordController.text!=confirmPasswordController.text)
-                              {
+                              } else if (passwordController.text !=
+                                  confirmPasswordController.text) {
                                 return 'كلمه السر غير متطابقه';
                               }
                               return null;
@@ -387,24 +370,24 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       condition: state is! UpdateUserPasswordLoadingState,
                       builder: (context) => Center(
                         child: defaultButton(
-                            onTap: (){
+                            onTap: () {
                               unFocusKeyboard(context);
-                              if ((passFormKey.currentState?.validate())!){
+                              if ((passFormKey.currentState?.validate())!) {
                                 MainAppCubit.get(context).updateUserPassword(
-                                    context: context,
-                                    newPassword: passwordController.text,
-                                    currentPassword: currentPasswordController.text,
+                                  context: context,
+                                  newPassword: passwordController.text,
+                                  currentPassword:
+                                      currentPasswordController.text,
+                                  isFirstTime: false,
                                 );
                               }
                             },
                             text: 'تغيير كلمه السر',
                             height: 36.h,
-                            width: MediaQuery.of(context).size.width * 0.70
-                        ),
+                            width: MediaQuery.of(context).size.width * 0.70),
                       ),
-                      fallback: (context) =>  Center(
-                          child: myCircularProgressIndicator()
-                      ),
+                      fallback: (context) =>
+                          Center(child: myCircularProgressIndicator()),
                     ),
                   ],
                 ),

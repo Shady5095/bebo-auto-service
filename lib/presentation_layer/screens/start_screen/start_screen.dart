@@ -1,3 +1,5 @@
+import 'package:bebo_auto_service/business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/start_screen/create_password_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/start_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +15,23 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool? onBoarding = CacheHelper.getBool(key: 'onBoarding');
     myUid = CacheHelper.getString(key: 'uId');
-    Widget startScreen(){
-      if(onBoarding == true ){
+    Widget startScreen() {
+      if(onBoarding!){
         if(myUid!=null){
           return const SplashScreen();
         }
-        else {
-          return const BlurHomeScreen();
+        else if(CacheHelper.getString(key: 'chassisNo') != null) {
+          print(CacheHelper.getString(key: 'chassisNo'));
+          MainAppCubit.get(context).isChassisNoAccepted(CacheHelper.getString(key: 'chassisNo')!);
+          return const SplashScreen();
         }
-      }
+
+          else {
+            return const BlurHomeScreen();
+          }
+        }
       return const IntroScreen();
-    }
+      }
     return startScreen();
-  }
+    }
 }

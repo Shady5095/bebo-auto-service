@@ -323,9 +323,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 12.h,
                         ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
                         TextFormField(
                           controller: phoneController,
                           keyboardType: TextInputType.phone,

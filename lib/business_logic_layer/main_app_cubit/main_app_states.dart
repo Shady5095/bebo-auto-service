@@ -24,5 +24,11 @@ class SendComplaintSuccessState extends MainAppStates {}
 
 class SendComplaintErrorState extends MainAppStates {}
 
+class ChassisNoCheckState extends MainAppStates {
+  final bool isChassisNoExist ;
+
+  ChassisNoCheckState(this.isChassisNoExist);
+}
+
 
 

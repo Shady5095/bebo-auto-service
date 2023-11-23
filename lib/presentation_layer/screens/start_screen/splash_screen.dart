@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../business_logic_layer/main_app_cubit/main_app_states.dart';
+import 'create_password_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -22,7 +23,21 @@ class SplashScreen extends StatelessWidget {
     return BlocProvider.value(
       value: BlocProvider.of<MainAppCubit>(context)..getUserData(),
       child: BlocConsumer<MainAppCubit, MainAppStates>(
-        listener: (context, state)   {
+        listener: (context, state)  {
+          if(state is ChassisNoCheckState){
+            if(state.isChassisNoExist){
+              navigateAndFinish(
+                  context: context,
+                  widget: CreatePasswordForFirstTimeScreen(chassisNo: CacheHelper.getString(key: 'chassisNo')!)
+              );
+            }
+            else {
+              navigateAndFinish(
+                context: context,
+                widget: const BlurHomeScreen(),
+              );
+            }
+          }
           if (state is GetUserDataSuccessState && myUid != null) {
              precacheImage(
               const CachedNetworkImageProvider(

@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData darkTheme(context) => ThemeData(
       bottomSheetTheme: BottomSheetThemeData(
@@ -21,6 +22,10 @@ ThemeData darkTheme(context) => ThemeData(
         fillColor: Colors.white,
         prefixIconColor: Colors.white,
         suffixIconColor: Colors.white,
+        errorStyle: TextStyle(
+            color: Colors.red,
+            fontSize: 10.sp
+        ),
         labelStyle: const TextStyle(
           color: Colors.white,
         ),

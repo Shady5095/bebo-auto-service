@@ -90,10 +90,12 @@ class MainAppCubit extends Cubit<MainAppStates> {
     required String newPassword,
     required String currentPassword,
     required BuildContext context,
+    required bool isFirstTime,
+    String? email,
   }) async {
     emit(UpdateUserPasswordLoadingState());
     AuthCredential credential = EmailAuthProvider.credential(
-      email: userData!.email!,
+      email: email ?? userData!.email!,
       password: currentPassword,
     );
     // ReAuthenticate with old password
@@ -110,16 +112,20 @@ class MainAppCubit extends Cubit<MainAppStates> {
         emit(UpdateUserDataSuccessState());
         Navigator.pop(context);
         CacheHelper.putString(key: 'password', value: newPassword);
-        showDialog(context: context, builder: (context)=>const MyAlertDialog(
-          isFailed: false,
-          actions: [],
-          title: 'تم تغيير كلمه السر بنجاح',
-        ));
+        if(!isFirstTime){
+          showDialog(context: context, builder: (context)=>const MyAlertDialog(
+            isFailed: false,
+            actions: [],
+            title: 'تم تغيير كلمه السر بنجاح',
+          ));
+        }
       }).catchError((error) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(error.toString()),
-          backgroundColor: Colors.red,
-        ));
+        if(!isFirstTime){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(error.toString()),
+            backgroundColor: Colors.red,
+          ));
+        }
         emit(UpdateUserDataErrorState());
       });
     }).catchError((error) {
@@ -160,5 +166,16 @@ class MainAppCubit extends Cubit<MainAppStates> {
     }).catchError((error) {
       emit(SendComplaintErrorState());
     });
+  }
+  Future<void> isChassisNoAccepted(String chassisNo) async {
+    bool isChassisNoExist = false;
+    await db
+        .collection('verifiedUsers')
+        .where('chassisNo', isEqualTo: chassisNo)
+        .get()
+        .then((value) {
+       isChassisNoExist = value.docs.isNotEmpty ;
+    });
+    emit(ChassisNoCheckState(isChassisNoExist));
   }
 }

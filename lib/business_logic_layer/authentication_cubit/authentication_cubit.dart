@@ -92,6 +92,7 @@ class AuthCubit extends Cubit<AuthStates> {
           },
         });
         FirebaseMessaging.instance.subscribeToTopic(chassisNo); // to send to customer notification when he accepted
+        CacheHelper.putString(key: 'chassisNo', value: chassisNo);
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(error.toString()),
@@ -132,7 +133,7 @@ class AuthCubit extends Cubit<AuthStates> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-        email: email,
+        email: '$email@gmail.com',
         password: password,
       )
           .then((userCredential) async {
@@ -160,6 +161,7 @@ class AuthCubit extends Cubit<AuthStates> {
                 else{
                   myUid = null ;
                   FirebaseMessaging.instance.unsubscribeFromTopic('all');
+                  CacheHelper.removeData(key: 'uId');
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('تم حذف حسابك'),
                     backgroundColor: Colors.red,
