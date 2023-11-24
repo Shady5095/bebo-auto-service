@@ -2,16 +2,11 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
-import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
-import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 import '../../../../components/constans.dart';
 
 class SparePartsDetailsScreen extends StatefulWidget {
@@ -49,136 +44,131 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SparePartsCubit, SparePartsStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: defaultAppbar(
-            context: context,
-          ),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: widget.sparePartsModel.image == null
-                              ? Image.asset(
-                                  widget.categoryImage,
-                                  width: displayWidth(context) * 0.30,
-                                  height: displayHeight(context) * 0.20,
-                                )
-                              : Hero(
-                                  tag: '${widget.sparePartsModel.id}',
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image(
-                                      errorBuilder: (BuildContext? context,
-                                          Object? exception,
-                                          StackTrace? stackTrace) {
-                                        return const Center(
-                                          child: Icon(
-                                            Icons.warning_amber,
-                                            color: Colors.red,
-                                            size: 100,
-                                          ),
-                                        );
-                                      },
-                                      loadingBuilder: (BuildContext? context,
-                                          Widget? child,
-                                          ImageChunkEvent? loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child!;
-                                        }
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            color: defaultColor,
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    loadingProgress
-                                                        .expectedTotalBytes!
-                                                : null,
-                                          ),
-                                        );
-                                      },
-                                      image: CachedNetworkImageProvider(
-                                        '${widget.sparePartsModel.image}',
-                                      ),
-                                    ),
-                                  ),
+    return Scaffold(
+      appBar: defaultAppbar(
+        context: context,
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: widget.sparePartsModel.image == null
+                          ? Image.asset(
+                        widget.categoryImage,
+                        width: displayWidth(context) * 0.30,
+                        height: displayHeight(context) * 0.20,
+                      )
+                          : Hero(
+                        tag: '${widget.sparePartsModel.id}',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image(
+                            errorBuilder: (BuildContext? context,
+                                Object? exception,
+                                StackTrace? stackTrace) {
+                              return const Center(
+                                child: Icon(
+                                  Icons.warning_amber,
+                                  color: Colors.red,
+                                  size: 100,
                                 ),
+                              );
+                            },
+                            loadingBuilder: (BuildContext? context,
+                                Widget? child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child!;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: defaultColor,
+                                  value: loadingProgress
+                                      .expectedTotalBytes !=
+                                      null
+                                      ? loadingProgress
+                                      .cumulativeBytesLoaded /
+                                      loadingProgress
+                                          .expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                            image: CachedNetworkImageProvider(
+                              '${widget.sparePartsModel.image}',
+                            ),
+                          ),
                         ),
-                        const SizedBox(
-                          height: 10,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      ('${widget.sparePartsModel.name}'),
+                      style: TextStyle(
+                        fontSize: 22.sp,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (widget.sparePartsModel.description != null)
+                      Text(
+                        ('${widget.sparePartsModel.description}'),
+                        style: TextStyle(
+                          fontSize: 17.sp,
+                          color: Colors.white54,
+                        ),
+                      ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    isOnePriceWidgetOrMultiPrice(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          ' اخر تحديث :   ',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                          ),
                         ),
                         Text(
-                          ('${widget.sparePartsModel.name}'),
+                          DateFormat.yMMMd().format((widget
+                              .sparePartsModel.lastPriceUpdate
+                              ?.toDate())!),
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 22.sp,
-                            color: Colors.white,
+                            color: Colors.green,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 16.sp,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        if (widget.sparePartsModel.description != null)
-                          Text(
-                            ('${widget.sparePartsModel.description}'),
-                            style: TextStyle(
-                              fontSize: 17.sp,
-                              color: Colors.white54,
-                            ),
-                          ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        isOnePriceWidgetOrMultiPrice(),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              ' اخر تحديث :   ',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.sp,
-                              ),
-                            ),
-                            Text(
-                              DateFormat.yMMMd().format((widget
-                                  .sparePartsModel.lastPriceUpdate
-                                  ?.toDate())!),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 16.sp,
-                              ),
-                            ),
-                          ],
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/presentation_layer/screens/car_sell_screens/car_sell_tab_view_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/about_screen/about_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/car_sell_screens/listed_cars_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/phone_numbers_screen/phone_numbers_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/register_screen/register_screen.dart';
@@ -269,7 +269,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: displayHeight(context)*0.22,
+                          height: displayHeight(context)*0.19,
                         ),
                         Expanded(
                           child: Column(
@@ -354,7 +354,12 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                 height: 10.h,
                                               ),
                                               defaultButton(
-                                                onTap: () {},
+                                                onTap: () {
+                                                  navigateTo(
+                                                    context: context,
+                                                    widget: const AboutScreen(),
+                                                  );
+                                                },
                                                 text: 'عن المركز',
                                                 width: displayWidth(context) *
                                                     0.70,

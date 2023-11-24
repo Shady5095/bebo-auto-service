@@ -1,20 +1,12 @@
-import 'dart:convert';
 import 'dart:ui';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
-import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
-import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
-import '../../../../components/app_locale.dart';
 import '../../../../data_layer/models/spare_parts_model.dart';
 import '../spare_parts_details_screen/spare_parts_details_screen.dart';
 import '../specific_category_screen/specific_category_screen.dart';
@@ -35,50 +27,45 @@ class _SparePartsCategoriesScreenState
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SparePartsCubit, SparePartsStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
+    return Scaffold(
+      backgroundColor: defaultBackgroundColor,
+      appBar: AppBar(
           backgroundColor: defaultBackgroundColor,
-          appBar: AppBar(
-              backgroundColor: defaultBackgroundColor,
-              leading: isSearching
-                  ? IconButton(
-                      onPressed: () {
-                        isSearching = false;
-                        searchController.text = '';
-                        setState(() {});
-                      },
-                      icon: Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          size: 21.sp,
-                          color: Theme.of(context).secondaryHeaderColor,
-                        ),
-                      ),
-                    )
-                  : null,
-              elevation: 0,
-              toolbarHeight: 45.h,
-              title: titleWidget(),
-              actions: [
-                IconButton(
-                  icon: Icon(
-                    isSearching ? Icons.close : Icons.search,
-                    color: Colors.white,
-                    size: 22.sp,
-                  ),
-                  onPressed: () {
-                    isSearching = !isSearching;
-                    searchController.text = '';
-                    setState(() {});
-                  },
-                ),
-              ]),
-          body: bodyWidget(),
-        );
-      },
+          leading: isSearching
+              ? IconButton(
+            onPressed: () {
+              isSearching = false;
+              searchController.text = '';
+              setState(() {});
+            },
+            icon: Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: Icon(
+                Icons.arrow_back_ios,
+                size: 21.sp,
+                color: Theme.of(context).secondaryHeaderColor,
+              ),
+            ),
+          )
+              : null,
+          elevation: 0,
+          toolbarHeight: 45.h,
+          title: titleWidget(),
+          actions: [
+            IconButton(
+              icon: Icon(
+                isSearching ? Icons.close : Icons.search,
+                color: Colors.white,
+                size: 22.sp,
+              ),
+              onPressed: () {
+                isSearching = !isSearching;
+                searchController.text = '';
+                setState(() {});
+              },
+            ),
+          ]),
+      body: bodyWidget(),
     );
   }
 
@@ -101,7 +88,7 @@ class _SparePartsCategoriesScreenState
               filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(2, 0, 0, 0.2),
+                  color: const Color.fromRGBO(2, 0, 0, 0.2),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: FittedBox(

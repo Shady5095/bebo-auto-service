@@ -141,61 +141,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      'تم التسجيل بنجاح ... برجاء الانتظار قليلا لحين تفعيل الحساب من قبل المركز ثم عد لتسجيل الدخول بهذه البيانات',
+                      'تم التسجيل بنجاح ... برجاء الانتظار قليلا لحين تفعيل الحساب من قبل المركز وبعد التفعيل سنرسل لك اشعار لتكمل التسجيل',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 15.sp
                       ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'البريد الألكتروني : ',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
-                            ),
-                            Text(
-                              '${chassisNo.text}@gmail.com',
-                              textDirection: TextDirection.ltr,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'كلمه السر : ',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
-                            ),
-                            Text(
-                              chassisNo.text,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
                     ),
                   ],
                 ),

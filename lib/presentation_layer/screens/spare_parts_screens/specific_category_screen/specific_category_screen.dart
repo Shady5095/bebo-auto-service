@@ -3,12 +3,8 @@ import 'package:bebo_auto_service/data_layer/models/spare_parts_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-
-import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_cubit.dart';
-import '../../../../business_logic_layer/spare_parts_cubit/spare_parts_states.dart';
 import '../../../../components/constans.dart';
 import '../spare_parts_details_screen/spare_parts_details_screen.dart';
 
@@ -28,81 +24,76 @@ class SpecificCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SparePartsCubit, SparePartsStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: defaultAppbar(
-            context: context,
-            title: categoryAr,
-          ),
-          body: FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection('spareParts')
-                  .where('category', isEqualTo: category)
-                  .orderBy('name')
-                  .get(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Icon(
-                      Icons.warning_amber,
-                      color: Colors.red,
-                      size: 100,
+    return Scaffold(
+      appBar: defaultAppbar(
+        context: context,
+        title: categoryAr,
+      ),
+      body: FutureBuilder(
+          future: FirebaseFirestore.instance
+              .collection('spareParts')
+              .where('category', isEqualTo: category)
+              .orderBy('name')
+              .get(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Icon(
+                  Icons.warning_amber,
+                  color: Colors.red,
+                  size: 100,
+                ),
+              );
+            }
+            if (!snapshot.hasData) {
+              return Center(child: myCircularProgressIndicator());
+            }
+            if ((snapshot.data?.docs.isEmpty)!) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.construction,
+                      size: 110.sp,
+                      color: Theme.of(context).secondaryHeaderColor,
+                    ),
+                    SizedBox(
+                      height: 13.h,
+                    ),
+                    Text(
+                      'لا يوجد قطع غيار في هذا القسم',
+                      style: Theme.of(context).textTheme.bodyLarge,
+
+                    ),
+                  ],
+                ),
+              );
+            }
+            return AnimationLimiter(
+              child: ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  SparePartsModel sparePartsModel =
+                  SparePartsModel.fromJson(
+                      snapshot.data!.docs[index].data());
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 375),
+                    child: SlideAnimation(
+                      verticalOffset: 50.0,
+                      child: FadeInAnimation(
+                        child:
+                        buildNewSparePartItem(sparePartsModel, snapshot.data!.docs[index].data(),context,),
+                      ),
                     ),
                   );
-                }
-                if (!snapshot.hasData) {
-                  return Center(child: myCircularProgressIndicator());
-                }
-                if ((snapshot.data?.docs.isEmpty)!) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.construction,
-                          size: 110.sp,
-                          color: Theme.of(context).secondaryHeaderColor,
-                        ),
-                        SizedBox(
-                          height: 13.h,
-                        ),
-                        Text(
-                          'لا يوجد قطع غيار في هذا القسم',
-                          style: Theme.of(context).textTheme.bodyLarge,
-                          
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return AnimationLimiter(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      SparePartsModel sparePartsModel =
-                          SparePartsModel.fromJson(
-                              snapshot.data!.docs[index].data());
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 375),
-                        child: SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child:
-                                buildNewSparePartItem(sparePartsModel, snapshot.data!.docs[index].data(),context,),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }),
-        );
-      },
+                },
+              ),
+            );
+          }),
     );
   }
 

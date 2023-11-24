@@ -34,8 +34,8 @@ class MessageWidget extends StatelessWidget {
         children: [
           Padding(
             padding: isUserMessage
-                ? EdgeInsets.only(left: haveNip ? 7.0.w : 12.w, bottom: 4.h)
-                : EdgeInsets.only(right: haveNip ? 7.0.w : 12.w, bottom: 4.h),
+                ? EdgeInsets.only(left: haveNip ? 7.0.w : 12.w, bottom: 2.h)
+                : EdgeInsets.only(right: haveNip ? 7.0.w : 12.w, bottom: 2.h),
             child: Stack(
               alignment: Alignment.centerRight,
               children: [

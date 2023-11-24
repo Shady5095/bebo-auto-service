@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -174,8 +175,9 @@ class AuthCubit extends Cubit<AuthStates> {
         });
       });
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      emit(LoginErrorState());
+      if (kDebugMode) {
+        print(e.message);
+      }
       String? errorText;
       switch (e.message) {
         case 'There is no user record corresponding to this identifier. The user may have been deleted.':
@@ -200,11 +202,8 @@ class AuthCubit extends Cubit<AuthStates> {
           }
           break;
       }
+      emit(LoginErrorState(errorText??''));
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('$errorText'),
-        backgroundColor: Colors.red,
-      ));
     }
   }
 

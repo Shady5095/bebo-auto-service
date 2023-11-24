@@ -7,8 +7,8 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
-import 'package:intl/intl.dart' as dateTimeIntl;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart' as date_time_intl;
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import '../../../components/constans.dart';
 import '../../../data_layer/models/car_sell_models/seller_and_car_info_model.dart';
@@ -206,7 +206,7 @@ class _SellerAndCarDetailsScreenState extends State<SellerAndCarDetailsScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          '${dateTimeIntl.DateFormat.yMMMd('ar').format((widget.carSellModel.addedTime?.toDate())!)}  :  ${dateTimeIntl.DateFormat.jm('ar').format(widget.carSellModel.addedTime!.toDate())}',
+                          '${date_time_intl.DateFormat.yMMMd('ar').format((widget.carSellModel.addedTime?.toDate())!)}  :  ${date_time_intl.DateFormat.jm('ar').format(widget.carSellModel.addedTime!.toDate())}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.sp,

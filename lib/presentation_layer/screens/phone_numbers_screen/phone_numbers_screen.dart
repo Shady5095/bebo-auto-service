@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PhoneNumbersScreen extends StatefulWidget {
   const PhoneNumbersScreen({super.key});
@@ -103,36 +103,6 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                     SizedBox(
                       height: 15.h,
                     ),
-                    InkWell(
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Bebo Auto Service',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Icon(
-                              FontAwesomeIcons.facebook,
-                              color: Colors.blueAccent,
-                              size: 32.sp,
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        openFacebook();
-                      },
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
                     Row(
                       children: [
                         Icon(
@@ -167,6 +137,40 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                           image: AssetImage('assets/images/obourLocation.jpg'),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          child: Icon(
+                            FontAwesomeIcons.facebook,
+                            color: Colors.blueAccent,
+                            size: 34.sp,
+                          ),
+                          onTap: () {
+                            openFacebook();
+                          },
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.instagram,
+                          color: const Color.fromRGBO(238, 12, 124, 1.0),
+                          size: 34.sp,
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Icon(
+                         FontAwesomeIcons.twitter,
+                          color: Colors.blue,
+                          size: 34.sp,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -240,33 +244,6 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                     SizedBox(
                       height: 15.h,
                     ),
-                    InkWell(
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Bebo Auto Service',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Icon(
-                              FontAwesomeIcons.facebook,
-                              color: Colors.blueAccent,
-                              size: 32.sp,
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        openFacebook();
-                      },
-                    ),
                     SizedBox(
                       height: 15.h,
                     ),
@@ -305,6 +282,40 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                               AssetImage('assets/images/octoberLocation.jpg'),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          child: Icon(
+                            FontAwesomeIcons.facebook,
+                            color: Colors.blueAccent,
+                            size: 34.sp,
+                          ),
+                          onTap: () {
+                            openFacebook();
+                          },
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.instagram,
+                          color: const Color.fromRGBO(238, 12, 124, 1.0),
+                          size: 34.sp,
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.twitter,
+                          color: Colors.blue,
+                          size: 34.sp,
+                        ),
+                      ],
                     ),
                   ],
                 ),

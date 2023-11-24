@@ -3,13 +3,12 @@ import 'package:bebo_auto_service/presentation_layer/screens/my_car_reports_scee
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../components/constans.dart';
-import '../../widgets/image_viewer.dart';
 import 'package:intl/intl.dart' as dateTimeIntl;
 
 class ListedReportsScreen extends StatelessWidget {

@@ -26,5 +26,9 @@ class LoginLoadingState extends AuthStates {}
 
 class LoginSuccessState extends AuthStates {}
 
-class LoginErrorState extends AuthStates {}
+class LoginErrorState extends AuthStates {
+  final String error ;
+
+  LoginErrorState(this.error);
+}
 

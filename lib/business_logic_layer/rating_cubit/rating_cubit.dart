@@ -1,9 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
-
 import '../../components/constans.dart';
 import '../../data_layer/network/dio_helper.dart';
 
@@ -30,7 +27,6 @@ class RatingCubit extends Cubit<RatingState> {
       selectedRatingsText.add(text);
     }
     emit(SelectRatingState());
-    print(selectedRatingsText);
   }
 
   bool isRatingSelected(index) {

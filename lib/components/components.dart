@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -73,36 +71,6 @@ Widget defaultButton({
   ),
 );
 
-void myToast({
-  required String? msg ,
-  required ToastStates state ,
-}) => Fluttertoast.showToast(
-    msg: msg!,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.BOTTOM,
-    timeInSecForIosWeb: 1,
-    backgroundColor: toastColor(state),
-    textColor: Colors.white,
-    fontSize: 16.0
-);
-
-enum ToastStates {SUCCSES,ERROR,WARNING}
-
-Color toastColor(ToastStates state) {
-  Color? color;
-  switch(state)
-  {
-    case ToastStates.SUCCSES :
-      color = Colors.green;
-      break;
-      case ToastStates.ERROR :
-      color = Colors.red;
-      break;
-      case ToastStates.WARNING :
-      color =  Colors.amber;
-  }
-  return color;
-}
 
 PreferredSizeWidget defaultAppbar({
   required BuildContext context,
@@ -141,76 +109,6 @@ PreferredSizeWidget defaultAppbar({
         tabs: tabs,
       ),
     );
-
-Widget myBottomSheet({
-  required BuildContext context,
-  required List<Widget> items ,
-}) => FittedBox(
-  child: SizedBox(
-    width: MediaQuery.of(context).size.width,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: items,
-    ),
-  ),
-);
-
-Widget bottomSheetItem({
-  required Function() onTap,
-  required Icon icon,
-  required String title,
-  Color titleColor = Colors.white,
-}) => InkWell(
-  splashColor: Colors.grey[600],
-  onTap: onTap,
-  child: Padding(
-    padding: const EdgeInsets.all(15.0),
-    child: Row(
-      children:  [
-        icon,
-        const SizedBox(
-          width: 8,
-        ),
-        Expanded(
-          child: Text(
-            title,
-            style: TextStyle(
-                color: titleColor,
-                fontSize: 20
-            ),
-          ),
-        ),
-      ],
-    ),
-  ),
-);
-
-Widget firstBottomSheetItem() =>  Padding(
-  padding: const EdgeInsets.only(top: 8.0),
-  child: Center(
-    child: Container(
-      height: 5,
-      width: 45,
-      decoration: BoxDecoration(
-          color: Colors.grey[500],
-          borderRadius: BorderRadius.circular(30)
-      ),
-    ),
-  ),
-);
-
-Widget colorPicker({
-  required List<ColorSwatch> listOfColors ,
-  double circleSize = 30,
-  required Function(ColorSwatch?) onColorChange ,
-  required Color selectedColor,
-}) => MaterialColorPicker(
-  colors: listOfColors,
-  circleSize: circleSize,
-  onMainColorChange: onColorChange,
-  allowShades: false,
-  selectedColor: selectedColor ,
-);
 
 
 
@@ -378,56 +276,6 @@ Future<DateTime> getServerTimeNow() async {
   return dateTime;
 }
 
-String myTimeLeft(BuildContext context ,DateTime datetime, {bool full = true}) {
-  DateTime now = DateTime.now();
-  DateTime ago = datetime;
-  Duration dur = now.difference(ago);
-  int days = dur.inDays;
-  int years = days ~/ 365;
-  int months =  (days - (years * 365)) ~/ 30;
-  int weeks = (days - (years * 365 + months * 30)) ~/ 7;
-  int rdays = days - (years * 365 + months * 30 + weeks * 7).toInt();
-  int hours = (dur.inHours % 24).toInt();
-  int minutes = (dur.inMinutes % 60).toInt();
-  int seconds = (dur.inSeconds % 60).toInt();
-  var diff = {
-    "d":rdays,
-    "w":weeks,
-    "m":months,
-    "y":years,
-    "s":seconds,
-    "i":minutes,
-    "h":hours
-  };
-
-  Map str = {
-    'y':'سنة',
-    'm':'شهر',
-    'w':'أسبوع',
-    'd':'يوم',
-    'h':'ساعة',
-    'i':'دقيقة',
-    's':'ثانية',
-  };
-
-  str.forEach((k, v){
-    if (diff[k]! < 0) {
-      str[k] = '${diff[k]}$v${diff[k]! < 1 ? '' : ''}';
-    } else {
-      str[k] = "";
-    }
-  });
-  str.removeWhere((index, ele)=>ele == "");
-  List<String> tlist = [];
-  str.forEach((k, v){
-    tlist.add(v);
-  });
-  if(full){
-    return str.isNotEmpty?tlist.join(", "):"Just Now";
-  }else{
-    return str.isNotEmpty?tlist[0]:"Just Now";
-  }
-}
 
 void callDial(String phoneNumber) async {
   Uri uri = Uri(scheme: 'tel', path: phoneNumber);
@@ -462,8 +310,6 @@ Future<void> openFacebook() async {
   }
 
   String fallbackUrl = 'https://www.facebook.com/BeBo.Auto.Service2';
-
-  try {
     Uri fbBundleUri = Uri.parse(fbProtocolUrl);
     var canLaunchNatively = await canLaunchUrl(fbBundleUri);
 
@@ -473,9 +319,6 @@ Future<void> openFacebook() async {
       await launchUrl(Uri.parse(fallbackUrl),
           mode: LaunchMode.externalApplication);
     }
-  } catch (e, st) {
-    // Handle this as you prefer
-  }
 }
 
 class MapUtils {
@@ -493,7 +336,9 @@ class MapUtils {
 }
 
 void printWithColor(String? text) {
-  print('\x1B[33m$text\x1B[0m');
+  if (kDebugMode) {
+    print('\x1B[33m$text\x1B[0m');
+  }
 }
 
 

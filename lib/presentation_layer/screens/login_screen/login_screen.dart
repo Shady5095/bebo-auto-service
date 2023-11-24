@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
-
 import '../../../business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import '../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../components/components.dart';
@@ -27,7 +26,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit,AuthStates>(
-        listener: (context, state){},
+        listener: (context, state){
+          if(state is LoginErrorState){
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(state.error),
+              backgroundColor: Colors.red,
+            ));
+          }
+        },
         builder: (context, state){
           var cubit = AuthCubit.get(context);
           return Scaffold(

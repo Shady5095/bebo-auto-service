@@ -38,7 +38,7 @@ class SplashScreen extends StatelessWidget {
               );
             }
           }
-          if (state is GetUserDataSuccessState && myUid != null) {
+          if (state is GetUserDataSuccessState && myUid != null &&FirebaseAuth.instance.currentUser != null) {
              precacheImage(
               const CachedNetworkImageProvider(
                   'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a'),
@@ -95,6 +95,15 @@ class SplashScreen extends StatelessWidget {
               widget: const BlurHomeScreen(),
             );
           }
+          else
+            {
+              FirebaseMessaging.instance.unsubscribeFromTopic('all');
+              myUid = null ;
+              navigateAndFinish(
+                context: context,
+                widget: const BlurHomeScreen(),
+              );
+            }
         },
         builder: (context, state) {
           return Scaffold(

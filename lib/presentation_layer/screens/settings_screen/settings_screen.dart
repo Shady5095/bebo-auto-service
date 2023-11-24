@@ -1,9 +1,9 @@
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/screens/about_screen/about_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/chats_screens/chat_details_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/my_profile_screen/my_profile_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/screens/phone_numbers_screen/phone_numbers_screen.dart';
-import 'package:bebo_auto_service/presentation_layer/screens/rating_screen/rating_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -184,10 +184,10 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   ListTile(
                     onTap: (){
-                      /*navigateAndFinish(
+                      navigateToAnimated(
                         context: context,
-                        widget: RatingScreen()
-                      );*/
+                        widget: const AboutScreen(),
+                      );
                     },
                     splashColor: Colors.transparent,
                     contentPadding: const EdgeInsets.all(10),
@@ -243,7 +243,7 @@ class SettingsScreen extends StatelessWidget {
   Future<void> logOut(context) async {
     await FirebaseAuth.instance.signOut();
     FirebaseMessaging.instance.unsubscribeFromTopic('all');
-    FirebaseMessaging.instance.unsubscribeFromTopic(myUid!);
+    FirebaseMessaging.instance.unsubscribeFromTopic(myUid??'');
     CacheHelper.removeData(
         key: 'uId'
     )?.then((value) {
