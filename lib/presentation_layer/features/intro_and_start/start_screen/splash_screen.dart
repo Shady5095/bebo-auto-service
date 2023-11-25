@@ -39,16 +39,16 @@ class SplashScreen extends StatelessWidget {
               );
             }
           }
-          if (state is GetUserDataSuccessState && myUid != null &&FirebaseAuth.instance.currentUser != null) {
+          if (state is GetUserDataSuccessState && myUid != null && FirebaseAuth.instance.currentUser != null) {
              precacheImage(
-              const CachedNetworkImageProvider(
-                  'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a'),
+               CachedNetworkImageProvider(
+                  state.userModel.carImage??'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
               context,
             ).then(
               (value) async {
-                if(MainAppCubit.get(context).userData!.email != null){
+                if(state.userModel.email != null){
                   AuthCredential credential = EmailAuthProvider.credential(
-                    email: MainAppCubit.get(context).userData!.email!,
+                    email: state.userModel.email!,
                     password: CacheHelper.getString(key: 'password')??'0',
                   );
                   // ReAuthenticate with old password to check if password change or not
@@ -69,16 +69,22 @@ class SplashScreen extends StatelessWidget {
                       }
                     });
                   }).catchError((error){
-                    FirebaseMessaging.instance.unsubscribeFromTopic('all');
-                    myUid = null ;
-                    navigateAndFinish(
-                      context: context,
-                      widget: const BlurHomeScreen(),
-                    );
+                    if(context.mounted){
+                      FirebaseAuth.instance.signOut();
+                      FirebaseMessaging.instance.unsubscribeFromTopic('all');
+                      CacheHelper.removeData(key: 'uId');
+                      myUid = null ;
+                      navigateAndFinish(
+                        context: context,
+                        widget: const BlurHomeScreen(),
+                      );
+                    }
                   });
                 }
                 else{
+                  FirebaseAuth.instance.signOut();
                   FirebaseMessaging.instance.unsubscribeFromTopic('all');
+                  CacheHelper.removeData(key: 'uId');
                   myUid = null ;
                   navigateAndFinish(
                     context: context,
@@ -89,22 +95,26 @@ class SplashScreen extends StatelessWidget {
             );
           }
           if (state is GetUserDataErrorState){
+            FirebaseAuth.instance.signOut();
             FirebaseMessaging.instance.unsubscribeFromTopic('all');
+            CacheHelper.removeData(key: 'uId');
             myUid = null ;
             navigateAndFinish(
               context: context,
               widget: const BlurHomeScreen(),
             );
           }
-          else
+          /*else
             {
-              FirebaseMessaging.instance.unsubscribeFromTopic('all');
               myUid = null ;
+              FirebaseAuth.instance.signOut();
+              FirebaseMessaging.instance.unsubscribeFromTopic('all');
+              CacheHelper.removeData(key: 'uId');
               navigateAndFinish(
                 context: context,
                 widget: const BlurHomeScreen(),
               );
-            }
+            }*/
         },
         builder: (context, state) {
           return Scaffold(

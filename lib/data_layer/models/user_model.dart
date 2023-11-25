@@ -15,6 +15,7 @@ class UserModel {
   int? km;
   String? chassisNo;
   String? engineNo;
+  String? carImage;
   int? serviceStreak;
 
   UserModel({
@@ -34,6 +35,7 @@ class UserModel {
     this.km,
     this.chassisNo,
     this.engineNo,
+    this.carImage,
     this.serviceStreak,
   });
 
@@ -55,6 +57,7 @@ class UserModel {
     chassisNo = json['chassisNo'];
     engineNo = json['engineNo'];
     serviceStreak = json['serviceStreak'];
+    carImage = json['carImage'];
 
   }
 
@@ -79,6 +82,7 @@ class UserModel {
         'chassisNo' : chassisNo ,
         'engineNo' : engineNo ,
         'serviceStreak' : serviceStreak ,
+        'carImage' : carImage ,
     };
   }
 }

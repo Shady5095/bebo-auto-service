@@ -129,7 +129,7 @@ class _CreatePasswordForFirstTimeScreenState
                     unFocusKeyboard(context);
                     if (formKey.currentState!.validate()) {
                       String newPass = passController.text ;
-                      AuthCubit.get(context).userLogin(email: '${widget.chassisNo}@gmail.com', password: widget.chassisNo, context: context).then((value) {
+                      AuthCubit.get(context).userLogin(email: widget.chassisNo, password: widget.chassisNo, context: context).then((value) {
                         CacheHelper.removeData(key: 'chassisNo');
                         MainAppCubit.get(context).updateUserPassword(
                           newPassword: newPass,

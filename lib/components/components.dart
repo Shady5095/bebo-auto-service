@@ -9,68 +9,71 @@ import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'constans.dart';
 
+void navigateToAnimated(
+        {context, widget, animation = PageTransitionType.leftToRight}) =>
+    Navigator.push(
+      context,
+      PageTransition(
+          type: animation,
+          child: widget,
+          curve: Curves.fastOutSlowIn,
+          duration: const Duration(milliseconds: 250)),
+    );
 
-void navigateToAnimated({context , widget , animation=PageTransitionType.leftToRight}) => Navigator.push(context, PageTransition(
-  type: animation,
-  child: widget,
-  curve: Curves.fastOutSlowIn,
-  duration: const Duration(
-    milliseconds: 250
-  )
-),
-);
+void navigateTo({
+  context,
+  widget,
+}) =>
+    Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
 
-void navigateTo({context , widget ,}) => Navigator.push(context, MaterialPageRoute(builder: (context) => widget)
-);
-
-void navigateAndFinish({required context ,required widget,animation=PageTransitionType.leftToRight}) => Navigator.pushAndRemoveUntil(context,
-     PageTransition(
-  type: animation,
-  child: widget,
-  duration: const Duration(milliseconds: 200)
-),
-    (route) => false
-);
-
+void navigateAndFinish(
+        {required context,
+        required widget,
+        animation = PageTransitionType.leftToRight}) =>
+    Navigator.pushReplacement(
+        context,
+        PageTransition(
+            type: animation,
+            child: widget,
+            duration: const Duration(milliseconds: 200)),
+        );
 
 Widget defaultButton({
-  double width=double.infinity,
-  Color? background ,
-  double? height ,
+  double width = double.infinity,
+  Color? background,
+  double? height,
   required Function() onTap,
-  String? text ,
-  Widget? child ,
+  String? text,
+  Widget? child,
   bool isUppercase = true,
-  BoxDecoration? decoration ,
+  BoxDecoration? decoration,
   Color textColor = Colors.white,
   FontWeight fontWeight = FontWeight.normal,
-  double? fontSize ,
-}) => Container(
-  width: width,
-  height: height??40.h,
-  color: background,
-  decoration: decoration?? BoxDecoration(
-    borderRadius: BorderRadius.circular(15),
-    color: defaultColor
-  ),
-  child: MaterialButton(
-    onPressed: onTap,
-    padding: EdgeInsets.zero,
-    splashColor: Colors.transparent,
-    child : child ?? Text(
-      isUppercase ? text!.toUpperCase() : text!,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-          color: textColor,
-        fontWeight: fontWeight,
-        fontSize: fontSize??14.sp,
-
+  double? fontSize,
+}) =>
+    Container(
+      width: width,
+      height: height ?? 40.h,
+      color: background,
+      decoration: decoration ??
+          BoxDecoration(
+              borderRadius: BorderRadius.circular(15), color: defaultColor),
+      child: MaterialButton(
+        onPressed: onTap,
+        padding: EdgeInsets.zero,
+        splashColor: Colors.transparent,
+        child: child ??
+            Text(
+              isUppercase ? text!.toUpperCase() : text!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: fontWeight,
+                fontSize: fontSize ?? 14.sp,
+              ),
+            ),
       ),
-    ),
-
-  ),
-);
-
+    );
 
 PreferredSizeWidget defaultAppbar({
   required BuildContext context,
@@ -90,7 +93,7 @@ PreferredSizeWidget defaultAppbar({
       actions: actions,
       leading: IconButton(
         onPressed: onPopMethod ??
-                () {
+            () {
               Navigator.pop(context);
             },
         icon: Padding(
@@ -106,11 +109,9 @@ PreferredSizeWidget defaultAppbar({
       bottom: tabs == null
           ? null
           : TabBar(
-        tabs: tabs,
-      ),
+              tabs: tabs,
+            ),
     );
-
-
 
 Widget myCircularProgressIndicator({double? size}) =>
     LoadingAnimationWidget.threeRotatingDots(
@@ -130,7 +131,8 @@ extension ReformatString on String {
   String removeSpaceAndToLowercase() {
     return replaceAll(RegExp(r"\s+\b|\b\s"), "").toLowerCase();
   }
-  String addCommaToString(){
+
+  String addCommaToString() {
     String priceInText = "";
     int counter = 0;
     for (int i = (length - 1); i >= 0; i--) {
@@ -147,7 +149,6 @@ extension ReformatString on String {
     return priceInText.trim();
   }
 }
-
 
 extension ReformatInt on int {
   String addCommaToInt() {
@@ -187,7 +188,7 @@ void imagePickDialog({
                         child: InkWell(
                           splashColor: Colors.transparent,
                           onTap: galleryOnTap,
-                          child:  Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -213,7 +214,7 @@ void imagePickDialog({
                         child: InkWell(
                           splashColor: Colors.transparent,
                           onTap: cameraOnTap,
-                          child:  Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -227,7 +228,9 @@ void imagePickDialog({
                               Text(
                                 'الكاميرا',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 13.sp,),
+                                  color: Colors.white,
+                                  fontSize: 13.sp,
+                                ),
                               ),
                             ],
                           ),
@@ -276,28 +279,27 @@ Future<DateTime> getServerTimeNow() async {
   return dateTime;
 }
 
-
 void callDial(String phoneNumber) async {
   Uri uri = Uri(scheme: 'tel', path: phoneNumber);
   await launchUrl(uri);
 }
+
 void openWhatsapp({
   required String phoneNumber,
   required String text,
-}) async{
+}) async {
   var contact = phoneNumber;
   var androidUrl = "whatsapp://send?phone=$contact&text=$text";
   var iosUrl = "https://wa.me/$contact?text=${Uri.parse(text)}";
 
-  try{
-    if(Platform.isIOS){
+  try {
+    if (Platform.isIOS) {
       await launchUrl(Uri.parse(iosUrl));
-    }
-    else{
+    } else {
       await launchUrl(Uri.parse(androidUrl));
     }
-  } on Exception{
-    null ;
+  } on Exception {
+    null;
   }
 }
 
@@ -310,19 +312,18 @@ Future<void> openFacebook() async {
   }
 
   String fallbackUrl = 'https://www.facebook.com/BeBo.Auto.Service2';
-    Uri fbBundleUri = Uri.parse(fbProtocolUrl);
-    var canLaunchNatively = await canLaunchUrl(fbBundleUri);
+  Uri fbBundleUri = Uri.parse(fbProtocolUrl);
+  var canLaunchNatively = await canLaunchUrl(fbBundleUri);
 
-    if (canLaunchNatively) {
-      launchUrl(fbBundleUri);
-    } else {
-      await launchUrl(Uri.parse(fallbackUrl),
-          mode: LaunchMode.externalApplication);
-    }
+  if (canLaunchNatively) {
+    launchUrl(fbBundleUri);
+  } else {
+    await launchUrl(Uri.parse(fallbackUrl),
+        mode: LaunchMode.externalApplication);
+  }
 }
 
 class MapUtils {
-
   MapUtils._();
 
   static Future<void> openMap(String url) async {
@@ -340,8 +341,6 @@ void printWithColor(String? text) {
     print('\x1B[33m$text\x1B[0m');
   }
 }
-
-
 
 
 

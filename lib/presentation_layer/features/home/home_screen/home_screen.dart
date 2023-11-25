@@ -159,9 +159,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     position: carSlidingAnimation,
                                     child: Image(
                                       width: displayWidth(context) <= 385 ? 330.w : 350.w,
-                                      image: const CachedNetworkImageProvider(
-                                        'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a',
-                                      ),
+                                      image: const AssetImage('assets/images/mazda3.png'),
                                     ),
                                   );
                                 }

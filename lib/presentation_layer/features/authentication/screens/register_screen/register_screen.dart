@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../../../components/components.dart';
 import '../../../../widgets/my_alert_dialog.dart';
@@ -68,10 +67,11 @@ List<String> carColors = [
   'أبيض',
   'رمادي',
   'فضي',
-  'فراني',
+  'فراني او كحلي',
   'أزرق',
   'بني',
   'ذهبي',
+  'بتنجاني',
 ];
 String? bodyTypeSelected ;
 List<String> transmission = [
@@ -82,6 +82,7 @@ String? transmissionSelected ;
 List<String> bodyType = [
   'سيدان',
   'هاتشباك',
+  'SUV',
 ];
 List<String> plateLetters = [
   'أ',
@@ -148,6 +149,63 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontSize: 15.sp
                       ),
                     ),
+                    Text(
+                      'بيانات تسجيل الدخول لأول مره',
+                      style: TextStyle(
+                          color: Colors.white54,
+                          fontSize: 12.sp
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'رقم الشاسيه : ',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                            Text(
+                              chassisNo.text,
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'كلمه السر : ',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                            Text(
+                              chassisNo.text,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.sp
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 actions: const [],
@@ -170,11 +228,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Center(
+                         Center(
                           child: Image(
-                            width: 160,
-                            height: 160,
-                            image: AssetImage(
+                            width: 135.w,
+                            height: 135.h,
+                            image: const AssetImage(
                               'assets/images/logo.png'
                             ),
                           ),
@@ -670,15 +728,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   LengthLimitingTextInputFormatter(4),
                                                 ],
                                               style: TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   fontSize: 13.sp
                                               ),
                                               decoration: InputDecoration(
                                                 contentPadding: const EdgeInsets.symmetric(horizontal: 7),
                                                 hintStyle: const TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                 ),
                                                 hintText: 'الرقم',
+                                                filled: true,
+                                                fillColor: Colors.grey[900],
                                                 border: OutlineInputBorder(
                                                   borderRadius: BorderRadius.circular(15),
 

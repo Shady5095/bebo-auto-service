@@ -1,3 +1,4 @@
+import 'package:bebo_auto_service/components/car_images_url.dart';
 import 'package:bebo_auto_service/presentation_layer/features/home/layout/app_layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -57,6 +58,7 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(ChassisNoExistsBeforeState());
     }
     else{
+      String carImageUrl = carPhotoUrl(carModel: carModel, carYear: year, carColor: color);
       UserModel userModel = UserModel(
         firstName: firstName,
         lastName: lastName,
@@ -75,6 +77,7 @@ class AuthCubit extends Cubit<AuthStates> {
         chassisNo: chassisNo,
         engineNo: engineNo,
         serviceStreak: 0,
+        carImage: carImageUrl,
       );
       await db.collection('unverifiedUsers').add(userModel.toMap()).then((value) {
         emit(RegisterSuccessState());
@@ -144,8 +147,8 @@ class AuthCubit extends Cubit<AuthStates> {
           myUid = userCredential.user?.uid;
           await MainAppCubit.get(context).getUserData().then((value) async {
             await precacheImage(
-              const CachedNetworkImageProvider(
-                  'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/mazda3.png?alt=media&token=4f914e91-5ad3-43e8-9b8b-ab5057018f9a'),
+               CachedNetworkImageProvider(
+                  value!.carImage??'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
               context,
             ).then((value) {
               emit(LoginSuccessState());

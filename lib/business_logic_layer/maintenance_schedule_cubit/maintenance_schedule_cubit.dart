@@ -33,6 +33,7 @@ class MaintenanceScheduleCubit extends Cubit<MaintenanceScheduleState> {
     'فحص دايره التكييف',
     'فحص منظومه العادم',
     'فحص زيت الفتيس',
+    'تنظيف بخاخات',
   ];
 
   int calculateNextMaintenance(int km) {

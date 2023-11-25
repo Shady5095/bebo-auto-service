@@ -48,15 +48,16 @@ class MainAppCubit extends Cubit<MainAppStates> {
 
   UserModel? userData;
 
-  Future<void> getUserData() async {
+  Future<UserModel?> getUserData() async {
     if (myUid != null) {
       await db.collection('verifiedUsers').doc(myUid).get().then((value) {
         userData = UserModel.fromJson(value.data()!);
-        emit(GetUserDataSuccessState());
+        emit(GetUserDataSuccessState(userData!));
       }).catchError((error) {
         emit(GetUserDataErrorState());
       });
     }
+    return userData ;
   }
 
   Future<void> updateUserData({
