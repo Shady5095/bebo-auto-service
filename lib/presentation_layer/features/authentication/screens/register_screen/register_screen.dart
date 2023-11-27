@@ -18,108 +18,107 @@ class RegisterScreen extends StatefulWidget {
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
-var firstNameController = TextEditingController();
-var lastNameController = TextEditingController();
-var phoneController = TextEditingController();
-var kiloMeterCount = TextEditingController();
-var engineNo = TextEditingController();
-var chassisNo = TextEditingController();
-var plateNo = TextEditingController();
-var formKey = GlobalKey<FormState>();
-List<String> carModels = [
-  'Mazda 3',
-  'Mazda 2',
-  'Mazda 6',
-  'Mazda Cx3',
-  'Mazda Cx5',
-  'مازدا نوع اخر',
-];
-String? carModelSelected ;
-String? carYearSelected ;
-List<String> carYears = [
-  '2026',
-  '2025',
-  '2024',
-  '2023',
-  '2022',
-  '2021',
-  '2020',
-  '2019',
-  '2018',
-  '2017',
-  '2016',
-  '2015',
-  '2014',
-  '2013',
-  '2012',
-  '2011',
-  '2010',
-  '2009',
-  '2008',
-  '2007',
-  '2006',
-  '2005',
-];
-String? carColorSelected ;
-List<String> carColors = [
-  'أحمر',
-  'أسود',
-  'أبيض',
-  'رمادي',
-  'فضي',
-  'فراني او كحلي',
-  'أزرق',
-  'بني',
-  'ذهبي',
-  'بتنجاني',
-];
-String? bodyTypeSelected ;
-List<String> transmission = [
-  'أوتوماتيك',
-  'مانويل',
-];
-String? transmissionSelected ;
-List<String> bodyType = [
-  'سيدان',
-  'هاتشباك',
-  'SUV',
-];
-List<String> plateLetters = [
-  'أ',
-  'ب',
-  'ت',
-  'ث',
-  'ج',
-  'ح',
-  'خ',
-  'د',
-  'ذ',
-  'ر',
-  'ز',
-  'س',
-  'ش',
-  'ص',
-  'ض',
-  'ط',
-  'ظ',
-  'ع',
-  'غ',
-  'ف',
-  'ق',
-  'ك',
-  'ل',
-  'م',
-  'ن',
-  'ه',
-  'و',
-  'ي',
-];
-String? firstLetter ;
-String? secondLetter ;
-String? thirdLetter  ;
-
-
 class _RegisterScreenState extends State<RegisterScreen> {
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var phoneController = TextEditingController();
+  var kiloMeterCount = TextEditingController();
+  var engineNo = TextEditingController();
+  var chassisNo = TextEditingController();
+  var plateNo = TextEditingController();
+  var formKey = GlobalKey<FormState>();
+  List<String> carModels = [
+    'Mazda 3',
+    'Mazda 2',
+    'Mazda 6',
+    'Mazda Cx3',
+    'Mazda Cx5',
+    'مازدا نوع اخر',
+  ];
+  String? carModelSelected ;
+  String? carYearSelected ;
+  List<String> carYears = [
+    '2026',
+    '2025',
+    '2024',
+    '2023',
+    '2022',
+    '2021',
+    '2020',
+    '2019',
+    '2018',
+    '2017',
+    '2016',
+    '2015',
+    '2014',
+    '2013',
+    '2012',
+    '2011',
+    '2010',
+    '2009',
+    '2008',
+    '2007',
+    '2006',
+    '2005',
+  ];
+  String? carColorSelected ;
+  List<String> carColors = [
+    'أحمر',
+    'أسود',
+    'أبيض',
+    'رمادي',
+    'فضي',
+    'فراني او كحلي',
+    'أزرق',
+    'بني',
+    'ذهبي',
+    'بتنجاني',
+  ];
+  String? bodyTypeSelected ;
+  List<String> transmission = [
+    'أوتوماتيك',
+    'مانويل',
+  ];
+  String? transmissionSelected ;
+  List<String> bodyType = [
+    'سيدان',
+    'هاتشباك',
+    'SUV',
+  ];
+  List<String> plateLetters = [
+    'أ',
+    'ب',
+    'ت',
+    'ث',
+    'ج',
+    'ح',
+    'خ',
+    'د',
+    'ذ',
+    'ر',
+    'ز',
+    'س',
+    'ش',
+    'ص',
+    'ض',
+    'ط',
+    'ظ',
+    'ع',
+    'غ',
+    'ف',
+    'ق',
+    'ك',
+    'ل',
+    'م',
+    'ن',
+    'ه',
+    'و',
+    'ي',
+  ];
+  String? firstLetter ;
+  String? secondLetter ;
+  String? thirdLetter  ;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -373,11 +372,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 14.h,
                         ),
-                        const Text(
+                         Text(
                           'بيانات السيارة',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20
+                              fontSize: 17.sp
                           ),
                         ),
                         SizedBox(
@@ -397,7 +396,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
-                                buttonHeight: 47,
+                                buttonHeight: 38.h,
                               ),
                             ),
                             const SizedBox(
@@ -415,7 +414,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
-                                buttonHeight: 47,
+                                buttonHeight: 38.h,
                               ),
                             ),
                           ],
@@ -437,7 +436,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
-                                buttonHeight: 47,
+                                buttonHeight: 38.h,
                               ),
                             ),
                             const SizedBox(
@@ -455,7 +454,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
-                                buttonHeight: 47,
+                                buttonHeight: 38.h,
                               ),
                             ),
                           ],
@@ -477,7 +476,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
-                                buttonHeight: 47,
+                                buttonHeight: 38.h,
                               ),
                             ),
                             const SizedBox(
@@ -619,7 +618,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           width: double.infinity,
                           margin: const EdgeInsets.symmetric(horizontal: 50).w,
-                          height: 120,
+                          height: 100.h,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
@@ -627,7 +626,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Column(
                             children: [
                               Container(
-                                height: 35,
                                 decoration: const BoxDecoration(
                                   color: Colors.blueAccent,
                                   borderRadius: BorderRadius.only(topRight: Radius.circular(15) , topLeft: Radius.circular(15)),
@@ -680,7 +678,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     });
                                                   },
                                                   buttonWidth: double.infinity,
-                                                  buttonHeight: 47,
+                                                  buttonHeight: 38.h,
                                                 ),
                                               ),
                                               Expanded(
@@ -696,7 +694,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     });
                                                   },
                                                   buttonWidth: double.infinity,
-                                                  buttonHeight: 47,
+                                                  buttonHeight: 38.h,
                                                 ),
                                               ),
                                               Expanded(
@@ -712,7 +710,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     });
                                                   },
                                                   buttonWidth: double.infinity,
-                                                  buttonHeight: 47,
+                                                  buttonHeight: 38.h,
                                                 ),
                                               ),
                                             ],

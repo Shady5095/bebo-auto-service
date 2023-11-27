@@ -1,4 +1,6 @@
+import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/widgets/image_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_clippers/custom_clippers.dart';
@@ -83,50 +85,62 @@ class MessageWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               if (messageModel.image != null)
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: messageModel.text != '' ? 5 : 0),
-                                  child: SizedBox(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12).r,
-                                      child: Image(
-                                        errorBuilder: (BuildContext? context,
-                                            Object? exception,
-                                            StackTrace? stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.warning_amber,
-                                              color: Colors.red,
-                                              size: 50,
-                                            ),
-                                          );
-                                        },
-                                        loadingBuilder: (BuildContext? context,
-                                            Widget? child,
-                                            ImageChunkEvent? loadingProgress) {
-                                          if (loadingProgress == null) {
-                                            return child!;
-                                          }
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 30,
-                                              height: 30,
-                                              child: CircularProgressIndicator(
-                                                color: defaultColor,
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        image: CachedNetworkImageProvider(
+                                InkWell(
+                                  onTap: (){
+                                    navigateTo(
+                                      context: context,
+                                      widget: ImageViewer(
+                                        photo: CachedNetworkImageProvider(
                                             '${messageModel.image}'),
+                                        isNetworkImage: true,
+                                      ),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: messageModel.text != '' ? 5 : 0),
+                                    child: SizedBox(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12).r,
+                                        child: Image(
+                                          errorBuilder: (BuildContext? context,
+                                              Object? exception,
+                                              StackTrace? stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.warning_amber,
+                                                color: Colors.red,
+                                                size: 50,
+                                              ),
+                                            );
+                                          },
+                                          loadingBuilder: (BuildContext? context,
+                                              Widget? child,
+                                              ImageChunkEvent? loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child!;
+                                            }
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 30,
+                                                height: 30,
+                                                child: CircularProgressIndicator(
+                                                  color: defaultColor,
+                                                  value: loadingProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? loadingProgress
+                                                              .cumulativeBytesLoaded /
+                                                          loadingProgress
+                                                              .expectedTotalBytes!
+                                                      : null,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          image: CachedNetworkImageProvider(
+                                              '${messageModel.image}'),
+                                        ),
                                       ),
                                     ),
                                   ),

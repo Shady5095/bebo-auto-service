@@ -30,12 +30,13 @@ void navigateAndFinish(
         {required context,
         required widget,
         animation = PageTransitionType.leftToRight}) =>
-    Navigator.pushReplacement(
+    Navigator.pushAndRemoveUntil(
         context,
         PageTransition(
             type: animation,
             child: widget,
             duration: const Duration(milliseconds: 200)),
+          (route) => false,
         );
 
 Widget defaultButton({

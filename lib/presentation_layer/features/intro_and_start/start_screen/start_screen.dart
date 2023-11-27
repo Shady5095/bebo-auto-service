@@ -14,7 +14,7 @@ class StartScreen extends StatelessWidget {
     bool? onBoarding = CacheHelper.getBool(key: 'onBoarding');
     myUid = CacheHelper.getString(key: 'uId');
     Widget startScreen() {
-      if(onBoarding!){
+      if(onBoarding != null  || onBoarding == true ){
         if(myUid!=null){
           return const SplashScreen();
         }
