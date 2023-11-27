@@ -37,6 +37,7 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
             appBar: AppBar(
               toolbarHeight: 60.h,
               leadingWidth: double.infinity,
+              backgroundColor: defaultBackgroundColor,
               titleSpacing: 12.w,
               leading: Row(
                 children: [

@@ -25,7 +25,7 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
             tabs: [
               Tab(
                 height: 37.h,
-                child: Text('فرع العبور', style: TextStyle(fontSize: 14.sp)),
+                child: Text('فرع العبور', style: TextStyle(fontSize: 14.sp,color: Colors.white)),
               ),
               Tab(
                 height: 37.h,
@@ -100,9 +100,6 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                             itemCount: snapshot.data!.docs.length,
                           );
                         }),
-                    SizedBox(
-                      height: 15.h,
-                    ),
                     Row(
                       children: [
                         Icon(
@@ -241,12 +238,6 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                             itemCount: snapshot.data!.docs.length,
                           );
                         }),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
                     Row(
                       children: [
                         Icon(

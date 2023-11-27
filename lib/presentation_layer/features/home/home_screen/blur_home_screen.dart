@@ -443,8 +443,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                     child: Text(
                                                       'تسجيل الدخول',
                                                       style: TextStyle(
-                                                          fontSize: 13.sp
-                                                      ),
+                                                          fontSize: 13.sp,color: defaultColor,),
                                                     ),
                                                   ),
                                                 ],

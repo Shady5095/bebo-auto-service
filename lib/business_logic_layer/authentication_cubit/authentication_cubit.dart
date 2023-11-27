@@ -204,6 +204,11 @@ class AuthCubit extends Cubit<AuthStates> {
             errorText = 'هذا الحساب غير متوفر او لم يتم قبوله من قبل المسئول';
           }
           break;
+        case '"INVALID_LOGIN_CREDENTIALS"':
+          {
+            errorText = 'هذا الحساب غير متوفر او لم يتم قبوله من قبل المسئول';
+          }
+          break;
       }
       emit(LoginErrorState(errorText??''));
 

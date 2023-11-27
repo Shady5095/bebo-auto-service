@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +30,20 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BlocConsumer<AuthCubit,AuthStates>(
         listener: (context, state){
           if(state is LoginErrorState){
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.error),
-              backgroundColor: Colors.red,
-            ));
+            if(Platform.isAndroid){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.error),
+                backgroundColor: Colors.red,
+
+              ));
+            }
+            else{
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('هذا الحساب غير متوفر او لم يتم قبوله من قبل المسئول'),
+                backgroundColor: Colors.red,
+
+              ));
+            }
           }
         },
         builder: (context, state){
@@ -56,11 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 40.h,
                           ),
-                          const Center(
+                           Center(
                             child: Image(
-                              width: 160,
-                              height: 160,
-                              image: AssetImage(
+                              width: 130.w,
+                              height: 130.h,
+                              image: const AssetImage(
                                   'assets/images/logo.png'
                               ),
                             ),
@@ -196,7 +208,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child:  Text(
                                   'تسجيل الدخول',
                                   style: TextStyle(
-                                      fontSize: 13.sp
+                                      fontSize: 13.sp,
+                                    color: defaultColor
                                   ),
                                 ),
                               ),

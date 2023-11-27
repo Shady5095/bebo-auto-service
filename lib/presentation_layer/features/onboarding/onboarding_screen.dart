@@ -13,7 +13,7 @@ class BoardingModel {
 
   late final String image2;
 
-  late final AlignmentGeometry image2Alignment ;
+  late final AlignmentGeometry image2Alignment;
 
   late final String title;
 
@@ -48,7 +48,6 @@ class _OnBoardingState extends State<OnBoarding> {
         animation: PageTransitionType.rightToLeft);
   }
 
-
   @override
   Widget build(BuildContext context) {
     List<BoardingModel> boarding = [
@@ -57,16 +56,14 @@ class _OnBoardingState extends State<OnBoarding> {
         image2: 'assets/images/maintenance.png',
         image2Alignment: AlignmentDirectional.bottomCenter,
         title: '',
-        body:
-        '',
+        body: '',
       ),
       BoardingModel(
         image1: 'assets/images/onboarding2.png',
         image2: 'assets/images/report.png',
         image2Alignment: AlignmentDirectional.bottomStart,
         title: '',
-        body:
-        '',
+        body: '',
       ),
       BoardingModel(
         image1: 'assets/images/onboarding3.png',
@@ -90,7 +87,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   onPressed: () {
                     onSubmit();
                   },
-                  child:  Text(
+                  child: Text(
                     'تخطي',
                     style: TextStyle(
                       color: Colors.white,
@@ -132,18 +129,17 @@ class _OnBoardingState extends State<OnBoarding> {
                 SmoothPageIndicator(
                   controller: boarderController,
                   count: boarding.length,
-                  effect: const ExpandingDotsEffect(
+                  effect:  ExpandingDotsEffect(
                     dotColor: Colors.white,
                     activeDotColor: defaultColor,
-                    expansionFactor: 3,
+                    expansionFactor: 2,
                     spacing: 10,
-                    dotWidth: 10,
-                    dotHeight: 10,
+                    dotWidth: 8.w,
+                    dotHeight: 8.h,
                   ),
                 ),
-                FloatingActionButton(
-                  backgroundColor: defaultColor,
-                  onPressed: () {
+                InkWell(
+                  onTap: () {
                     if (isLast == false) {
                       boarderController.nextPage(
                         duration: const Duration(
@@ -155,9 +151,14 @@ class _OnBoardingState extends State<OnBoarding> {
                       onSubmit();
                     }
                   },
-                  child: const Icon(
-                     Icons.arrow_forward_ios_sharp,
-                    size: 35,
+                  child: CircleAvatar(
+                    backgroundColor: defaultColor,
+                    radius: 20.r,
+                    child: Icon(
+                      Icons.arrow_forward_ios_sharp,
+                      color: Colors.white,
+                      size: 23.sp,
+                    ),
                   ),
                 ),
               ],
@@ -172,17 +173,22 @@ class _OnBoardingState extends State<OnBoarding> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image(
-            width: (displayHeight(context) >= 790 && displayAspectRatio(context) <= 0.6 ) ? 300.w : 250.w,
-            height: (displayHeight(context) >= 790 && displayAspectRatio(context) <= 0.6 ) ? 280.h : 200.h,
+            width: (displayHeight(context) >= 790 &&
+                    displayAspectRatio(context) <= 0.6)
+                ? 300.w
+                : 250.w,
+            height: (displayHeight(context) >= 790 &&
+                    displayAspectRatio(context) <= 0.6)
+                ? 280.h
+                : 200.h,
             image: AssetImage(model.image1),
           ),
           Text(
             model.title,
             style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 30.sp,
-              color: Colors.white
-            ),
+                fontWeight: FontWeight.w900,
+                fontSize: 30.sp,
+                color: Colors.white),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -192,7 +198,10 @@ class _OnBoardingState extends State<OnBoarding> {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Text(
               model.body,
-              style: TextStyle(fontSize: 15.sp, color: Colors.white54, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  fontSize: 15.sp,
+                  color: Colors.white54,
+                  fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
             ),
           ),

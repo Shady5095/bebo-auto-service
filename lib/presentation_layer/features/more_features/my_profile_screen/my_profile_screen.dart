@@ -83,6 +83,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   ],
                                   textCapitalization: TextCapitalization.words,
                                   decoration: InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .secondaryHeaderColor,
+                                        )),
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               horizontal: 7),
@@ -124,7 +129,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   inputFormatters: [
                                     LengthLimitingTextInputFormatter(14),
                                   ],
-                                  decoration: InputDecoration(
+                                  decoration: InputDecoration(focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      )),
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               horizontal: 7),
@@ -142,6 +151,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                         color: Theme.of(context)
                                             .secondaryHeaderColor,
                                       ))),
+
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'برجاء أدخال البيانات';

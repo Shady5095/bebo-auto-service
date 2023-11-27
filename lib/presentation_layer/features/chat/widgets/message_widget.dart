@@ -158,7 +158,7 @@ class MessageWidget extends StatelessWidget {
                                                           null &&
                                                       messageModel.text == ''
                                                   ? 0
-                                                  : 13.0)
+                                                  : 13.0).h
                                           .h,
                                       child: Text(
                                         //textAlign: TextAlign.start,
@@ -173,8 +173,7 @@ class MessageWidget extends StatelessWidget {
                                       ),
                                     ),
                                     Positioned(
-                                      bottom:
-                                          messageModel.image != null ? 0 : -5,
+                                      bottom: 0,
                                       right: 1,
                                       child: Row(
                                         children: [

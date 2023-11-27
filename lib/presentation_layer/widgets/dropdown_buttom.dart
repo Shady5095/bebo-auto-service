@@ -138,6 +138,9 @@ class CustomDropdownButton extends StatelessWidget {
           offset: offset,
           scrollbarTheme: ScrollbarThemeData(
             radius: scrollbarRadius ?? const Radius.circular(40),
+
+            trackColor: MaterialStateProperty.all(Colors.white),
+            trackBorderColor: MaterialStateProperty.all(Colors.white),
             thumbColor: MaterialStateProperty.resolveWith((states) {
               // If the button is pressed, return size 40, otherwise 20
               if (states.contains(MaterialState.pressed)) {
