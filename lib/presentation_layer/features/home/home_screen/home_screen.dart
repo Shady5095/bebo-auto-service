@@ -2,7 +2,6 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:bebo_auto_service/presentation_layer/features/points/points_screen.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

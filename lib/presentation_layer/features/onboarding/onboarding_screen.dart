@@ -55,22 +55,29 @@ class _OnBoardingState extends State<OnBoarding> {
         image1: 'assets/images/onboarding111.png',
         image2: 'assets/images/maintenance.png',
         image2Alignment: AlignmentDirectional.bottomCenter,
-        title: '',
-        body: '',
+        title: 'دليل شامل عن سيارتك',
+        body: 'تقدر دلوقتي تشوف جميع فواتير الصيانه و تعرف معاد الصيانه القادم ويمكنك فحص كل قطعه في السياره والحصول علي تقرير بحاله السياره',
       ),
       BoardingModel(
         image1: 'assets/images/onboarding2.png',
         image2: 'assets/images/report.png',
         image2Alignment: AlignmentDirectional.bottomStart,
-        title: '',
-        body: '',
+        title: 'الأطلاع علي جميع قطع الغيار',
+        body: 'يمكنك معرفه توافر جميع قطع الغيار واسعارها',
+      ),
+      BoardingModel(
+        image1: 'assets/images/mazda3.png',
+        image2: 'assets/images/report.png',
+        image2Alignment: AlignmentDirectional.bottomStart,
+        title: 'فلوسك رجعالك نقاط',
+        body: 'دلوقتي مع كل صيانه هتعملها تقدر تجمع نقط تستبدلها في صيانتك القادمه',
       ),
       BoardingModel(
         image1: 'assets/images/onboarding3.png',
         image2: 'assets/images/price.png',
         image2Alignment: AlignmentDirectional.bottomEnd,
-        title: '',
-        body: '',
+        title: 'بيع واشتري بضمان المركز',
+        body: 'دلوقتي تقدر تبيع عربيتك بعد الفحص من المركز وعربيتك هتنزل علي التطبيق بجميع تفاصيل حاله كل جزء في السياره',
       ),
     ];
     return Scaffold(
@@ -107,9 +114,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     isLast = true;
                   } else {
                     setState(() {
-                      if (index == boarding.length - 1) {
-                        isLast = false;
-                      }
+                      isLast = false;
                     });
                   }
                 });
@@ -153,7 +158,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   },
                   child: CircleAvatar(
                     backgroundColor: defaultColor,
-                    radius: 20.r,
+                    radius: 22.r,
                     child: Icon(
                       Icons.arrow_forward_ios_sharp,
                       color: Colors.white,
@@ -187,7 +192,7 @@ class _OnBoardingState extends State<OnBoarding> {
             model.title,
             style: TextStyle(
                 fontWeight: FontWeight.w900,
-                fontSize: 30.sp,
+                fontSize: 25.sp,
                 color: Colors.white),
             textAlign: TextAlign.center,
           ),
