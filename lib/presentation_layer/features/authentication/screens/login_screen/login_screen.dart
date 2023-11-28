@@ -206,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
                                 },
                                 child:  Text(
-                                  'تسجيل الدخول',
+                                  'تسجيل',
                                   style: TextStyle(
                                       fontSize: 13.sp,
                                     color: defaultColor

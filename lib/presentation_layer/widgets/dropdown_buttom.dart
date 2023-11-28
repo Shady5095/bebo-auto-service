@@ -2,7 +2,6 @@ import 'package:bebo_auto_service/components/constans.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomDropdownButton extends StatelessWidget {
   const CustomDropdownButton({
@@ -74,7 +73,8 @@ class CustomDropdownButton extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: TextStyle(
-              fontSize: 15.sp,
+              fontSize: 14.sp,
+              height: 1,
               color: Theme.of(context).hintColor,
             ),
           ),
@@ -91,7 +91,7 @@ class CustomDropdownButton extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style:  TextStyle(
-                fontSize: 15.sp,
+                fontSize: 14.sp,
                 color: Colors.white
               ),
             ),

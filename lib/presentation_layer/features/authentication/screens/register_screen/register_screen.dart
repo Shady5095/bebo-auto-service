@@ -258,13 +258,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ],
                                 style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 13.sp
+                                    fontSize: 12.sp
                                 ),
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(5),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
-                                    fontSize: 13.sp,
+                                    fontSize: 12.sp,
                                   ),
                                   prefixIconColor: Theme.of(context).secondaryHeaderColor,
                                   labelText: 'الاسم الاول',
@@ -299,12 +299,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ],
                                 style: TextStyle(
                                     color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 13.sp
+                                    fontSize: 12.sp
                                 ),
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(5),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
+                                    fontSize: 12.sp
                                   ),
                                   prefixIconColor: Theme.of(context).secondaryHeaderColor,
                                   labelText: 'الاسم الاخير',
@@ -339,12 +340,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                           style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
-                              fontSize: 13.sp
+                              fontSize: 12.sp
                           ),
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(5),
                             labelStyle: TextStyle(
                               color: Theme.of(context).hintColor,
+                                fontSize: 12.sp
                             ),
                             prefixIconColor: Theme.of(context).secondaryHeaderColor,
                             suffixIconColor: Theme.of(context).secondaryHeaderColor,
@@ -396,6 +398,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
+                                dropdownWidth: displayWidth(context)*0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -406,6 +409,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: CustomDropdownButton(
                                 dropdownItems: carYears,
                                 hint: 'السنة',
+
                                 value: carYearSelected,
                                 onChanged: (String? carYear){
                                   carYearSelected = carYear ;
@@ -414,6 +418,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
+                                dropdownWidth: displayWidth(context)*0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -436,6 +441,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
+                                dropdownWidth: displayWidth(context)*0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -454,6 +460,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
+                                dropdownWidth: displayWidth(context)*0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -476,6 +483,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                 },
                                 buttonWidth: double.infinity,
+                                dropdownWidth: displayWidth(context)*0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -775,22 +783,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         Row(
                           children: [
-                            const Icon(
+                             Icon(
                               CupertinoIcons.pin,
                               color: defaultColor,
-                              size: 20,
+                              size: 17.sp,
                             ),
                             SizedBox(
                               width: 8.w,
                             ),
-                            const Expanded(
+                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'سيتم مراجعة بياناتك من قبل المسئول',
                                     style: TextStyle(
-                                      color: Colors.white54
+                                      color: Colors.white54,
+                                        fontSize: 13.sp
                                     ),
                                   ),
                                 ],
@@ -803,22 +812,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         Row(
                           children: [
-                            const Icon(
+                             Icon(
                               CupertinoIcons.pin,
                               color: defaultColor,
-                              size: 20,
+                              size: 17.sp,
                             ),
                             SizedBox(
                               width: 8.w,
                             ),
-                            const Expanded(
+                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'برجاء العلم انه لن يتم قبول حسابك اذا انت ليس عميل بمركز بيبو',
                                     style: TextStyle(
-                                      color: Colors.white54
+                                      color: Colors.white54,
+                                      fontSize: 13.sp
                                     ),
                                   ),
                                 ],
@@ -831,22 +841,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         Row(
                           children: [
-                            const Icon(
+                             Icon(
                               CupertinoIcons.pin,
                               color: defaultColor,
-                              size: 20,
+                              size: 17.sp,
                             ),
                             SizedBox(
                               width: 8.w,
                             ),
-                            const Expanded(
+                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'برجاء التأكد من رقم الشاسيه جيدا لانه لن يتم قبول السياره اذا كان الرقم غير صحيح ',
                                     style: TextStyle(
-                                      color: Colors.white54
+                                      color: Colors.white54,
+                                        fontSize: 13.sp
                                     ),
                                   ),
                                 ],

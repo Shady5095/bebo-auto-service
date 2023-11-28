@@ -25,7 +25,7 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
             tabs: [
               Tab(
                 height: 37.h,
-                child: Text('فرع العبور', style: TextStyle(fontSize: 14.sp,color: Colors.white)),
+                child: Text('فرع العبور', style: TextStyle(fontSize: 14.sp)),
               ),
               Tab(
                 height: 37.h,

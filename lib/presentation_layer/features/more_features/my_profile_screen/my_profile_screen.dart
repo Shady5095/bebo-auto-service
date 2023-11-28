@@ -76,7 +76,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .secondaryHeaderColor,
-                                      fontSize: 13.sp),
+                                      fontSize: 13.sp,height: 1.3.h),
                                   controller: firstNameController,
                                   inputFormatters: [
                                     LengthLimitingTextInputFormatter(14),
@@ -123,7 +123,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .secondaryHeaderColor,
-                                      fontSize: 13.sp),
+                                      fontSize: 13.sp,height: 1.3.h,),
                                   controller: lastNameController,
                                   textCapitalization: TextCapitalization.words,
                                   inputFormatters: [
@@ -173,8 +173,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
                               fontSize: 13.sp,
+                              height: 1.3.h
                             ),
                             decoration: InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                    )),
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 7),
                                 label: Text(
@@ -244,6 +250,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 color: Theme.of(context).secondaryHeaderColor,
                                 fontSize: 13.sp),
                             decoration: InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                    )),
                                 contentPadding: const EdgeInsets.all(5),
                                 labelStyle: TextStyle(
                                   color: Theme.of(context).hintColor,
@@ -289,6 +300,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 color: Theme.of(context).secondaryHeaderColor,
                                 fontSize: 13.sp),
                             decoration: InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                    )),
                                 contentPadding: const EdgeInsets.all(5),
                                 labelStyle: TextStyle(
                                   color: Theme.of(context).hintColor,
@@ -334,6 +350,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 color: Theme.of(context).secondaryHeaderColor,
                                 fontSize: 13.sp),
                             decoration: InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                    )),
                                 contentPadding: const EdgeInsets.all(5),
                                 labelStyle: TextStyle(
                                   color: Theme.of(context).hintColor,
