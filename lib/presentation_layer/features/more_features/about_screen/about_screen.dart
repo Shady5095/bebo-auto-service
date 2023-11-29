@@ -34,9 +34,11 @@ class _AboutScreenState extends State<AboutScreen> {
   Future<void> finshTextAnimation() async {
     await Future.delayed(const Duration(milliseconds: 2000));
     isAnimatedTextFinsh = true ;
-    setState(() {
+    if(mounted){
+      setState(() {
 
-    });
+      });
+    }
   }
 @override
   void initState() {
@@ -282,7 +284,7 @@ class _AboutScreenState extends State<AboutScreen> {
     return Text(
       '* $text',
       textAlign: TextAlign.start,
-      style: TextStyle(fontSize: 15.sp, color: Colors.white54),
+      style: TextStyle(fontSize: 15.sp, color: Colors.white54,fontWeight: FontWeight.w700),
     );
   }
 }

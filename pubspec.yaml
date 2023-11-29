@@ -75,11 +75,11 @@ dependencies:
   animated_text_kit: ^4.2.2
 
   #firebase
-  firebase_storage: ^11.2.5
-  firebase_core: ^2.15.0
-  firebase_auth: ^4.7.0
-  cloud_firestore: ^4.8.3
-  firebase_messaging: ^14.6.7
+  firebase_storage: ^11.5.3
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.0
+  cloud_firestore: ^4.13.3
+  firebase_messaging: ^14.7.6
   firebase_performance: ^0.9.3+4
 
   flutter:

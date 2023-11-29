@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -64,6 +62,27 @@ class _ImageViewerState extends State<ImageViewer> {
           color: Theme.of(context).scaffoldBackgroundColor,
           child: widget.photosList == null ?  PhotoView(
             minScale: PhotoViewComputedScale.contained * 0.8,
+              loadingBuilder: (BuildContext? context,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return myCircularProgressIndicator();
+                return Center(
+                  child: SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(
+                      color: defaultColor,
+                      value: loadingProgress
+                          .expectedTotalBytes !=
+                          null
+                          ? loadingProgress
+                          .cumulativeBytesLoaded /
+                          loadingProgress
+                              .expectedTotalBytes!
+                          : null,
+                    ),
+                  ),
+                );
+              },
             maxScale: PhotoViewComputedScale.covered * 2,
             backgroundDecoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,

@@ -82,16 +82,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextFormField(
                             controller: chassisNoController,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.number,
+                            maxLength: 8,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .secondaryHeaderColor,
-                                fontSize: 14.sp),
+                                fontSize: 13.sp),
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(5),
                               labelStyle: TextStyle(
-                                color: Theme.of(context)
-                                    .secondaryHeaderColor,
+                                  color: Colors.white54,
+                                  fontSize: 13.sp
                               ),
                               labelText: 'رقم الشاسيه (من الرخصه)',
                               border: OutlineInputBorder(
@@ -121,13 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(
                                   color: Theme.of(context)
                                       .secondaryHeaderColor,
-                                  fontSize: 14.sp),
+                                  fontSize: 13.sp),
                               obscureText: cubit.isPassword,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(5),
                                 labelStyle: TextStyle(
-                                  color: Theme.of(context)
-                                      .secondaryHeaderColor,
+                                    color: Colors.white54,
+                                    fontSize: 13.sp
                                 ),
                                 labelText: 'كلمه السر',
                                 suffixIcon: IconButton(

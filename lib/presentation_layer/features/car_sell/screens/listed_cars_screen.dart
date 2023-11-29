@@ -178,7 +178,7 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Container(
             width: double.infinity,
-            //height: 120.h,
+            height: 120.h,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: const Color.fromRGBO(2, 0, 0, 0.3),
@@ -189,63 +189,60 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: displayWidth(context) * 0.30,
-                      height: displayHeight(context) * 0.15,
-                      child: carSellModel.images == null ||
-                              carSellModel.images!.isEmpty
-                          ? const Icon(
-                              FluentIcons.image_off_24_regular,
-                              color: Colors.white54,
-                              size: 37,
-                            )
-                          : Hero(
-                              tag: '${carSellModel.docId}',
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image(
-                                  height: displayHeight(context) * 0.15,
-                                  width: displayWidth(context) * 0.30,
-                                  errorBuilder: (BuildContext? context,
-                                      Object? exception,
-                                      StackTrace? stackTrace) {
-                                    return const Center(
-                                      child: Icon(
-                                        Icons.warning_amber,
-                                        color: Colors.red,
-                                        size: 100,
+                    carSellModel.images == null ||
+                            carSellModel.images!.isEmpty
+                        ?  Icon(
+                            FluentIcons.image_off_24_regular,
+                            color: Colors.white54,
+                            size: 31.sp,
+                          )
+                        : Hero(
+                            tag: '${carSellModel.docId}',
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image(
+                                height: 120.h,
+                                width: displayWidth(context) * 0.40,
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext? context,
+                                    Object? exception,
+                                    StackTrace? stackTrace) {
+                                  return  Center(
+                                    child: Icon(
+                                      Icons.warning_amber,
+                                      color: Colors.red,
+                                      size: 30.sp,
+                                    ),
+                                  );
+                                },
+                                loadingBuilder: (BuildContext? context,
+                                    Widget? child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child!;
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: CircularProgressIndicator(
+                                        color: defaultColor,
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
                                       ),
-                                    );
-                                  },
-                                  loadingBuilder: (BuildContext? context,
-                                      Widget? child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child!;
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 30,
-                                        height: 30,
-                                        child: CircularProgressIndicator(
-                                          color: defaultColor,
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  image: CachedNetworkImageProvider(
-                                    carSellModel.images![0],
-                                  ),
+                                    ),
+                                  );
+                                },
+                                image: CachedNetworkImageProvider(
+                                  carSellModel.images![0],
                                 ),
                               ),
                             ),
-                    ),
+                          ),
                     SizedBox(
                       width: 10.w,
                     ),
@@ -274,7 +271,7 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.white54,
-                                  fontSize: 10.sp,
+                                  fontSize: 11.sp,
                                   height: 1.3),
                             ),
                         ],

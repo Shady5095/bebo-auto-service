@@ -209,6 +209,11 @@ class AuthCubit extends Cubit<AuthStates> {
             errorText = 'هذا الحساب غير متوفر او لم يتم قبوله من قبل المسئول';
           }
           break;
+        case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
+          {
+            errorText = 'لا يوجد اتصال بالانترنت';
+          }
+          break;
       }
       emit(LoginErrorState(errorText??''));
 

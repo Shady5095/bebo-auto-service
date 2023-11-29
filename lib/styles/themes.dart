@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData darkTheme(context) => ThemeData(
@@ -11,11 +12,11 @@ ThemeData darkTheme(context) => ThemeData(
                   topLeft: Radius.circular(20)))),
       appBarTheme: const AppBarTheme(
         color: defaultBackgroundColor,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         elevation: 0,
+        scrolledUnderElevation: 0,
         titleTextStyle: TextStyle(color: Colors.white, fontFamily: 'Cairo'),
-        actionsIconTheme: IconThemeData(
-          color: Colors.white
-        ),
+        actionsIconTheme: IconThemeData(color: Colors.white),
       ),
       scaffoldBackgroundColor: defaultBackgroundColor,
       tabBarTheme: TabBarTheme(
@@ -27,20 +28,32 @@ ThemeData darkTheme(context) => ThemeData(
           titleMedium: TextStyle(
         color: Colors.white,
       )),
-      textSelectionTheme: const TextSelectionThemeData(cursorColor: defaultColor),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: defaultColor,
+        selectionColor: Colors.grey.withOpacity(0.5),
+        selectionHandleColor: defaultColor,
+      ),
       inputDecorationTheme: InputDecorationTheme(
-        //filled: true,
         fillColor: Colors.white,
+        counterStyle: const TextStyle(
+          color: Colors.white54
+        ),
         prefixIconColor: Colors.white,
         suffixIconColor: Colors.white,
         errorStyle: TextStyle(color: Colors.red, fontSize: 10.sp),
-        labelStyle: const TextStyle(
-          color: Colors.white,
+        hintStyle: TextStyle(
+            color: Colors.white54,
+            fontSize: 12.sp
+        ),
+        labelStyle: TextStyle(
+          color: Colors.white54,
+          fontSize: 13.sp
         ),
 
-        focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
-          color: defaultColor,
-        ),
+        focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: defaultColor,
+            ),
             borderRadius: BorderRadius.circular(15)),
         enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
@@ -48,6 +61,8 @@ ThemeData darkTheme(context) => ThemeData(
             ),
             borderRadius: BorderRadius.circular(15)),
       ),
+      primaryColorDark: defaultColor,
+      splashFactory: NoSplash.splashFactory,
       primarySwatch: Colors.red,
       secondaryHeaderColor: Colors.white,
       primaryColor: Colors.black,

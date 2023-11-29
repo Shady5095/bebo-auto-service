@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             locale: const Locale('ar'),
             builder: (BuildContext? context, Widget? child) {
               return MediaQuery(
-                data: MediaQuery.of(context!).copyWith(textScaleFactor: 1.0, ), //set desired text scale factor here
+                data: MediaQuery.of(context!).copyWith(textScaler: TextScaler.noScaling, ), //set desired text scale factor here
                 child: child!,
               );
             },

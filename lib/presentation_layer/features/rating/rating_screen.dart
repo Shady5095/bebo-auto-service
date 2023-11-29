@@ -115,7 +115,7 @@ class _RatingScreenState extends State<RatingScreen> {
                   if(state is SendRatingLoadingState)
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: LinearProgressIndicator(),
+                    child: LinearProgressIndicator(color: defaultColor,),
                   ),
                   defaultButton(
                     onTap: () {

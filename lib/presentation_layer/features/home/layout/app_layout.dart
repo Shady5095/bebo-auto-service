@@ -77,6 +77,7 @@ class _AppLayoutState extends State<AppLayout> {
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
               selectedItemColor: const Color.fromRGBO(210, 29, 29, 1.0),
+
               type: BottomNavigationBarType.fixed,
               unselectedItemColor: Colors.white54,
               elevation: 20,

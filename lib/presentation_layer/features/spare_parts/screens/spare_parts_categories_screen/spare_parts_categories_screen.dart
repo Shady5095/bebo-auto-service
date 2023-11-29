@@ -144,6 +144,7 @@ class _SparePartsCategoriesScreenState
         decoration: InputDecoration(
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
           hintStyle: TextStyle(
             color: Colors.grey[400],
             fontSize: 15.sp,

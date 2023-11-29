@@ -18,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
+
 class _RegisterScreenState extends State<RegisterScreen> {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
@@ -35,8 +36,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'Mazda Cx5',
     'مازدا نوع اخر',
   ];
-  String? carModelSelected ;
-  String? carYearSelected ;
+  String? carModelSelected;
+
+  String? carYearSelected;
+
   List<String> carYears = [
     '2026',
     '2025',
@@ -61,7 +64,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     '2006',
     '2005',
   ];
-  String? carColorSelected ;
+  String? carColorSelected;
+
   List<String> carColors = [
     'أحمر',
     'أسود',
@@ -74,12 +78,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'ذهبي',
     'بتنجاني',
   ];
-  String? bodyTypeSelected ;
+  String? bodyTypeSelected;
+
   List<String> transmission = [
     'أوتوماتيك',
     'مانويل',
   ];
-  String? transmissionSelected ;
+  String? transmissionSelected;
+
   List<String> bodyType = [
     'سيدان',
     'هاتشباك',
@@ -115,24 +121,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'و',
     'ي',
   ];
-  String? firstLetter ;
-  String? secondLetter ;
-  String? thirdLetter  ;
+  String? firstLetter;
+
+  String? secondLetter;
+
+  String? thirdLetter;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(),
-      child: BlocConsumer<AuthCubit,AuthStates>(
-        listener: (context, state){
-          if(state is ChassisNoExistsBeforeState){
-            showDialog(context: context, builder: (context)=>const MyAlertDialog(
-              isFailed: true,
-              title: 'رقم الشاسيه مسجل من قبل',
-              actions: [],
-            ));
+      child: BlocConsumer<AuthCubit, AuthStates>(
+        listener: (context, state) {
+          if (state is ChassisNoExistsBeforeState) {
+            showDialog(
+                context: context,
+                builder: (context) => const MyAlertDialog(
+                      isFailed: true,
+                      title: 'رقم الشاسيه مسجل من قبل',
+                      actions: [],
+                    ));
           }
-          if(state is RegisterSuccessState){
+          if (state is RegisterSuccessState) {
             Navigator.pop(context);
             showDialog(
               context: context,
@@ -143,17 +153,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: <Widget>[
                     Text(
                       'تم التسجيل بنجاح ... برجاء الانتظار قليلا لحين تفعيل الحساب من قبل المركز وبعد التفعيل سنرسل لك اشعار لتكمل التسجيل',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 15.sp),
                     ),
                     Text(
                       'بيانات تسجيل الدخول لأول مره',
-                      style: TextStyle(
-                          color: Colors.white54,
-                          fontSize: 12.sp
-                      ),
+                      style: TextStyle(color: Colors.white54, fontSize: 12.sp),
                     ),
                     SizedBox(
                       height: 10.h,
@@ -168,17 +172,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Text(
                               'رقم الشاسيه : ',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
+                                  color: Colors.white, fontSize: 13.sp),
                             ),
                             Text(
                               chassisNo.text,
                               textDirection: TextDirection.ltr,
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
+                                  color: Colors.white, fontSize: 13.sp),
                             ),
                           ],
                         ),
@@ -190,16 +190,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Text(
                               'كلمه السر : ',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
+                                  color: Colors.white, fontSize: 13.sp),
                             ),
                             Text(
                               chassisNo.text,
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp
-                              ),
+                                  color: Colors.white, fontSize: 13.sp),
                             ),
                           ],
                         ),
@@ -212,11 +208,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             );
           }
         },
-        builder: (context, state){
+        builder: (context, state) {
           var cubit = AuthCubit.get(context);
           return Scaffold(
             appBar: defaultAppbar(context: context),
-            body : SafeArea(
+            body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Form(
@@ -227,21 +223,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                         Center(
+                        Center(
                           child: Image(
                             width: 135.w,
                             height: 135.h,
-                            image: const AssetImage(
-                              'assets/images/logo.png'
-                            ),
+                            image: const AssetImage('assets/images/logo.png'),
                           ),
                         ),
                         const Text(
-                            'البيانات الشخصية',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20
-                          ),
+                          'البيانات الشخصية',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                         SizedBox(
                           height: 10.h,
@@ -257,29 +248,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   LengthLimitingTextInputFormatter(14),
                                 ],
                                 style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 12.sp
-                                ),
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: 12.sp),
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(5),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
                                     fontSize: 12.sp,
                                   ),
-                                  prefixIconColor: Theme.of(context).secondaryHeaderColor,
+                                  prefixIconColor:
+                                      Theme.of(context).secondaryHeaderColor,
                                   labelText: 'الاسم الاول',
-                                  prefixIcon: const Icon(
-                                      Icons.person
-                                  ),
-
+                                  prefixIcon: const Icon(Icons.person),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-
                                   ),
                                 ),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                validator: (value){
-                                  if (value==null || value.isEmpty){
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
                                   }
                                   return null;
@@ -298,29 +287,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   LengthLimitingTextInputFormatter(14),
                                 ],
                                 style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 12.sp
-                                ),
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: 12.sp),
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(5),
                                   labelStyle: TextStyle(
-                                    color: Theme.of(context).hintColor,
-                                    fontSize: 12.sp
-                                  ),
-                                  prefixIconColor: Theme.of(context).secondaryHeaderColor,
+                                      color: Theme.of(context).hintColor,
+                                      fontSize: 12.sp),
+                                  prefixIconColor:
+                                      Theme.of(context).secondaryHeaderColor,
                                   labelText: 'الاسم الاخير',
-                                  prefixIcon: const Icon(
-                                      Icons.person
-                                  ),
-
+                                  prefixIcon: const Icon(Icons.person),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-
                                   ),
                                 ),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                validator: (value){
-                                  if (value==null || value.isEmpty){
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
                                   }
                                   return null;
@@ -340,32 +326,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                           style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
-                              fontSize: 12.sp
-                          ),
+                              fontSize: 12.sp),
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(5),
                             labelStyle: TextStyle(
-                              color: Theme.of(context).hintColor,
-                                fontSize: 12.sp
-                            ),
-                            prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                            suffixIconColor: Theme.of(context).secondaryHeaderColor,
+                                color: Theme.of(context).hintColor,
+                                fontSize: 12.sp),
+                            prefixIconColor:
+                                Theme.of(context).secondaryHeaderColor,
+                            suffixIconColor:
+                                Theme.of(context).secondaryHeaderColor,
                             labelText: 'رقم الهاتف',
-                            prefixIcon: const Icon(
-                                Icons.phone
-                            ),
-
+                            prefixIcon: const Icon(Icons.phone),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-
                             ),
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value){
-                            if (value==null || value.isEmpty){
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'برجاء ادخال البيانات';
-                            }
-                            else if(value.length < 11) {
+                            } else if (value.length < 11) {
                               return 'رقم الهاتف غير صالح';
                             }
                             return null;
@@ -374,12 +355,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 14.h,
                         ),
-                         Text(
+                        Text(
                           'بيانات السيارة',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.sp
-                          ),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 17.sp),
                         ),
                         SizedBox(
                           height: 10.h,
@@ -391,14 +370,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 dropdownItems: carModels,
                                 hint: 'الموديل',
                                 value: carModelSelected,
-                                onChanged: (String? carModel){
-                                  carModelSelected = carModel ;
-                                  setState(() {
-
-                                  });
+                                onChanged: (String? carModel) {
+                                  carModelSelected = carModel;
+                                  setState(() {});
                                 },
                                 buttonWidth: double.infinity,
-                                dropdownWidth: displayWidth(context)*0.45,
+                                dropdownWidth: displayWidth(context) * 0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -409,16 +386,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: CustomDropdownButton(
                                 dropdownItems: carYears,
                                 hint: 'السنة',
-
                                 value: carYearSelected,
-                                onChanged: (String? carYear){
-                                  carYearSelected = carYear ;
-                                  setState(() {
-
-                                  });
+                                onChanged: (String? carYear) {
+                                  carYearSelected = carYear;
+                                  setState(() {});
                                 },
                                 buttonWidth: double.infinity,
-                                dropdownWidth: displayWidth(context)*0.45,
+                                dropdownWidth: displayWidth(context) * 0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -434,14 +408,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 dropdownItems: carColors,
                                 hint: 'اللون',
                                 value: carColorSelected,
-                                onChanged: (String? selected){
-                                  carColorSelected = selected ;
-                                  setState(() {
-
-                                  });
+                                onChanged: (String? selected) {
+                                  carColorSelected = selected;
+                                  setState(() {});
                                 },
                                 buttonWidth: double.infinity,
-                                dropdownWidth: displayWidth(context)*0.45,
+                                dropdownWidth: displayWidth(context) * 0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -453,14 +425,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 dropdownItems: bodyType,
                                 hint: 'نوع الهيكل',
                                 value: bodyTypeSelected,
-                                onChanged: (String? selected){
-                                  bodyTypeSelected = selected ;
-                                  setState(() {
-
-                                  });
+                                onChanged: (String? selected) {
+                                  bodyTypeSelected = selected;
+                                  setState(() {});
                                 },
                                 buttonWidth: double.infinity,
-                                dropdownWidth: displayWidth(context)*0.45,
+                                dropdownWidth: displayWidth(context) * 0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -476,14 +446,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 dropdownItems: transmission,
                                 hint: 'ناقل الحركة',
                                 value: transmissionSelected,
-                                onChanged: (String? selected){
-                                  transmissionSelected= selected ;
-                                  setState(() {
-
-                                  });
+                                onChanged: (String? selected) {
+                                  transmissionSelected = selected;
+                                  setState(() {});
                                 },
                                 buttonWidth: double.infinity,
-                                dropdownWidth: displayWidth(context)*0.45,
+                                dropdownWidth: displayWidth(context) * 0.45,
                                 buttonHeight: 38.h,
                               ),
                             ),
@@ -499,26 +467,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   LengthLimitingTextInputFormatter(6),
                                 ],
                                 style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 13.sp
-                                ),
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: 13.sp),
                                 decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 13),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 13),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
                                     fontSize: 12.sp,
                                   ),
-                                  prefixIconColor: Theme.of(context).secondaryHeaderColor,
+                                  prefixIconColor:
+                                      Theme.of(context).secondaryHeaderColor,
                                   labelText: 'عداد الكيلومتر',
-
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-
                                   ),
                                 ),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                validator: (value){
-                                  if (value==null || value.isEmpty){
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
                                   }
                                   return null;
@@ -537,29 +506,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 controller: chassisNo,
                                 keyboardType: TextInputType.number,
                                 style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 13.sp
-                                ),
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: 13.sp),
                                 decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 13),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 13),
                                   labelStyle: TextStyle(
-                                    color: Theme.of(context).hintColor,
-                                    fontSize: 12.sp
-                                  ),
-                                  prefixIconColor: Theme.of(context).secondaryHeaderColor,
-                                  suffixIconColor: Theme.of(context).secondaryHeaderColor,
+                                      color: Theme.of(context).hintColor,
+                                      fontSize: 12.sp),
+                                  prefixIconColor:
+                                      Theme.of(context).secondaryHeaderColor,
+                                  suffixIconColor:
+                                      Theme.of(context).secondaryHeaderColor,
                                   labelText: 'رقم الشاسيه (من الرخصة)',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-
                                   ),
                                 ),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                validator: (value){
-                                  if (value==null || value.isEmpty){
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
-                                  }
-                                  else if(value.length != 8) {
+                                  } else if (value.length != 8) {
                                     return 'رقم شاسيه غير صالح';
                                   }
                                   return null;
@@ -575,28 +545,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 keyboardType: TextInputType.number,
                                 textCapitalization: TextCapitalization.words,
                                 style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 13.sp
-                                ),
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: 13.sp),
                                 decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 13),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 13),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
                                     fontSize: 12.sp,
                                   ),
-                                  prefixIconColor: Theme.of(context).secondaryHeaderColor,
+                                  prefixIconColor:
+                                      Theme.of(context).secondaryHeaderColor,
                                   labelText: 'رقم الماتور (من الرخصة)',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-
                                   ),
                                 ),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                validator: (value){
-                                  if (value==null || value.isEmpty){
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
-                                  }
-                                  else if(value.length != 6) {
+                                  } else if (value.length != 6) {
                                     return 'رقم ماتور غير صالح';
                                   }
                                   return null;
@@ -614,9 +585,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Text(
                               'رقم اللوحه',
                               style: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 15
-                              ),
+                                  color: Colors.white54, fontSize: 15),
                             ),
                           ),
                         ),
@@ -636,29 +605,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Container(
                                 decoration: const BoxDecoration(
                                   color: Colors.blueAccent,
-                                  borderRadius: BorderRadius.only(topRight: Radius.circular(15) , topLeft: Radius.circular(15)),
-
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(15),
+                                      topLeft: Radius.circular(15)),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         'مصر',
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w600
-                                        ),
+                                            color: Colors.black,
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w600),
                                       ),
                                       Text(
                                         'Egypt',
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w600
-                                        ),
+                                            color: Colors.black,
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w600),
                                       ),
                                     ],
                                   ),
@@ -679,11 +649,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   hint: '',
                                                   iconSize: 0,
                                                   value: firstLetter,
-                                                  onChanged: (String? selected){
-                                                    firstLetter = selected ;
-                                                    setState(() {
-
-                                                    });
+                                                  onChanged:
+                                                      (String? selected) {
+                                                    firstLetter = selected;
+                                                    setState(() {});
                                                   },
                                                   buttonWidth: double.infinity,
                                                   buttonHeight: 38.h,
@@ -695,11 +664,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   hint: '',
                                                   iconSize: 0,
                                                   value: secondLetter,
-                                                  onChanged: (String? selected){
-                                                    secondLetter = selected ;
-                                                    setState(() {
-
-                                                    });
+                                                  onChanged:
+                                                      (String? selected) {
+                                                    secondLetter = selected;
+                                                    setState(() {});
                                                   },
                                                   buttonWidth: double.infinity,
                                                   buttonHeight: 38.h,
@@ -711,11 +679,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   hint: '',
                                                   iconSize: 0,
                                                   value: thirdLetter,
-                                                  onChanged: (String? selected){
-                                                    thirdLetter = selected! ;
-                                                    setState(() {
-
-                                                    });
+                                                  onChanged:
+                                                      (String? selected) {
+                                                    thirdLetter = selected!;
+                                                    setState(() {});
                                                   },
                                                   buttonWidth: double.infinity,
                                                   buttonHeight: 38.h,
@@ -726,19 +693,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
                                             child: TextFormField(
                                               controller: plateNo,
-                                              keyboardType: TextInputType.number,
-                                                inputFormatters: [
-                                                  LengthLimitingTextInputFormatter(4),
-                                                ],
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              inputFormatters: [
+                                                LengthLimitingTextInputFormatter(
+                                                    4),
+                                              ],
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 13.sp
-                                              ),
+                                                  fontSize: 13.sp),
                                               decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.symmetric(horizontal: 7),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 7),
                                                 hintStyle: const TextStyle(
                                                   color: Colors.white,
                                                 ),
@@ -746,23 +717,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 filled: true,
                                                 fillColor: Colors.grey[900],
                                                 border: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(15),
-
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
                                                 ),
-                                                enabledBorder: OutlineInputBorder(
-                                                    borderSide: const BorderSide(
-                                                      color: defaultBackgroundColor,
-                                                    ),
-                                                    borderRadius: BorderRadius.circular(15)
-                                                ),
-
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide:
+                                                            const BorderSide(
+                                                          color:
+                                                              defaultBackgroundColor,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15)),
                                               ),
-                                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                                              validator: (value){
-                                                if (value==null || value.isEmpty){
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
                                                   return 'برجاء ادخال البيانات';
-                                                }
-                                                else if (value == '-' || value == '.'){
+                                                } else if (value == '-' ||
+                                                    value == '.') {
                                                   return 'الرقم غير صالح';
                                                 }
                                                 return null;
@@ -783,7 +759,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         Row(
                           children: [
-                             Icon(
+                            Icon(
                               CupertinoIcons.pin,
                               color: defaultColor,
                               size: 17.sp,
@@ -791,16 +767,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(
                               width: 8.w,
                             ),
-                             Expanded(
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'سيتم مراجعة بياناتك من قبل المسئول',
                                     style: TextStyle(
-                                      color: Colors.white54,
-                                        fontSize: 13.sp
-                                    ),
+                                        color: Colors.white54, fontSize: 13.sp),
                                   ),
                                 ],
                               ),
@@ -812,7 +786,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         Row(
                           children: [
-                             Icon(
+                            Icon(
                               CupertinoIcons.pin,
                               color: defaultColor,
                               size: 17.sp,
@@ -820,16 +794,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(
                               width: 8.w,
                             ),
-                             Expanded(
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'برجاء العلم انه لن يتم قبول حسابك اذا انت ليس عميل بمركز بيبو',
                                     style: TextStyle(
-                                      color: Colors.white54,
-                                      fontSize: 13.sp
-                                    ),
+                                        color: Colors.white54, fontSize: 13.sp),
                                   ),
                                 ],
                               ),
@@ -841,7 +813,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         Row(
                           children: [
-                             Icon(
+                            Icon(
                               CupertinoIcons.pin,
                               color: defaultColor,
                               size: 17.sp,
@@ -849,16 +821,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(
                               width: 8.w,
                             ),
-                             Expanded(
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'برجاء التأكد من رقم الشاسيه جيدا لانه لن يتم قبول السياره اذا كان الرقم غير صحيح ',
                                     style: TextStyle(
-                                      color: Colors.white54,
-                                        fontSize: 13.sp
-                                    ),
+                                        color: Colors.white54, fontSize: 13.sp),
                                   ),
                                 ],
                               ),
@@ -869,48 +839,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: 12.h,
                         ),
                         ConditionalBuilder(
-                          condition: state is !RegisterLoadingState,
+                          condition: state is! RegisterLoadingState,
                           builder: (context) => defaultButton(
-                            onTap: (){
-                              if(formKey.currentState!.validate()){
-                                if(carModelSelected == null
-                                    || carYearSelected == null
-                                    || carColorSelected == null
-                                    || bodyTypeSelected == null
-                                    || transmissionSelected == null
-                                ){
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                if (carModelSelected == null ||
+                                    carYearSelected == null ||
+                                    carColorSelected == null ||
+                                    bodyTypeSelected == null ||
+                                    transmissionSelected == null ||
+                                    secondLetter == null) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
                                     content: Text('برجاء ادخال جميع البيانات '),
                                     backgroundColor: Colors.red,
-
                                   ));
-                                }
-                                else if(firstLetter == null){
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                    content: Text('برجاء ادخال اول حرف من نمر السياره'),
+                                } else if (firstLetter == null) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'برجاء ادخال اول حرف من نمر السياره'),
                                     backgroundColor: Colors.red,
                                   ));
-                                }
-                                else {
-                                  cubit.userRegister(
-                                      email: '${chassisNo.text}@gmail.com',
-                                      password: chassisNo.text,
-                                      firstName: firstNameController.text,
-                                      lastName: lastNameController.text,
-                                      carModel: carModelSelected!,
-                                      year: carYearSelected!.toInt(),
-                                      transmission: transmissionSelected!,
-                                      color: carColorSelected!,
-                                      bodyType: bodyTypeSelected!,
-                                      km: kiloMeterCount.text.toInt(),
-                                      chassisNo: chassisNo.text,
-                                      engineNo: engineNo.text,
-                                      plate: '$firstLetter $secondLetter ${thirdLetter??''}  ${plateNo.text}',
-                                      phone: phoneController.text,
-                                      context: context
-                                  ).then((value) {
-
-                                  });
+                                } else {
+                                  cubit
+                                      .userRegister(
+                                          email: '${chassisNo.text}@gmail.com',
+                                          password: chassisNo.text,
+                                          firstName: firstNameController.text,
+                                          lastName: lastNameController.text,
+                                          carModel: carModelSelected!,
+                                          year: carYearSelected!.toInt(),
+                                          transmission: transmissionSelected!,
+                                          color: carColorSelected!,
+                                          bodyType: bodyTypeSelected!,
+                                          km: kiloMeterCount.text.toInt(),
+                                          chassisNo: chassisNo.text,
+                                          engineNo: engineNo.text,
+                                          plate:
+                                              '$firstLetter $secondLetter ${thirdLetter ?? ''}  ${plateNo.text}',
+                                          phone: phoneController.text,
+                                          context: context)
+                                      .then((value) {});
                                 }
                               }
                             },
@@ -918,11 +888,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 40.h,
                             textColor: Theme.of(context).secondaryHeaderColor,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: defaultColor
-                            ),
+                                borderRadius: BorderRadius.circular(20),
+                                color: defaultColor),
                           ),
-                          fallback: (context) => Center(child: myCircularProgressIndicator()),
+                          fallback: (context) =>
+                              Center(child: myCircularProgressIndicator()),
                         ),
                         SizedBox(
                           height: 14.h,

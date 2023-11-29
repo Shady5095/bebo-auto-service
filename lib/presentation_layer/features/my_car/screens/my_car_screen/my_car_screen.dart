@@ -18,7 +18,6 @@ import '../../../../../business_logic_layer/main_app_cubit/main_app_states.dart'
 import '../../../../../data_layer/models/user_model.dart';
 import '../../../../widgets/my_alert_dialog.dart';
 
-
 class MyCarScreen extends StatefulWidget {
   const MyCarScreen({Key? key}) : super(key: key);
 
@@ -43,14 +42,15 @@ class _MyCarScreenState extends State<MyCarScreen> {
   ];
   var formKey = GlobalKey<FormState>();
   var kmController = TextEditingController();
-  double oldKm =0;
+  double oldKm = 0;
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MainAppCubit,MainAppStates>(
-      listener: (context,state){},
-      builder: (context,state){
-        oldKm = MainAppCubit.get(context).userData!.km!.toDouble() ;
-        UserModel? userData = MainAppCubit.get(context).userData ;
+    return BlocConsumer<MainAppCubit, MainAppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        oldKm = MainAppCubit.get(context).userData!.km!.toDouble();
+        UserModel? userData = MainAppCubit.get(context).userData;
         return Scaffold(
           backgroundColor: defaultBackgroundColor,
           appBar: AppBar(
@@ -59,9 +59,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
             toolbarHeight: 45.h,
             title: Text(
               'سيارتي',
-              style: TextStyle(
-                  fontSize: 22.sp
-              ),
+              style: TextStyle(fontSize: 22.sp),
             ),
           ),
           body: SingleChildScrollView(
@@ -71,7 +69,8 @@ class _MyCarScreenState extends State<MyCarScreen> {
               children: [
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 28.0, vertical: 9).w,
+                      const EdgeInsets.symmetric(horizontal: 28.0, vertical: 9)
+                          .w,
                   child: Stack(
                     children: [
                       Column(
@@ -134,7 +133,8 @@ class _MyCarScreenState extends State<MyCarScreen> {
                                   ),
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Row(
                                       children: [
@@ -189,7 +189,9 @@ class _MyCarScreenState extends State<MyCarScreen> {
                           child: Image(
                             width: displayWidth(context) * 0.7,
                             height: displayHeight(context) * 0.18,
-                            image: CachedNetworkImageProvider(userData.carImage??'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
+                            image: CachedNetworkImageProvider(userData
+                                    .carImage ??
+                                'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
                           ),
                         ),
                       ),
@@ -208,7 +210,8 @@ class _MyCarScreenState extends State<MyCarScreen> {
                         child: SlideAnimation(
                           verticalOffset: 50.0,
                           child: FadeInAnimation(
-                            child: buildMenuItems(menuItemsDetails[index] , context , index),
+                            child: buildMenuItems(
+                                menuItemsDetails[index], context, index),
                           ),
                         ),
                       );
@@ -223,35 +226,34 @@ class _MyCarScreenState extends State<MyCarScreen> {
     );
   }
 
-  Widget buildMenuItems(Map<String,dynamic> menuModel , BuildContext context , int index) => InkWell(
-    onTap: (){
-      switch(index) {
-        case  0 :
-        {
-          navigateToAnimated(
-              context: context,
-              widget: const InvoicesScreen(),
-              animation: PageTransitionType.leftToRight
-          );
-        }
-        break ;
-        case  1 :
-        {
-          showDialog(context: context, builder: (context)=>updateKmDialog());
-        }
-        break ;
-        case  2 :
-        {
-          navigateToAnimated(
-            context: context,
-            widget: const ListedReportsScreen()
-          );
-        }
-        break ;
-      }
-
-    },
-    child: Padding(
+  Widget buildMenuItems(
+          Map<String, dynamic> menuModel, BuildContext context, int index) =>
+      InkWell(
+        onTap: () {
+          switch (index) {
+            case 0:
+              {
+                navigateToAnimated(
+                    context: context,
+                    widget: const InvoicesScreen(),
+                    animation: PageTransitionType.leftToRight);
+              }
+              break;
+            case 1:
+              {
+                showDialog(
+                    context: context, builder: (context) => updateKmDialog());
+              }
+              break;
+            case 2:
+              {
+                navigateToAnimated(
+                    context: context, widget: const ListedReportsScreen());
+              }
+              break;
+          }
+        },
+        child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
             width: double.infinity,
@@ -259,8 +261,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: const Color.fromRGBO(2, 0, 0, 0.3),
-                borderRadius: BorderRadius.circular(15).r
-            ),
+                borderRadius: BorderRadius.circular(15).r),
             child: Row(
               children: [
                 Container(
@@ -269,10 +270,10 @@ class _MyCarScreenState extends State<MyCarScreen> {
                   decoration: BoxDecoration(
                     color: defaultColor,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.zero ,
-                      bottomLeft: Radius.zero ,
-                      bottomRight:  const Radius.circular(20).r ,
-                      topRight: const Radius.circular(20).r ,
+                      topLeft: Radius.zero,
+                      bottomLeft: Radius.zero,
+                      bottomRight: const Radius.circular(20).r,
+                      topRight: const Radius.circular(20).r,
                     ),
                   ),
                 ),
@@ -285,10 +286,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
                     children: [
                       Text(
                         '${menuModel['title']}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 15.sp),
                       ),
                       SizedBox(
                         height: 3.h,
@@ -296,10 +294,8 @@ class _MyCarScreenState extends State<MyCarScreen> {
                       Expanded(
                         child: Text(
                           '${menuModel['description']}',
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 11.sp
-                          ),
+                          style:
+                              TextStyle(color: Colors.white54, fontSize: 11.sp),
                         ),
                       ),
                     ],
@@ -309,94 +305,91 @@ class _MyCarScreenState extends State<MyCarScreen> {
             ),
           ),
         ),
-  );
+      );
 
-  Widget updateKmDialog()=> MyAlertDialog(
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'برجاء ادخال عداد الكيلومتر الحالي لعرض معاد الصيانة القادم',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.white, fontSize: 15.sp),
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Form(
-              key: formKey,
-              child: TextFormField(
-                controller: kmController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(6),
-                ],
-                style: TextStyle(
-                    color: Theme.of(context)
-                        .secondaryHeaderColor,
-                    fontSize: 13.sp),
-                decoration: InputDecoration(
-                    contentPadding:
-                    const EdgeInsets.all(5),
-                    labelStyle: TextStyle(
-                      color: Theme.of(context).hintColor,
-                    ),
-                    prefixIconColor: Theme.of(context)
-                        .secondaryHeaderColor,
-                    suffixIconColor: Theme.of(context)
-                        .secondaryHeaderColor,
-                    labelText: 'عداد الكيلومتر الحالي',
-                    prefixIcon: const Icon(
-                        CupertinoIcons.speedometer),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .secondaryHeaderColor,
+  Widget updateKmDialog() => MyAlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'برجاء ادخال عداد الكيلومتر الحالي لعرض معاد الصيانة القادم',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 15.sp),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Form(
+                  key: formKey,
+                  child: TextFormField(
+                    controller: kmController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(6),
+                    ],
+                    style: TextStyle(
+                        color: Theme.of(context).secondaryHeaderColor,
+                        fontSize: 13.sp),
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(5),
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).hintColor,
+                        ),
+                        prefixIconColor: Theme.of(context).secondaryHeaderColor,
+                        suffixIconColor: Theme.of(context).secondaryHeaderColor,
+                        labelText: 'عداد الكيلومتر الحالي',
+                        prefixIcon: const Icon(CupertinoIcons.speedometer),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).secondaryHeaderColor,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Theme.of(context).secondaryHeaderColor,
                         ))),
-                autovalidateMode:
-                AutovalidateMode.onUserInteraction,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'برجاء ادخال البيانات';
-                  }
-                  if (value != '' &&
-                      value.toDouble() < oldKm) {
-                    return 'العداد الحالي اقل من العداد السابق';
-                  }
-                  return null;
-                },
-              ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'برجاء ادخال البيانات';
+                      }
+                      if (value != '' && value.toDouble() < oldKm) {
+                        return 'العداد الحالي اقل من العداد السابق';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-      ],
-    ),
-    actions: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: defaultButton(
-          onTap: () {
-            if (formKey.currentState!.validate()) {
-              navigateToAnimated(
-                context: context,
-                widget: MaintenanceScheduleScreen(km: kmController.text.toInt()),
-              );
-            }
-          },
-          text: 'تم',
-          width: displayWidth(context) * 0.23,
-          height: 28.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: defaultColor,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: defaultButton(
+              onTap: () {
+                if (formKey.currentState!.validate()) {
+                  navigateToAnimated(
+                    context: context,
+                    widget: MaintenanceScheduleScreen(
+                        km: kmController.text.toInt()),
+                  );
+                }
+              },
+              text: 'تم',
+              width: displayWidth(context) * 0.23,
+              height: 28.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: defaultColor,
+              ),
+            ),
           ),
-        ),
-      ),
-    ],
-  );
+        ],
+      );
 }

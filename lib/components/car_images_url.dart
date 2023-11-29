@@ -136,7 +136,7 @@ String mazda3SwichCase({
         return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_black.png?alt=media&token=101ff4c7-5bf3-4107-8601-6c3d58449ede';
       }
       case 'أبيض' : {
-        return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_white.png?alt=media&token=4f6b06f1-bbc7-4b9e-981f-c3146895c93c';
+        return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_white.png?alt=media&token=3c567c7c-fd6f-4484-9c69-30bffac1d838';
       }
       case 'رمادي' : {
         return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_grey.png?alt=media&token=5e641231-7926-4cad-9bce-a510494dfb51';
@@ -151,7 +151,7 @@ String mazda3SwichCase({
         return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_ferany.png?alt=media&token=ca6f0a69-4f94-4247-8009-55bdb485750f';
       }
       case 'أزرق' : {
-        return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_blue.png?alt=media&token=cb94fa8e-979f-4a39-bc2f-dfd70075690a';
+        return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_blue.png?alt=media&token=d1da6c21-e324-4972-8849-b51687f7e60f';
       }
       case 'ذهبي' : {
         return 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2015-2020%2Fmazda3_2015_brown.png?alt=media&token=942b7360-0d58-4788-a912-47b949b2643e';
