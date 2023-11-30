@@ -171,12 +171,8 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                       return SlideTransition(
                                         position: carSlidingAnimation,
                                         child: Image(
-                                          width: displayWidth(context) <= 385
-                                              ? 270.w
-                                              : 305.w,
-                                          image: const AssetImage(
-                                            'assets/images/mazda3copy.png',
-                                          ),
+                                          width: displayWidth(context) <= 385 ? 330.w : 350.w,
+                                          image: const AssetImage('assets/images/mazda3.png'),
                                         ),
                                       );
                                     }),

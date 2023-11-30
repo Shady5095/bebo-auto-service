@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,19 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDOz0KcIwer6rBEsS9Z06eaZLeLts5GLzA',
-    appId: '1:707769663992:web:188ffe3094dfddf2c0560d',
-    messagingSenderId: '707769663992',
-    projectId: 'bebo-auto-service',
-    authDomain: 'bebo-auto-service.firebaseapp.com',
-    storageBucket: 'bebo-auto-service.appspot.com',
-    measurementId: 'G-GE1LVNF7GR',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBJJiibFYA8v3Slr4Q8A83Y398ybfIsDA8',
-    appId: '1:707769663992:android:407ecb56919f7922c0560d',
+    appId: '1:707769663992:android:910bf33f02c059e1c0560d',
     messagingSenderId: '707769663992',
     projectId: 'bebo-auto-service',
     storageBucket: 'bebo-auto-service.appspot.com',
@@ -68,14 +64,5 @@ class DefaultFirebaseOptions {
     projectId: 'bebo-auto-service',
     storageBucket: 'bebo-auto-service.appspot.com',
     iosBundleId: 'com.example.beboAutoService',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCSjBBnfsCvnuTtmrW55o-LDCwuBJhhMEE',
-    appId: '1:707769663992:ios:6701de322410ca29c0560d',
-    messagingSenderId: '707769663992',
-    projectId: 'bebo-auto-service',
-    storageBucket: 'bebo-auto-service.appspot.com',
-    iosBundleId: 'com.example.beboAutoService.RunnerTests',
   );
 }

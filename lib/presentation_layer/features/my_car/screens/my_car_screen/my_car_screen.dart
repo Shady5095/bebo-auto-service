@@ -99,7 +99,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
                             child: Column(
                               children: [
                                 SizedBox(
-                                  height: 28.h,
+                                  height: 32.h,
                                 ),
                                 Text(
                                   '${userData!.carModel} ${userData.year}',
