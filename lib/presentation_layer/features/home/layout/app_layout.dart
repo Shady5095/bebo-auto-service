@@ -45,6 +45,7 @@ class _AppLayoutState extends State<AppLayout> {
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging.instance.requestPermission();
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       for (var key in event.data.keys) {
         if (key == 'newOffer') {
