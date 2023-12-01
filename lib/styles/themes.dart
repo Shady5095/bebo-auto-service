@@ -35,8 +35,9 @@ ThemeData darkTheme(context) => ThemeData(
       ),
       inputDecorationTheme: InputDecorationTheme(
         fillColor: Colors.white,
-        counterStyle: const TextStyle(
-          color: Colors.white54
+        counterStyle:  TextStyle(
+          color: Colors.white54,
+          fontSize: 9.sp
         ),
         prefixIconColor: Colors.white,
         suffixIconColor: Colors.white,

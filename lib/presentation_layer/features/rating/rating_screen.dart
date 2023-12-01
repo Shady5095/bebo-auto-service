@@ -48,7 +48,7 @@ class _RatingScreenState extends State<RatingScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            toolbarHeight: 35,
+            toolbarHeight: 30.h,
             actions: [
               IconButton(
                   onPressed: () {
@@ -57,9 +57,10 @@ class _RatingScreenState extends State<RatingScreen> {
                       widget: const AppLayout(),
                     );
                   },
-                  icon: const Icon(
+                  icon:  Icon(
                     Icons.close,
                     color: Colors.white,
+                    size: 17.sp,
                   ))
             ],
           ),
@@ -91,9 +92,10 @@ class _RatingScreenState extends State<RatingScreen> {
                     minRating: 1,
                     direction: Axis.horizontal,
                     unratedColor: Colors.black.withOpacity(0.7),
+                    itemSize: 35.sp,
                     itemCount: 5,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => const Icon(
+                    itemBuilder: (context, _) =>  const Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),

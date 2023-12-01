@@ -118,12 +118,12 @@ class SplashScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
-            body: Container(
-              width: displayWidth(context),
-              height: displayHeight(context),
-              padding: const EdgeInsets.all(60).h,
-              decoration: const BoxDecoration(color: defaultBackgroundColor),
-              child: Image.asset('assets/images/logo.png')
+            body: Center(
+              child: Container(
+                padding: const EdgeInsets.all(60).h,
+                decoration: const BoxDecoration(color: defaultBackgroundColor),
+                child: Image.asset('assets/images/logo.png')
+              ),
             ),
           );
         },
