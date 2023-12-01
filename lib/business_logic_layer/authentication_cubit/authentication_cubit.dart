@@ -54,11 +54,11 @@ class AuthCubit extends Cubit<AuthStates> {
   }) async {
     emit(RegisterLoadingState());
     bool isChassisNoExists = await isChassisNoExistsBefore(chassisNo);
-    if(isChassisNoExists){
+    if (isChassisNoExists) {
       emit(ChassisNoExistsBeforeState());
-    }
-    else{
-      String carImageUrl = carPhotoUrl(carModel: carModel, carYear: year, carColor: color);
+    } else {
+      String carImageUrl =
+          carPhotoUrl(carModel: carModel, carYear: year, carColor: color);
       UserModel userModel = UserModel(
         firstName: firstName,
         lastName: lastName,
@@ -79,7 +79,10 @@ class AuthCubit extends Cubit<AuthStates> {
         serviceStreak: 0,
         carImage: carImageUrl,
       );
-      await db.collection('unverifiedUsers').add(userModel.toMap()).then((value) {
+      await db
+          .collection('unverifiedUsers')
+          .add(userModel.toMap())
+          .then((value) {
         emit(RegisterSuccessState());
         db.collection('unverifiedUsers').doc(value.id).update(
             {'newUserId': value.id, 'time': FieldValue.serverTimestamp()});
@@ -95,7 +98,8 @@ class AuthCubit extends Cubit<AuthStates> {
             "click_action": "FLUTTER_NOTIFICATION_CLICK"
           },
         });
-        FirebaseMessaging.instance.subscribeToTopic(chassisNo); // to send to customer notification when he accepted
+        FirebaseMessaging.instance.subscribeToTopic(
+            chassisNo); // to send to customer notification when he accepted
         CacheHelper.putString(key: 'chassisNo', value: chassisNo);
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -108,30 +112,31 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   Future<bool> isChassisNoExistsBefore(String chassisNo) async {
-    bool isExists = false ;
+    bool isExists = false;
     await db.collection('unverifiedUsers').get().then((value) {
-      for(var doc in value.docs){
-        if(doc.data()['chassisNo'] == chassisNo){
-          isExists =  true ;
+      for (var doc in value.docs) {
+        if (doc.data()['chassisNo'] == chassisNo) {
+          isExists = true;
         }
       }
     });
-    if(!isExists){
+    if (!isExists) {
       await db.collection('verifiedUsers').get().then((value) {
-        for(var doc in value.docs){
-          if(doc.data()['chassisNo'] == chassisNo){
-            isExists =  true ;
+        for (var doc in value.docs) {
+          if (doc.data()['chassisNo'] == chassisNo) {
+            isExists = true;
           }
         }
       });
     }
-    return isExists ;
+    return isExists;
   }
 
   Future<void> userLogin({
     required String email,
     required String password,
     required BuildContext context,
+    bool createPassFirstTime = false,
   }) async {
     emit(LoginLoadingState());
     try {
@@ -141,19 +146,25 @@ class AuthCubit extends Cubit<AuthStates> {
         password: password,
       )
           .then((userCredential) async {
-        await CacheHelper.putString(key: 'password', value: password);
+        if (!createPassFirstTime) {
+          await CacheHelper.putString(key: 'password', value: password);
+        }
         await CacheHelper.putString(key: 'uId', value: userCredential.user!.uid)
             .then((value) async {
           myUid = userCredential.user?.uid;
           await MainAppCubit.get(context).getUserData().then((value) async {
             await precacheImage(
-               CachedNetworkImageProvider(
-                  value!.carImage??'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
+              CachedNetworkImageProvider(value!.carImage ??
+                  'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
               context,
             ).then((value) {
               emit(LoginSuccessState());
-              db.collection('verifiedUsers').doc(userCredential.user!.uid).get().then((value) {
-                if(value.exists){
+              db
+                  .collection('verifiedUsers')
+                  .doc(userCredential.user!.uid)
+                  .get()
+                  .then((value) {
+                if (value.exists) {
                   navigateAndFinish(
                     context: context,
                     widget: const AppLayout(),
@@ -161,9 +172,8 @@ class AuthCubit extends Cubit<AuthStates> {
                   );
                   FirebaseMessaging.instance.subscribeToTopic('all');
                   FirebaseMessaging.instance.subscribeToTopic(myUid!);
-                }
-                else{
-                  myUid = null ;
+                } else {
+                  myUid = null;
                   FirebaseMessaging.instance.unsubscribeFromTopic('all');
                   CacheHelper.removeData(key: 'uId');
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -220,8 +230,7 @@ class AuthCubit extends Cubit<AuthStates> {
           }
           break;
       }
-      emit(LoginErrorState(errorText??''));
-
+      emit(LoginErrorState(errorText ?? ''));
     }
   }
 
@@ -232,13 +241,15 @@ class AuthCubit extends Cubit<AuthStates> {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) {
       emit(ResetPasswordState());
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(' تم ارسال رابط تغيير كلمه السر لبريد اليكتروني  :  $email'),
+        content:
+            Text(' تم ارسال رابط تغيير كلمه السر لبريد اليكتروني  :  $email'),
       ));
     }).catchError((error) {
       if (error.toString() ==
           '[firebase_auth/channel-error] Unable to establish connection on channel.') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('برجاء ادخال البريد الاليكتروني لارسال رابط لتغيير كلمه المرور'),
+          content: Text(
+              'برجاء ادخال البريد الاليكتروني لارسال رابط لتغيير كلمه المرور'),
           backgroundColor: Colors.red,
         ));
       } else {

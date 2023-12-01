@@ -178,4 +178,5 @@ class MainAppCubit extends Cubit<MainAppStates> {
     });
     emit(ChassisNoCheckState(isChassisNoExist));
   }
+
 }
