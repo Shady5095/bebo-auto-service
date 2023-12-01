@@ -60,7 +60,7 @@ class _RatingScreenState extends State<RatingScreen> {
                   icon:  Icon(
                     Icons.close,
                     color: Colors.white,
-                    size: 17.sp,
+                    size: 21.sp,
                   ))
             ],
           ),
