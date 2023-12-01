@@ -150,14 +150,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ),
                           Positioned(
                             bottom: 0,
-                            left: displayWidth(context) <= 385 ? displayWidth(context)*0.21 :displayWidth(context)*0.16,
+                            left: displayWidth(context) <= 385 ? displayWidth(context)*0.21 : displayWidth(context) > 600 ?  displayWidth(context)*0.22 : displayWidth(context)*0.16,
                             child: AnimatedBuilder(
                                 animation: carSlidingAnimation,
                                 builder: (context, _) {
                                   return SlideTransition(
                                     position: carSlidingAnimation,
                                     child: Image(
-                                      width: displayWidth(context) <= 385 ? 330.w : 350.w,
+                                      width: displayWidth(context) <= 385 ? 330.w :  displayWidth(context) > 600 ? 330.w : 350.w,
                                       image: const AssetImage('assets/images/mazda3.png'),
                                     ),
                                   );
