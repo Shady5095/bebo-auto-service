@@ -36,25 +36,24 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Need to take image</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Need to use mic</string>
+	<string>Need to use camera to take image to put it in the app and send it to the admin</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Need to access gallery to download</string>
+	<string>Need to access gallery to download this image and save it to gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Need to upload image</string>
+	<string>Need to access gallery to upload an image to to put it in the app and  send it to the admin</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
