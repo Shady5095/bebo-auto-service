@@ -36,11 +36,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Our apps uses the camera to capture photos for sending images in chat</string>
+	<string>Our apps uses the camera to capture photos for sending them in chat</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Need to access gallery to download invoice image and save it to gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Our apps uses photo library to select photos for sending images in chat</string>
+	<string>Our apps uses photo library to select photos for sending them in chat</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
