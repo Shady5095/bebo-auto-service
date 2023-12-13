@@ -1,14 +1,21 @@
 import 'package:bebo_auto_service/components/components.dart';
+import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
+import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_states.dart';
+import '../../../../data_layer/local/cache_helper.dart';
+import '../../home/home_screen/blur_home_screen.dart';
 
 class MyProfileScreen extends StatefulWidget {
   final UserModel userData;
@@ -420,6 +427,32 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fallback: (context) =>
                           Center(child: myCircularProgressIndicator()),
                     ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Center(
+                      child: defaultButton(
+                          onTap: () {
+                            showDialog(context: context, builder: (context)=>MyAlertDialog(
+                              onTapYes: (){
+                                Navigator.pop(context);
+                                MainAppCubit.get(context).deleteCustomerAccount(myUid!);
+                                FirebaseAuth.instance.currentUser!.delete();
+                                logOut(context);
+                              },
+                              isFailed: true,
+                              title: 'هل انت متأكد من حذف حسابك ؟ \nسيتم حذف جميع الفواتير وتقارير الفحص ولا يمكن استرجاعهم',
+                            ));
+                          },
+                          text: 'حذف الحساب',
+                          decoration: BoxDecoration(
+                            color: Colors.grey[700],
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          height: 36.h,
+                          width:
+                          MediaQuery.of(context).size.width * 0.70),
+                    ),
                   ],
                 ),
               ),
@@ -428,5 +461,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         );
       },
     );
+  }
+  Future<void> logOut(context) async {
+    await FirebaseAuth.instance.signOut();
+    FirebaseMessaging.instance.unsubscribeFromTopic('all');
+    FirebaseMessaging.instance.unsubscribeFromTopic(myUid??'');
+    CacheHelper.removeData(
+        key: 'uId'
+    )?.then((value) {
+      if (value) {
+        myUid = null ;
+        Navigator.pushReplacement(context, PageTransition(
+            type: PageTransitionType.fade,
+            child: const BlurHomeScreen(),
+            duration: const Duration(milliseconds: 250)
+        ),
+        );
+      }
+    });
   }
 }

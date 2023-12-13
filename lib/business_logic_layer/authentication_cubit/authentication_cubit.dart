@@ -153,37 +153,41 @@ class AuthCubit extends Cubit<AuthStates> {
             .then((value) async {
           myUid = userCredential.user?.uid;
           await MainAppCubit.get(context).getUserData().then((value) async {
-            await precacheImage(
-              CachedNetworkImageProvider(value!.carImage ??
-                  'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
-              context,
-            ).then((value) {
-              emit(LoginSuccessState());
-              db
-                  .collection('verifiedUsers')
-                  .doc(userCredential.user!.uid)
-                  .get()
-                  .then((value) {
-                if (value.exists) {
-                  navigateAndFinish(
-                    context: context,
-                    widget: const AppLayout(),
-                    animation: PageTransitionType.leftToRight,
-                  );
-                  FirebaseMessaging.instance.subscribeToTopic('all');
-                  FirebaseMessaging.instance.subscribeToTopic(myUid!);
-                } else {
-                  myUid = null;
-                  FirebaseMessaging.instance.unsubscribeFromTopic('all');
-                  CacheHelper.removeData(key: 'uId');
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('تم حذف حسابك'),
-                    backgroundColor: Colors.red,
-                  ));
-                  userCredential.user!.delete();
-                }
+            if (value != null) {
+              await precacheImage(
+                CachedNetworkImageProvider(value.carImage ??
+                    'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
+                context,
+              ).then((value) {
+                emit(LoginSuccessState());
+                db
+                    .collection('verifiedUsers')
+                    .doc(userCredential.user!.uid)
+                    .get()
+                    .then((value) {
+                  if (value.exists) {
+                    navigateAndFinish(
+                      context: context,
+                      widget: const AppLayout(),
+                      animation: PageTransitionType.leftToRight,
+                    );
+                    FirebaseMessaging.instance.subscribeToTopic('all');
+                    FirebaseMessaging.instance.subscribeToTopic(myUid!);
+                  } else {
+                    myUid = null;
+                    FirebaseMessaging.instance.unsubscribeFromTopic('all');
+                    CacheHelper.removeData(key: 'uId');
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('تم حذف حسابك'),
+                      backgroundColor: Colors.red,
+                    ));
+                    userCredential.user!.delete();
+                  }
+                });
               });
-            });
+            } else {
+              emit(LoginErrorState('تم حذف هذا الحساب'));
+            }
           });
         });
       });

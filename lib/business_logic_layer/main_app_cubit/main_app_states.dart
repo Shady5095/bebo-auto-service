@@ -30,11 +30,18 @@ class SendComplaintSuccessState extends MainAppStates {}
 
 class SendComplaintErrorState extends MainAppStates {}
 
+class DeleteCustomerAccountSuccessState extends MainAppStates {}
+
+class DeleteCustomerReportLoadingState extends MainAppStates {}
+
+class DeleteCustomerReportSuccessState extends MainAppStates {}
+
 class ChassisNoCheckState extends MainAppStates {
   final bool isChassisNoExist ;
 
   ChassisNoCheckState(this.isChassisNoExist);
 }
+
 
 
 

@@ -7,6 +7,7 @@ import 'package:bebo_auto_service/presentation_layer/features/more_features/sett
 import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,7 @@ class MainAppCubit extends Cubit<MainAppStates> {
     const SettingsScreen(),
   ];
   var db = FirebaseFirestore.instance;
+  var storage = FirebaseStorage.instance;
 
   void changeBottomNav(int index) {
     currentIndex = index;
@@ -177,6 +179,88 @@ class MainAppCubit extends Cubit<MainAppStates> {
        isChassisNoExist = value.docs.isNotEmpty ;
     });
     emit(ChassisNoCheckState(isChassisNoExist));
+  }
+
+  Future<void> deleteCustomerAccount(String uid) async {
+    await deleteInvoices(uid);
+    await deleteInvoicesImages(uid);
+    await deleteReports(uid);
+    await deleteDocId(uid);
+    emit(DeleteCustomerAccountSuccessState());
+  }
+
+  Future<void> deleteInvoices(String uid) async {
+    await db.collection('verifiedUsers').doc(uid).collection('invoices').get().then((value) {
+      for(var invoiceDoc in value.docs){
+        db.collection('verifiedUsers').doc(uid).collection('invoices').doc(invoiceDoc.id).delete();
+      }
+    });
+  }
+
+  Future<void> deleteReports(String uid) async {
+    await db.collection('verifiedUsers').doc(uid).collection('reports').get().then((value) async {
+      for(var reportsDoc in value.docs){
+        await deleteCustomerReport(userDocId: uid, reportDocId: reportsDoc.id);
+      }
+    });
+  }
+  Future<void> deleteCustomerReport({
+    required String userDocId,
+    required String reportDocId,
+  }) async {
+    emit(DeleteCustomerReportLoadingState());
+    List<String> categoriesEn = [
+      'engineAndTransmission',
+      'brake',
+      'airCondition',
+      'suspension',
+      'electric',
+      'computer',
+      'interior',
+      'body',
+      'otherNotes',
+    ];
+    for (var collection in categoriesEn) {
+      await db
+          .collection('verifiedUsers')
+          .doc(userDocId)
+          .collection('reports')
+          .doc(reportDocId)
+          .collection(collection)
+          .get()
+          .then((value) {
+        for (var doc in value.docs) {
+          db
+              .collection('verifiedUsers')
+              .doc(userDocId)
+              .collection('reports')
+              .doc(reportDocId)
+              .collection(collection)
+              .doc(doc.id)
+              .delete();
+        }
+      });
+    }
+    await db
+        .collection('verifiedUsers')
+        .doc(userDocId)
+        .collection('reports')
+        .doc(reportDocId)
+        .delete();
+    emit(DeleteCustomerReportSuccessState());
+  }
+
+  Future<void> deleteDocId(String uid) async {
+    await db.collection('verifiedUsers').doc(uid).delete();
+  }
+  Future<void> deleteInvoicesImages(String uid) async {
+    storage.ref()
+        .child('Invoices/$uid')
+        .listAll().then((value) {
+      for (var element in value.items) {
+        storage.ref(element.fullPath).delete();
+      }
+    });
   }
 
 }

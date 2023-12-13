@@ -4,6 +4,7 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/chat/screens/chat_details_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,7 @@ class _AppLayoutState extends State<AppLayout> {
       }
     });
     getInit();
+    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
   }
 
   @override
