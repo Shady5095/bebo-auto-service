@@ -2,23 +2,34 @@
     <queries>
         <!-- If your app checks for SMS support -->
         <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="sms" />
+            <action
+                android:name="android.intent.action.VIEW"/>
+            <data
+                android:scheme="sms"/>
         </intent>
         <!-- If your app checks for call support -->
         <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="tel" />
+            <action
+                android:name="android.intent.action.VIEW"/>
+            <data
+                android:scheme="tel"/>
         </intent>
         <!-- If your application checks for inAppBrowserView launch mode support -->
         <intent>
-            <action android:name="android.support.customtabs.action.CustomTabsService" />
+            <action
+                android:name="android.support.customtabs.action.CustomTabsService"/>
         </intent>
     </queries>
     <application
         android:label="Bebo Auto Service"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/transparent"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -26,7 +37,6 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
@@ -56,4 +66,11 @@
             android:name="flutterEmbedding"
             android:value="2"/>
     </application>
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"/>
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"/>
 </manifest>

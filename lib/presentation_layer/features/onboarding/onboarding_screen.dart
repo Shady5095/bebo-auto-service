@@ -52,7 +52,7 @@ class _OnBoardingState extends State<OnBoarding> {
   Widget build(BuildContext context) {
     List<BoardingModel> boarding = [
       BoardingModel(
-        image1: 'assets/images/onboarding111.png',
+        image1: 'assets/images/onboarding1.png',
         image2: 'assets/images/maintenance.png',
         image2Alignment: AlignmentDirectional.bottomCenter,
         title: 'دليل شامل عن سيارتك',
@@ -66,14 +66,14 @@ class _OnBoardingState extends State<OnBoarding> {
         body: 'يمكنك معرفه توافر جميع قطع الغيار واسعارها',
       ),
       BoardingModel(
-        image1: 'assets/images/mazda3.png',
+        image1: 'assets/images/onboarding3.png',
         image2: 'assets/images/report.png',
         image2Alignment: AlignmentDirectional.bottomStart,
         title: 'فلوسك رجعالك نقاط',
         body: 'دلوقتي مع كل صيانه هتعملها تقدر تجمع نقط تستبدلها في صيانتك القادمه',
       ),
       BoardingModel(
-        image1: 'assets/images/onboarding3.png',
+        image1: 'assets/images/onboarding4.png',
         image2: 'assets/images/price.png',
         image2Alignment: AlignmentDirectional.bottomEnd,
         title: 'بيع واشتري بضمان المركز',

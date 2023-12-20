@@ -1,3 +1,4 @@
+import 'package:bebo_auto_service/components/constans.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,7 +79,8 @@ class _CircularPercentIndicatorWidgetState extends State<CircularPercentIndicato
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 13.sp,
-                  color: Colors.grey[500],
+                  color: (widget.notes) == null ? Colors.grey[500] : defaultColor,
+                  fontWeight:(widget.notes) == null ? null : FontWeight.w700
                 ),
               ),
             ),

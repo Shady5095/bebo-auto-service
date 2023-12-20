@@ -258,7 +258,8 @@ class _CarConditionExpandableWidgetState
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 13.sp,
-                                color: Colors.grey[500],
+                                  color: snapshot.data!.docs.last.data()['notes'] == null ? Colors.grey[500] : defaultColor,
+                                  fontWeight:snapshot.data!.docs.last.data()['notes'] == null ? null : FontWeight.w700
                               ),
                             ),
                           ),

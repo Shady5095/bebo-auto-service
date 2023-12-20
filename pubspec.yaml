@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.3+4
+version: 1.0.4+5
 
 environment:
   sdk: '>=3.1.2 <4.0.0'
@@ -116,10 +116,10 @@ flutter_native_splash:
   image_dark: assets/images/logo.png
   ios : true
   android_12:
-    image: assets/images/logo.png
+    #image: assets/images/logo12.png
     color_dark: "#232121"
     color: "#232121"
-    image_dark: assets/images/logo.png
+    #image_dark: assets/images/logo12.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
