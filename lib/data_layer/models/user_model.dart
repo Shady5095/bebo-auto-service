@@ -17,6 +17,7 @@ class UserModel {
   String? engineNo;
   String? carImage;
   int? serviceStreak;
+  bool? isLastServiceRated;
 
   UserModel({
     this.firstName,
@@ -37,6 +38,7 @@ class UserModel {
     this.engineNo,
     this.carImage,
     this.serviceStreak,
+    this.isLastServiceRated,
   });
 
   UserModel.fromJson(Map<String,dynamic> json){
@@ -58,6 +60,7 @@ class UserModel {
     engineNo = json['engineNo'];
     serviceStreak = json['serviceStreak'];
     carImage = json['carImage'];
+    isLastServiceRated = json['isLastServiceRated'];
 
   }
 
@@ -83,6 +86,7 @@ class UserModel {
         'engineNo' : engineNo ,
         'serviceStreak' : serviceStreak ,
         'carImage' : carImage ,
+        'isLastServiceRated' : isLastServiceRated ,
     };
   }
 }

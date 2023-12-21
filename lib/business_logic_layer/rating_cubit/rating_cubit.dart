@@ -71,6 +71,7 @@ class RatingCubit extends Cubit<RatingState> {
     });
     selectedRatingsText = [];
     selectedRatingsIndex = [];
+    makeServiceRated(myUid!);
     emit(SendRatingSuccessState());
     DioHelper.pushNotification(data: {
       'to': '/topics/admin',
@@ -83,6 +84,11 @@ class RatingCubit extends Cubit<RatingState> {
         "rating": 'rating',
         "click_action": "FLUTTER_NOTIFICATION_CLICK"
       },
+    });
+  }
+  void makeServiceRated(String docId){
+    db.collection('verifiedUsers').doc(docId).update({
+      'isLastServiceRated' : true ,
     });
   }
 }

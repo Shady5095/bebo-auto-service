@@ -57,9 +57,13 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
-      appBar: defaultAppbar(
-        context: context,
-        title: 'السيارات المعروضة للبيع',
+      appBar: AppBar(
+        title: Text(
+          'السيارات المعروضة للبيع',
+          style: TextStyle(
+            fontSize: 18.sp,
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () {
