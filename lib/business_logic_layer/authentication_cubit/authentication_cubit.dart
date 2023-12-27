@@ -78,6 +78,7 @@ class AuthCubit extends Cubit<AuthStates> {
         engineNo: engineNo,
         serviceStreak: 0,
         carImage: carImageUrl,
+        isLastServiceRated: true,
       );
       await db
           .collection('unverifiedUsers')
@@ -85,7 +86,7 @@ class AuthCubit extends Cubit<AuthStates> {
           .then((value) {
         emit(RegisterSuccessState());
         db.collection('unverifiedUsers').doc(value.id).update(
-            {'newUserId': value.id, 'time': FieldValue.serverTimestamp()});
+            {'newUserId': value.id, 'joinedDate': FieldValue.serverTimestamp()});
         DioHelper.pushNotification(data: {
           'to': '/topics/admin',
           'notification': {

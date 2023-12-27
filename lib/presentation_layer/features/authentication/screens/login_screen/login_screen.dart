@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
@@ -83,6 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextFormField(
                             controller: chassisNoController,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                            ],
                             maxLength: 8,
                             style: TextStyle(
                                 color: Theme.of(context)

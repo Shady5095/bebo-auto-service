@@ -13,7 +13,8 @@ import '../../../../data_layer/models/car_sell_models/seller_and_car_info_model.
 import 'car_sell_tab_view_screen.dart';
 
 class ListedCarsForSaleScreen extends StatefulWidget {
-  const ListedCarsForSaleScreen({Key? key}) : super(key: key);
+  final bool isFromBlurHomeScreen ;
+  const ListedCarsForSaleScreen({Key? key, required this.isFromBlurHomeScreen}) : super(key: key);
 
   @override
   State<ListedCarsForSaleScreen> createState() =>
@@ -61,7 +62,7 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
         title: Text(
           'السيارات المعروضة للبيع',
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 20.sp,
           ),
         ),
         actions: [
@@ -97,6 +98,20 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
                 size: 20.sp,
               ))
         ],
+        leading: widget.isFromBlurHomeScreen ? IconButton(
+          onPressed: () {
+                Navigator.pop(context);
+              },
+          icon: Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Theme.of(context).secondaryHeaderColor,
+              size: 19.sp,
+            ),
+          ),
+        ) : null,
+        titleSpacing: 12.w,
       ),
       body: FutureBuilder(
           future: FirebaseFirestore.instance

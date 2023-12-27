@@ -323,6 +323,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.phone,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(11),
+                            FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
                           ],
                           style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
@@ -465,6 +466,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 textCapitalization: TextCapitalization.words,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(6),
+                                  FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
                                 ],
                                 style: TextStyle(
                                     color:
@@ -505,6 +507,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: TextFormField(
                                 controller: chassisNo,
                                 keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                ],
                                 style: TextStyle(
                                     color:
                                         Theme.of(context).secondaryHeaderColor,
@@ -529,8 +534,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
-                                  } else if (value.length != 8) {
-                                    return 'رقم شاسيه غير صالح';
                                   }
                                   return null;
                                 },
@@ -543,6 +546,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: TextFormField(
                                 controller: engineNo,
                                 keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                ],
                                 textCapitalization: TextCapitalization.words,
                                 style: TextStyle(
                                     color:
@@ -567,8 +573,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
-                                  } else if (value.length != 6) {
-                                    return 'رقم ماتور غير صالح';
                                   }
                                   return null;
                                 },
@@ -702,6 +706,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               inputFormatters: [
                                                 LengthLimitingTextInputFormatter(
                                                     4),
+                                                FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
                                               ],
                                               style: TextStyle(
                                                   color: Colors.white,

@@ -330,6 +330,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(6),
+                      FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
                     ],
                     style: TextStyle(
                         color: Theme.of(context).secondaryHeaderColor,

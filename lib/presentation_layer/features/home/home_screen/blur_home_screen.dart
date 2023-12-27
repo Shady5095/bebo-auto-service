@@ -398,7 +398,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                 onTap: () {
                                                   navigateTo(
                                                     context: context,
-                                                    widget: const ListedCarsForSaleScreen()
+                                                    widget: const ListedCarsForSaleScreen(isFromBlurHomeScreen: true,)
                                                   );
                                                 },
                                                 text: 'سيارات للبيع بضمان المركز',

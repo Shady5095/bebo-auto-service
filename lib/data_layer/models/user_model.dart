@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   String? firstName ;
   String? lastName ;
@@ -18,6 +19,7 @@ class UserModel {
   String? carImage;
   int? serviceStreak;
   bool? isLastServiceRated;
+  Timestamp? joinedDate ;
 
   UserModel({
     this.firstName,
@@ -39,6 +41,7 @@ class UserModel {
     this.carImage,
     this.serviceStreak,
     this.isLastServiceRated,
+    this.joinedDate,
   });
 
   UserModel.fromJson(Map<String,dynamic> json){
@@ -61,6 +64,7 @@ class UserModel {
     serviceStreak = json['serviceStreak'];
     carImage = json['carImage'];
     isLastServiceRated = json['isLastServiceRated'];
+    joinedDate = json['joinedDate'];
 
   }
 
@@ -87,6 +91,7 @@ class UserModel {
         'serviceStreak' : serviceStreak ,
         'carImage' : carImage ,
         'isLastServiceRated' : isLastServiceRated ,
+        'joinedDate' : joinedDate ,
     };
   }
 }

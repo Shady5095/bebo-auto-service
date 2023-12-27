@@ -28,7 +28,7 @@ class MainAppCubit extends Cubit<MainAppStates> {
     const HomeScreen(),
     const MyCarScreen(),
     const SparePartsCategoriesScreen(),
-    const ListedCarsForSaleScreen(),
+    const ListedCarsForSaleScreen(isFromBlurHomeScreen: false),
     const SettingsScreen(),
   ];
   var db = FirebaseFirestore.instance;
