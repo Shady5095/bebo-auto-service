@@ -535,6 +535,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
                                   }
+                                  else if (value.length < 6) {
+                                    return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
+                                  }
                                   return null;
                                 },
                               ),
@@ -573,6 +576,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'برجاء ادخال البيانات';
+                                  }
+                                  else if (value.length < 6) {
+                                    return 'رقم الماتور يجب ان لا يقل عن 6 ارقام';
                                   }
                                   return null;
                                 },

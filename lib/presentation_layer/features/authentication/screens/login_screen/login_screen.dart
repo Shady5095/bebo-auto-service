@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
@@ -18,6 +16,7 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 final passController = TextEditingController();
 final chassisNoController = TextEditingController();
 final formKey = GlobalKey<FormState>();
@@ -28,30 +27,28 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(),
-      child: BlocConsumer<AuthCubit,AuthStates>(
-        listener: (context, state){
-          if(state is LoginErrorState){
-            if(Platform.isAndroid){
+      child: BlocConsumer<AuthCubit, AuthStates>(
+        listener: (context, state) {
+          if (state is LoginErrorState) {
+            if (Platform.isAndroid) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.error),
                 backgroundColor: Colors.red,
-
               ));
-            }
-            else{
+            } else {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text('هذا الحساب غير متوفر او لم يتم قبوله من قبل المسئول'),
+                content:
+                    Text('هذا الحساب غير متوفر او لم يتم قبوله من قبل المسئول'),
                 backgroundColor: Colors.red,
-
               ));
             }
           }
         },
-        builder: (context, state){
+        builder: (context, state) {
           var cubit = AuthCubit.get(context);
           return Scaffold(
             appBar: defaultAppbar(context: context),
-            body : GestureDetector(
+            body: GestureDetector(
               onTap: () {
                 unFocusKeyboard(context);
               },
@@ -69,13 +66,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 40.h,
                           ),
-                           Center(
+                          Center(
                             child: Image(
                               width: 130.w,
                               height: 130.h,
-                              image: const AssetImage(
-                                  'assets/images/logo.png'
-                              ),
+                              image: const AssetImage('assets/images/logo.png'),
                             ),
                           ),
                           SizedBox(
@@ -84,32 +79,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextFormField(
                             controller: chassisNoController,
                             keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
-                            ],
-                            maxLength: 8,
                             style: TextStyle(
-                                color: Theme.of(context)
-                                    .secondaryHeaderColor,
+                                color: Theme.of(context).secondaryHeaderColor,
                                 fontSize: 13.sp),
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(5),
                               labelStyle: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 13.sp
-                              ),
+                                  color: Colors.white54, fontSize: 13.sp),
                               labelText: 'رقم الشاسيه (من الرخصه)',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
                             ),
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'برجاء ادخال البيانات';
-                              } else if (value.length < 8) {
-                                return 'رقم الشاسيه يجب ان لا يقل عن 8 ارقام';
+                              } else if (value.length < 6) {
+                                return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
                               }
                               return null;
                             },
@@ -124,16 +112,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               focusNode: focusNode,
                               keyboardType: TextInputType.visiblePassword,
                               style: TextStyle(
-                                  color: Theme.of(context)
-                                      .secondaryHeaderColor,
+                                  color: Theme.of(context).secondaryHeaderColor,
                                   fontSize: 13.sp),
                               obscureText: cubit.isPassword,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(5),
                                 labelStyle: TextStyle(
-                                    color: Colors.white54,
-                                    fontSize: 13.sp
-                                ),
+                                    color: Colors.white54, fontSize: 13.sp),
                                 labelText: 'كلمه السر',
                                 suffixIcon: IconButton(
                                   onPressed: () {
@@ -148,8 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'برجاء ادخال البيانات';
@@ -172,22 +156,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   cubit.userLogin(
                                       email: chassisNoController.text,
                                       password: passController.text.trim(),
-                                      context: context
-                                  );
+                                      context: context);
                                 }
                               },
                               height: 45.h,
                               text: 'تسجيل الدخول',
-                              textColor:
-                              Theme.of(context).secondaryHeaderColor,
+                              textColor: Theme.of(context).secondaryHeaderColor,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: defaultColor
-                              ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: defaultColor),
                             ),
-                            fallback: (context) =>  Center(
-                                child: myCircularProgressIndicator()
-                            ),
+                            fallback: (context) =>
+                                Center(child: myCircularProgressIndicator()),
                           ),
                           SizedBox(
                             height: 11.h,
@@ -198,24 +178,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               Text(
                                 'ليس لديك حساب ؟',
                                 style: TextStyle(
-                                    color: Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 14.sp
-                                ),
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: 14.sp),
                               ),
                               TextButton(
                                 onPressed: () {
                                   navigateToAnimated(
-                                    context: context,
-                                    widget: const RegisterScreen(),
-                                    animation: PageTransitionType.leftToRight
-                                  );
+                                      context: context,
+                                      widget: const RegisterScreen(),
+                                      animation:
+                                          PageTransitionType.leftToRight);
                                 },
-                                child:  Text(
+                                child: Text(
                                   'تسجيل',
                                   style: TextStyle(
-                                      fontSize: 13.sp,
-                                    color: defaultColor
-                                  ),
+                                      fontSize: 13.sp, color: defaultColor),
                                 ),
                               ),
                             ],
