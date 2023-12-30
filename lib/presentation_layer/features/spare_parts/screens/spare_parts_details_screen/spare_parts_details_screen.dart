@@ -73,40 +73,45 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
                         tag: '${widget.sparePartsModel.id}',
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image(
-                            errorBuilder: (BuildContext? context,
-                                Object? exception,
-                                StackTrace? stackTrace) {
-                              return const Center(
-                                child: Icon(
-                                  Icons.warning_amber,
-                                  color: Colors.red,
-                                  size: 100,
-                                ),
-                              );
-                            },
-                            loadingBuilder: (BuildContext? context,
-                                Widget? child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child!;
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: defaultColor,
-                                  value: loadingProgress
-                                      .expectedTotalBytes !=
-                                      null
-                                      ? loadingProgress
-                                      .cumulativeBytesLoaded /
-                                      loadingProgress
-                                          .expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            },
-                            image: CachedNetworkImageProvider(
-                              '${widget.sparePartsModel.image}',
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxHeight: displayHeight(context)*0.60
+                            ),
+                            child: Image(
+                              errorBuilder: (BuildContext? context,
+                                  Object? exception,
+                                  StackTrace? stackTrace) {
+                                return const Center(
+                                  child: Icon(
+                                    Icons.warning_amber,
+                                    color: Colors.red,
+                                    size: 100,
+                                  ),
+                                );
+                              },
+                              loadingBuilder: (BuildContext? context,
+                                  Widget? child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child!;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: defaultColor,
+                                    value: loadingProgress
+                                        .expectedTotalBytes !=
+                                        null
+                                        ? loadingProgress
+                                        .cumulativeBytesLoaded /
+                                        loadingProgress
+                                            .expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                              image: CachedNetworkImageProvider(
+                                '${widget.sparePartsModel.image}',
+                              ),
                             ),
                           ),
                         ),
@@ -241,8 +246,8 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
       if(widget.sparePartsModel.isShowPriceToCustomer!){
         return Center(
           child: Text(
-            '${widget.sparePartsModel.onePrice}'
-                .addCommaToString(),
+            '${'${widget.sparePartsModel.onePrice}'
+                .addCommaToString()} L.E ',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: defaultColor,
