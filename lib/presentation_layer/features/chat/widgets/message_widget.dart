@@ -121,9 +121,8 @@ class MessageWidget extends StatelessWidget {
                                               return child!;
                                             }
                                             return Center(
-                                              child: SizedBox(
-                                                width: 30,
-                                                height: 30,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(40.0),
                                                 child: CircularProgressIndicator(
                                                   color: defaultColor,
                                                   value: loadingProgress

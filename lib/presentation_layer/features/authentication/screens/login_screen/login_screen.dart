@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'برجاء ادخال البيانات';
-                                } else if (value.length < 8) {
+                                } else if (value.length < 6) {
                                   return 'كلمه السر غير صالحة';
                                 }
                                 return null;

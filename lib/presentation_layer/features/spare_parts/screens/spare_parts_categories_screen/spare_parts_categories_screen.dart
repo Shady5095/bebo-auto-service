@@ -315,41 +315,47 @@ class _SparePartsCategoriesScreenState
                           tag: '${sparePartsModel.id}',
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Image(
-                              errorBuilder: (BuildContext? context,
-                                  Object? exception, StackTrace? stackTrace) {
-                                return const Center(
-                                  child: Icon(
-                                    Icons.warning_amber,
-                                    color: Colors.red,
-                                    size: 100,
-                                  ),
-                                );
-                              },
-                              loadingBuilder: (BuildContext? context,
-                                  Widget? child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child!;
-                                return Center(
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: CircularProgressIndicator(
-                                      color: defaultColor,
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
+                            child: Container(
+                              constraints: BoxConstraints(
+                                  maxWidth: 90.w,
+                                  minWidth: 50.w,
+                                  minHeight: 40.h
+                              ),
+                              child: Image(
+                                errorBuilder: (BuildContext? context,
+                                    Object? exception, StackTrace? stackTrace) {
+                                  return  Center(
+                                    child: Icon(
+                                      Icons.warning_amber,
+                                      color: Colors.red,
+                                      size: 30.sp,
                                     ),
-                                  ),
-                                );
-                              },
-                              image: CachedNetworkImageProvider(
-                                '${sparePartsModel.image}',
+                                  );
+                                },
+                                loadingBuilder: (BuildContext? context,
+                                    Widget? child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child!;
+                                  return Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: CircularProgressIndicator(
+                                        color: defaultColor,
+                                        value:
+                                            loadingProgress.expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                image: CachedNetworkImageProvider(
+                                  '${sparePartsModel.image}',
+                                ),
                               ),
                             ),
                           ),

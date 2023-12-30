@@ -239,9 +239,8 @@ class _ListedCarsForSaleScreenState extends State<ListedCarsForSaleScreen> {
                                     ImageChunkEvent? loadingProgress) {
                                   if (loadingProgress == null) return child!;
                                   return Center(
-                                    child: SizedBox(
-                                      width: 30,
-                                      height: 30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
                                       child: CircularProgressIndicator(
                                         color: defaultColor,
                                         value: loadingProgress
