@@ -7,7 +7,6 @@ import 'package:bebo_auto_service/presentation_layer/features/more_features/sett
 import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +24,6 @@ class MainAppCubit extends Cubit<MainAppStates> {
   static MainAppCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
-  final remoteConfig = FirebaseRemoteConfig.instance;
 
   List<Widget> screens = [
     const HomeScreen(),
@@ -264,16 +262,6 @@ class MainAppCubit extends Cubit<MainAppStates> {
         storage.ref(element.fullPath).delete();
       }
     });
-  }
-  Future<bool> remoteConfigCheck() async {
-    bool isShowSensitiveData = false ;
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(seconds: 1),
-      minimumFetchInterval: const Duration(seconds: 1),
-    ));
-    isShowSensitiveData = remoteConfig.getBool('isShowSensitiveData');
-    await remoteConfig.fetchAndActivate();
-    return isShowSensitiveData ;
   }
   Future<String> getCountry() async{
     emit(GetCountryLoadingState());
