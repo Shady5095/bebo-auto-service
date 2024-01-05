@@ -859,47 +859,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           condition: state is! RegisterLoadingState,
                           builder: (context) => defaultButton(
                             onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                if (carModelSelected == null ||
-                                    carYearSelected == null ||
-                                    carColorSelected == null ||
-                                    bodyTypeSelected == null ||
-                                    transmissionSelected == null ||
-                                    secondLetter == null) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text('برجاء ادخال جميع البيانات '),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                } else if (firstLetter == null) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text(
-                                        'برجاء ادخال اول حرف من نمر السياره'),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                } else {
-                                  cubit
-                                      .userRegister(
-                                          email: '${chassisNo.text}@gmail.com',
-                                          password: chassisNo.text,
-                                          firstName: firstNameController.text,
-                                          lastName: lastNameController.text,
-                                          carModel: carModelSelected!,
-                                          year: carYearSelected!.toInt(),
-                                          transmission: transmissionSelected!,
-                                          color: carColorSelected!,
-                                          bodyType: bodyTypeSelected!,
-                                          km: kiloMeterCount.text.toInt(),
-                                          chassisNo: chassisNo.text,
-                                          engineNo: engineNo.text,
-                                          plate:
-                                              '$firstLetter $secondLetter ${thirdLetter ?? ''}  ${plateNo.text}',
-                                          phone: phoneController.text,
-                                          context: context)
-                                      .then((value) {});
+                              if(widget.isShowSensitiveData){
+                                if (formKey.currentState!.validate()) {
+                                  if (carModelSelected == null ||
+                                      carYearSelected == null ||
+                                      carColorSelected == null ||
+                                      bodyTypeSelected == null ||
+                                      transmissionSelected == null ||
+                                      secondLetter == null) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text('برجاء ادخال جميع البيانات '),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  } else if (firstLetter == null) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text(
+                                          'برجاء ادخال اول حرف من نمر السياره'),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  } else {
+                                    cubit
+                                        .userRegister(
+                                        email: '${chassisNo.text}@gmail.com',
+                                        password: chassisNo.text,
+                                        firstName: firstNameController.text,
+                                        lastName: lastNameController.text,
+                                        carModel: carModelSelected!,
+                                        year: carYearSelected!.toInt(),
+                                        transmission: transmissionSelected!,
+                                        color: carColorSelected!,
+                                        bodyType: bodyTypeSelected!,
+                                        km: kiloMeterCount.text.toInt(),
+                                        chassisNo: chassisNo.text,
+                                        engineNo: engineNo.text,
+                                        plate:
+                                        '$firstLetter $secondLetter ${thirdLetter ?? ''}  ${plateNo.text}',
+                                        phone: phoneController.text,
+                                        context: context)
+                                        .then((value) {});
+                                  }
                                 }
                               }
+                              else
+                                {
+                                  cubit
+                                      .userRegister(
+                                      email: '11111111@gmail.com',
+                                      password: '11111111',
+                                      firstName: firstNameController.text,
+                                      lastName: lastNameController.text,
+                                      carModel: carModelSelected!,
+                                      year: carYearSelected!.toInt(),
+                                      transmission: transmissionSelected!,
+                                      color: carColorSelected!,
+                                      bodyType: bodyTypeSelected!,
+                                      km: kiloMeterCount.text.toInt(),
+                                      chassisNo: '11111111',
+                                      engineNo: '111111',
+                                      plate:
+                                      'ا ا ا 111',
+                                      phone: phoneController.text,
+                                      context: context)
+                                      .then((value) {});
+                                }
                             },
                             text: 'تسجيل',
                             height: 40.h,
