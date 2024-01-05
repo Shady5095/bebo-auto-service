@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/invoices_screen/invoices_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/maintenance_schedule_screen/maintenance_schedule_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/my_car_reports_sceens/listed_reports_screen.dart';
@@ -43,6 +44,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
   var formKey = GlobalKey<FormState>();
   var kmController = TextEditingController();
   double oldKm = 0;
+  bool isShowSensitiveData = CacheHelper.getString(key: 'country') == 'Egypt' ;
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +118,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
                                     //height: 1.4.sp,
                                   ),
                                 ),
+                                if(isShowSensitiveData)
                                 Text(
                                   '${userData.plate}',
                                   style: TextStyle(
@@ -132,6 +135,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
                                     //height: 1.2.h,
                                   ),
                                 ),
+                                if(isShowSensitiveData)
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,

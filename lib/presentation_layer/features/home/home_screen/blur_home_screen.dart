@@ -90,12 +90,6 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppCubit, MainAppStates>(
       listener: (context, state) {
-        if(state is GetCountrySuccessState){
-          navigateTo(
-            context: context,
-            widget: RegisterScreen(isShowSensitiveData: state.country == 'Egypt')
-          );
-        }
         if(state is GetCountryErrorState){
           showDialog(context: context, builder: (context)=>const MyAlertDialog(
             title: 'برجاء التحقق من أتصال الأنترنت',
@@ -353,7 +347,12 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                   }
                                                   else
                                                     {
-                                                      MainAppCubit.get(context).getCountry();
+                                                      MainAppCubit.get(context).getCountry().then((value) {
+                                                        navigateTo(
+                                                            context: context,
+                                                            widget: RegisterScreen(isShowSensitiveData: value == 'Egypt')
+                                                        );
+                                                      });
                                                     }
 
                                                 },
@@ -456,10 +455,22 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                   ),
                                                   TextButton(
                                                     onPressed: () {
-                                                      navigateTo(
+                                                      if(CacheHelper.getString(key: 'country') != null){
+                                                        String? country = CacheHelper.getString(key: 'country') ;
+                                                        navigateTo(
                                                           context: context,
-                                                          widget:
-                                                              const LoginScreen());
+                                                          widget: LoginScreen(isShowSensitiveData: country == 'Egypt'),
+                                                        );
+                                                      }
+                                                      else
+                                                      {
+                                                        MainAppCubit.get(context).getCountry().then((value) {
+                                                          navigateTo(
+                                                              context: context,
+                                                              widget: LoginScreen(isShowSensitiveData: value == 'Egypt')
+                                                          );
+                                                        });
+                                                      }
                                                     },
                                                     child: Text(
                                                       'تسجيل الدخول',

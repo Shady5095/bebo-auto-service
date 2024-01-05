@@ -9,7 +9,8 @@ import '../../../../../business_logic_layer/authentication_cubit/authentication_
 import '../../../../../components/components.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final bool isShowSensitiveData ;
+  const LoginScreen({Key? key, required this.isShowSensitiveData}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -84,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               contentPadding: const EdgeInsets.all(5),
                               labelStyle: TextStyle(
                                   color: Colors.white54, fontSize: 13.sp),
-                              labelText: 'رقم الشاسيه (من الرخصه)',
+                              labelText: widget.isShowSensitiveData ? 'رقم الشاسيه (من الرخصه)' : 'رقم الهاتف',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -95,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'برجاء ادخال البيانات';
                               } else if (value.length < 6) {
-                                return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
+                                return widget.isShowSensitiveData ? 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام' : 'الرقم غير صالح';
                               }
                               return null;
                             },
