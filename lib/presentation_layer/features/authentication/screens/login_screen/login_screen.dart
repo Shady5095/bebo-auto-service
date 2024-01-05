@@ -4,11 +4,9 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:page_transition/page_transition.dart';
 import '../../../../../business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import '../../../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../../../components/components.dart';
-import '../register_screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -172,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 11.h,
                           ),
-                          Row(
+                          /*Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
@@ -197,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ],
-                          ),
+                          ),*/
                         ],
                       ),
                     ),

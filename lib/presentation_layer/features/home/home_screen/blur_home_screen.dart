@@ -4,6 +4,7 @@ import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/about_screen/about_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/phone_numbers_screen/phone_numbers_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/authentication/screens/register_screen/register_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:countup/countup.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_states.dart';
+import '../../../../data_layer/local/cache_helper.dart';
 import '../../authentication/screens/login_screen/login_screen.dart';
 import '../../car_sell/screens/listed_cars_screen.dart';
+
 
 class BlurHomeScreen extends StatefulWidget {
   const BlurHomeScreen({Key? key}) : super(key: key);
@@ -86,7 +89,21 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppCubit, MainAppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is GetCountrySuccessState){
+          navigateTo(
+            context: context,
+            widget: RegisterScreen(isShowSensitiveData: state.country == 'Egypt')
+          );
+        }
+        if(state is GetCountryErrorState){
+          showDialog(context: context, builder: (context)=>const MyAlertDialog(
+            title: 'برجاء التحقق من أتصال الأنترنت',
+            isFailed: true,
+            actions: [],
+          ));
+        }
+      },
       builder: (context, state) {
         return Stack(
           children: [
@@ -327,11 +344,18 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                             children: [
                                               defaultButton(
                                                 onTap: () {
-                                                  navigateTo(
-                                                    context: context,
-                                                    widget:
-                                                        const RegisterScreen(),
-                                                  );
+                                                  if(CacheHelper.getString(key: 'country') != null){
+                                                    String? country = CacheHelper.getString(key: 'country') ;
+                                                    navigateTo(
+                                                      context: context,
+                                                      widget: RegisterScreen(isShowSensitiveData: country == 'Egypt'),
+                                                    );
+                                                  }
+                                                  else
+                                                    {
+                                                      MainAppCubit.get(context).getCountry();
+                                                    }
+
                                                 },
                                                 text: 'سجل',
                                                 width: displayWidth(context) *
@@ -445,6 +469,8 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                   ),
                                                 ],
                                               ),
+                                              if(state is GetCountryLoadingState)
+                                                myCircularProgressIndicator()
                                             ],
                                           ),
                                         ),

@@ -76,7 +76,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.almarai(
                   decoration: TextDecoration.none,
-                  color: Colors.white54,
+                  color: Colors.grey,
                   fontSize: 14.sp,
                 )
               ),
@@ -102,7 +102,7 @@ class _IntroScreenState extends State<IntroScreen> {
             onTap: (){
               navigateToAnimated(
                 context: context,
-                widget: OnBoarding(),
+                widget: const OnBoarding(),
                 animation: PageTransitionType.leftToRightWithFade
               );
             },

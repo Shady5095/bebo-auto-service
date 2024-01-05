@@ -11,6 +11,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import 'create_password_screen.dart';
@@ -129,9 +130,24 @@ class SplashScreen extends StatelessWidget {
           return Scaffold(
             body: Center(
               child: Container(
-                padding: const EdgeInsets.all(60).h,
-                decoration: const BoxDecoration(color: defaultBackgroundColor),
-                child: Image.asset('assets/images/logo.png')
+                  padding: const EdgeInsets.all(60).h,
+                  decoration: const BoxDecoration(color: defaultBackgroundColor),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        height: 250.h,
+                        width: 250.w,
+                        'assets/images/logo.png',
+                      ),
+                      Lottie.asset(frameRate: FrameRate(60),
+                        fit: BoxFit.cover,
+                        height: 1,
+                        width: 160.w,
+                        'assets/images/tireAnimation.json',
+                      )
+                    ],
+                  )
               ),
             ),
           );

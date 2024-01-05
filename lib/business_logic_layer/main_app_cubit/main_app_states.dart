@@ -36,6 +36,16 @@ class DeleteCustomerReportLoadingState extends MainAppStates {}
 
 class DeleteCustomerReportSuccessState extends MainAppStates {}
 
+class GetCountrySuccessState extends MainAppStates {
+  final String country ;
+
+  GetCountrySuccessState(this.country);
+}
+
+class GetCountryErrorState extends MainAppStates {}
+
+class GetCountryLoadingState extends MainAppStates {}
+
 class ChassisNoCheckState extends MainAppStates {
   final bool isChassisNoExist ;
 

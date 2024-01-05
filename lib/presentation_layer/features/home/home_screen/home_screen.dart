@@ -35,10 +35,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    initCarAnimation();
-    initPointsTextAnimation();
-    initHelloTextAnimation();
-    initButtonsAnimation();
+      initCarAnimation();
+      initPointsTextAnimation();
+      initHelloTextAnimation();
+      initButtonsAnimation();
   }
 
   @override
@@ -310,7 +310,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         curve: Curves.fastLinearToSlowEaseIn,
       ),
     );
-    await Future.delayed(const Duration(milliseconds: 300));
-    button2AnimationController.forward();
+      button2AnimationController.forward();
   }
 }

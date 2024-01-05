@@ -7,10 +7,12 @@ import 'package:bebo_auto_service/presentation_layer/features/more_features/sett
 import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../components/get_country_api.dart';
 import '../../data_layer/local/cache_helper.dart';
 import '../../data_layer/network/dio_helper.dart';
 import '../../presentation_layer/features/car_sell/screens/listed_cars_screen.dart';
@@ -23,6 +25,7 @@ class MainAppCubit extends Cubit<MainAppStates> {
   static MainAppCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
+  final remoteConfig = FirebaseRemoteConfig.instance;
 
   List<Widget> screens = [
     const HomeScreen(),
@@ -262,5 +265,33 @@ class MainAppCubit extends Cubit<MainAppStates> {
       }
     });
   }
+  Future<bool> remoteConfigCheck() async {
+    bool isShowSensitiveData = false ;
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 1),
+      minimumFetchInterval: const Duration(seconds: 1),
+    ));
+    isShowSensitiveData = remoteConfig.getBool('isShowSensitiveData');
+    await remoteConfig.fetchAndActivate();
+    return isShowSensitiveData ;
+  }
+  Future<String> getCountry() async{
+    emit(GetCountryLoadingState());
+    Network n =  Network("http://ip-api.com/json");
+    var locationSTR = (await n.getData());
+    if(locationSTR == 'No Data'){
+      emit(GetCountryErrorState());
+      return 'No Data' ;
+    }
+    else
+      {
 
+        var locationx = jsonDecode(locationSTR);
+        CacheHelper.putString(key: 'country', value: locationx["country"]);
+        emit(GetCountrySuccessState(locationx["country"]));
+        return locationx["country"];
+      }
+  }
 }
+
+

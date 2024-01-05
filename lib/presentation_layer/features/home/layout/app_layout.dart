@@ -81,14 +81,12 @@ class _AppLayoutState extends State<AppLayout> {
             upgrader: Upgrader(
               dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material ,
               canDismissDialog: false,
-              cupertinoButtonTextStyle: TextStyle(
-              color: defaultColor,
-              fontSize: 10.sp
-            ),
               countryCode: 'eg',
               languageCode: 'ar',
               showIgnore: false,
               showLater: false,
+              //debugLogging: true,
+              //debugDisplayAlways: true,
               durationUntilAlertAgain: const Duration(seconds: 1),
             ),
             child: Scaffold(

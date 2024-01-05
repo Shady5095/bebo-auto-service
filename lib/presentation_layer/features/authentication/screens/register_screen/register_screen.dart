@@ -13,7 +13,8 @@ import '../../../../../components/components.dart';
 import '../../../../widgets/my_alert_dialog.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final bool isShowSensitiveData ;
+  const RegisterScreen({Key? key, required this.isShowSensitiveData}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -477,7 +478,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       horizontal: 13),
                                   labelStyle: TextStyle(
                                     color: Theme.of(context).hintColor,
-                                    fontSize: 12.sp,
+                                    fontSize: 11.sp,
                                   ),
                                   prefixIconColor:
                                       Theme.of(context).secondaryHeaderColor,
@@ -501,353 +502,358 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 12.h,
                         ),
-                        Row(
+                        if(widget.isShowSensitiveData)
+                        Column(
                           children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: chassisNo,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
-                                ],
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 13.sp),
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 13),
-                                  labelStyle: TextStyle(
-                                      color: Theme.of(context).hintColor,
-                                      fontSize: 12.sp),
-                                  prefixIconColor:
-                                      Theme.of(context).secondaryHeaderColor,
-                                  suffixIconColor:
-                                      Theme.of(context).secondaryHeaderColor,
-                                  labelText: 'رقم الشاسيه (من الرخصة)',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: chassisNo,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                    ],
+                                    style: TextStyle(
+                                        color:
+                                            Theme.of(context).secondaryHeaderColor,
+                                        fontSize: 13.sp),
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.symmetric(
+                                          horizontal: 13),
+                                      labelStyle: TextStyle(
+                                          color: Theme.of(context).hintColor,
+                                          fontSize: 11.sp),
+                                      prefixIconColor:
+                                          Theme.of(context).secondaryHeaderColor,
+                                      suffixIconColor:
+                                          Theme.of(context).secondaryHeaderColor,
+                                      labelText: 'رقم الشاسيه (من الرخصة)',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'برجاء ادخال البيانات';
+                                      }
+                                      else if (value.length < 6) {
+                                        return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'برجاء ادخال البيانات';
-                                  }
-                                  else if (value.length < 6) {
-                                    return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
-                                  }
-                                  return null;
-                                },
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: engineNo,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                    ],
+                                    textCapitalization: TextCapitalization.words,
+                                    style: TextStyle(
+                                        color:
+                                            Theme.of(context).secondaryHeaderColor,
+                                        fontSize: 13.sp),
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.symmetric(
+                                          horizontal: 13),
+                                      labelStyle: TextStyle(
+                                        color: Theme.of(context).hintColor,
+                                        fontSize: 11.sp,
+                                      ),
+                                      prefixIconColor:
+                                          Theme.of(context).secondaryHeaderColor,
+                                      labelText: 'رقم الماتور (من الرخصة)',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'برجاء ادخال البيانات';
+                                      }
+                                      else if (value.length < 6) {
+                                        return 'رقم الماتور يجب ان لا يقل عن 6 ارقام';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                            const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  'رقم اللوحه',
+                                  style: TextStyle(
+                                      color: Colors.white54, fontSize: 15),
+                                ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              height: 8.h,
                             ),
-                            Expanded(
-                              child: TextFormField(
-                                controller: engineNo,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                            Container(
+                              width: double.infinity,
+                              margin: const EdgeInsets.symmetric(horizontal: 50).w,
+                              height: 100.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.blueAccent,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(15),
+                                          topLeft: Radius.circular(15)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'مصر',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            'Egypt',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: CustomDropdownButton(
+                                                      dropdownItems: plateLetters,
+                                                      hint: '',
+                                                      iconSize: 0,
+                                                      value: firstLetter,
+                                                      onChanged:
+                                                          (String? selected) {
+                                                        firstLetter = selected;
+                                                        setState(() {});
+                                                      },
+                                                      buttonWidth: double.infinity,
+                                                      buttonHeight: 38.h,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: CustomDropdownButton(
+                                                      dropdownItems: plateLetters,
+                                                      hint: '',
+                                                      iconSize: 0,
+                                                      value: secondLetter,
+                                                      onChanged:
+                                                          (String? selected) {
+                                                        secondLetter = selected;
+                                                        setState(() {});
+                                                      },
+                                                      buttonWidth: double.infinity,
+                                                      buttonHeight: 38.h,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: CustomDropdownButton(
+                                                      dropdownItems: plateLetters,
+                                                      hint: '',
+                                                      iconSize: 0,
+                                                      value: thirdLetter,
+                                                      onChanged:
+                                                          (String? selected) {
+                                                        thirdLetter = selected!;
+                                                        setState(() {});
+                                                      },
+                                                      buttonWidth: double.infinity,
+                                                      buttonHeight: 38.h,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 8.0),
+                                                child: TextFormField(
+                                                  controller: plateNo,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  inputFormatters: [
+                                                    LengthLimitingTextInputFormatter(
+                                                        4),
+                                                    FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                                  ],
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 13.sp),
+                                                  decoration: InputDecoration(
+                                                    contentPadding:
+                                                        const EdgeInsets.symmetric(
+                                                            horizontal: 7),
+                                                    hintStyle: const TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                    hintText: 'الرقم',
+                                                    filled: true,
+                                                    fillColor: Colors.grey[900],
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(15),
+                                                    ),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color:
+                                                                  defaultBackgroundColor,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(15)),
+                                                  ),
+                                                  autovalidateMode: AutovalidateMode
+                                                      .onUserInteraction,
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'برجاء ادخال البيانات';
+                                                    } else if (value == '-' ||
+                                                        value == '.') {
+                                                      return 'الرقم غير صالح';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
-                                textCapitalization: TextCapitalization.words,
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 13.sp),
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 13),
-                                  labelStyle: TextStyle(
-                                    color: Theme.of(context).hintColor,
-                                    fontSize: 12.sp,
-                                  ),
-                                  prefixIconColor:
-                                      Theme.of(context).secondaryHeaderColor,
-                                  labelText: 'رقم الماتور (من الرخصة)',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'برجاء ادخال البيانات';
-                                  }
-                                  else if (value.length < 6) {
-                                    return 'رقم الماتور يجب ان لا يقل عن 6 ارقام';
-                                  }
-                                  return null;
-                                },
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        const Center(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'رقم اللوحه',
-                              style: TextStyle(
-                                  color: Colors.white54, fontSize: 15),
+                            SizedBox(
+                              height: 12.h,
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(horizontal: 50).w,
-                          height: 100.h,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.blueAccent,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(15),
-                                      topLeft: Radius.circular(15)),
+                            Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.pin,
+                                  color: defaultColor,
+                                  size: 17.sp,
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'مصر',
+                                        'سيتم مراجعة بياناتك من قبل المسئول',
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        'Egypt',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w600),
+                                            color: Colors.white54, fontSize: 13.sp),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: CustomDropdownButton(
-                                                  dropdownItems: plateLetters,
-                                                  hint: '',
-                                                  iconSize: 0,
-                                                  value: firstLetter,
-                                                  onChanged:
-                                                      (String? selected) {
-                                                    firstLetter = selected;
-                                                    setState(() {});
-                                                  },
-                                                  buttonWidth: double.infinity,
-                                                  buttonHeight: 38.h,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: CustomDropdownButton(
-                                                  dropdownItems: plateLetters,
-                                                  hint: '',
-                                                  iconSize: 0,
-                                                  value: secondLetter,
-                                                  onChanged:
-                                                      (String? selected) {
-                                                    secondLetter = selected;
-                                                    setState(() {});
-                                                  },
-                                                  buttonWidth: double.infinity,
-                                                  buttonHeight: 38.h,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: CustomDropdownButton(
-                                                  dropdownItems: plateLetters,
-                                                  hint: '',
-                                                  iconSize: 0,
-                                                  value: thirdLetter,
-                                                  onChanged:
-                                                      (String? selected) {
-                                                    thirdLetter = selected!;
-                                                    setState(() {});
-                                                  },
-                                                  buttonWidth: double.infinity,
-                                                  buttonHeight: 38.h,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            child: TextFormField(
-                                              controller: plateNo,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              inputFormatters: [
-                                                LengthLimitingTextInputFormatter(
-                                                    4),
-                                                FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
-                                              ],
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 13.sp),
-                                              decoration: InputDecoration(
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 7),
-                                                hintStyle: const TextStyle(
-                                                  color: Colors.white,
-                                                ),
-                                                hintText: 'الرقم',
-                                                filled: true,
-                                                fillColor: Colors.grey[900],
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                          color:
-                                                              defaultBackgroundColor,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15)),
-                                              ),
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'برجاء ادخال البيانات';
-                                                } else if (value == '-' ||
-                                                    value == '.') {
-                                                  return 'الرقم غير صالح';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                              ],
+                            ),
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.pin,
+                                  color: defaultColor,
+                                  size: 17.sp,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.pin,
-                              color: defaultColor,
-                              size: 17.sp,
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'برجاء العلم انه لن يتم قبول حسابك اذا انت ليس عميل بمركز بيبو',
+                                        style: TextStyle(
+                                            color: Colors.white54, fontSize: 13.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              width: 8.w,
+                              height: 12.h,
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'سيتم مراجعة بياناتك من قبل المسئول',
-                                    style: TextStyle(
-                                        color: Colors.white54, fontSize: 13.sp),
+                            Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.pin,
+                                  color: defaultColor,
+                                  size: 17.sp,
+                                ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'برجاء التأكد من رقم الشاسيه جيدا لانه لن يتم قبول السياره اذا كان الرقم غير صحيح ',
+                                        style: TextStyle(
+                                            color: Colors.white54, fontSize: 13.sp),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.pin,
-                              color: defaultColor,
-                              size: 17.sp,
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              width: 8.w,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'برجاء العلم انه لن يتم قبول حسابك اذا انت ليس عميل بمركز بيبو',
-                                    style: TextStyle(
-                                        color: Colors.white54, fontSize: 13.sp),
-                                  ),
-                                ],
-                              ),
+                              height: 12.h,
                             ),
                           ],
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.pin,
-                              color: defaultColor,
-                              size: 17.sp,
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'برجاء التأكد من رقم الشاسيه جيدا لانه لن يتم قبول السياره اذا كان الرقم غير صحيح ',
-                                    style: TextStyle(
-                                        color: Colors.white54, fontSize: 13.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 12.h,
                         ),
                         ConditionalBuilder(
                           condition: state is! RegisterLoadingState,
