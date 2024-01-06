@@ -36,11 +36,7 @@ class DeleteCustomerReportLoadingState extends MainAppStates {}
 
 class DeleteCustomerReportSuccessState extends MainAppStates {}
 
-class GetCountrySuccessState extends MainAppStates {
-  final String country ;
-
-  GetCountrySuccessState(this.country);
-}
+class GetCountrySuccessState extends MainAppStates {}
 
 class GetCountryErrorState extends MainAppStates {}
 

@@ -581,8 +581,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       if (value == null || value.isEmpty) {
                                         return 'برجاء ادخال البيانات';
                                       }
-                                      else if (value.length < 6) {
-                                        return 'رقم الماتور يجب ان لا يقل عن 6 ارقام';
+                                      else if (value.length < 3) {
+                                        return 'رقم الماتور يجب ان لا يقل عن 3 ارقام';
                                       }
                                       return null;
                                     },

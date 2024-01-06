@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../business_logic_layer/authentication_cubit/authentication_cubit.dart';
@@ -78,6 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextFormField(
                             controller: chassisNoController,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                            ],
                             style: TextStyle(
                                 color: Theme.of(context).secondaryHeaderColor,
                                 fontSize: 13.sp),

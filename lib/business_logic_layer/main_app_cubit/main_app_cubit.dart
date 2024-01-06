@@ -11,7 +11,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../components/get_country_api.dart';
 import '../../data_layer/local/cache_helper.dart';
 import '../../data_layer/network/dio_helper.dart';
 import '../../presentation_layer/features/car_sell/screens/listed_cars_screen.dart';
@@ -24,6 +23,7 @@ class MainAppCubit extends Cubit<MainAppStates> {
   static MainAppCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
+  bool isShowSensitiveDataToUser = true ;
 
   List<Widget> screens = [
     const HomeScreen(),
@@ -263,22 +263,17 @@ class MainAppCubit extends Cubit<MainAppStates> {
       }
     });
   }
-  Future<String> getCountry() async{
+  Future<bool> isShowSensitiveData() async{
     emit(GetCountryLoadingState());
-    Network n =  Network("http://ip-api.com/json");
-    var locationSTR = (await n.getData());
-    if(locationSTR == 'No Data'){
+    bool isShowSensitiveData = false ;
+    await db.collection('appReview').doc('VWXaPtEW88xIW8snjKyq').get().then((value) {
+      isShowSensitiveData = value.data()!['isShow'];
+      isShowSensitiveDataToUser = value.data()!['isShow'];
+      emit(GetCountrySuccessState());
+    }).catchError((error){
       emit(GetCountryErrorState());
-      return 'No Data' ;
-    }
-    else
-      {
-
-        var locationx = jsonDecode(locationSTR);
-        CacheHelper.putString(key: 'country', value: locationx["country"]);
-        emit(GetCountrySuccessState(locationx["country"]));
-        return locationx["country"];
-      }
+    });
+    return isShowSensitiveData ;
   }
 }
 

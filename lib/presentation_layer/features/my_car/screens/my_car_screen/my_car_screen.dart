@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/invoices_screen/invoices_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/maintenance_schedule_screen/maintenance_schedule_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/my_car_reports_sceens/listed_reports_screen.dart';
@@ -44,7 +45,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
   var formKey = GlobalKey<FormState>();
   var kmController = TextEditingController();
   double oldKm = 0;
-  bool isShowSensitiveData = CacheHelper.getString(key: 'country') == 'Egypt' ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,7 @@ class _MyCarScreenState extends State<MyCarScreen> {
       builder: (context, state) {
         oldKm = MainAppCubit.get(context).userData!.km!.toDouble();
         UserModel? userData = MainAppCubit.get(context).userData;
+        bool isShowSensitiveData = MainAppCubit.get(context).isShowSensitiveDataToUser|| !Platform.isIOS ;
         return Scaffold(
           backgroundColor: defaultBackgroundColor,
           appBar: AppBar(

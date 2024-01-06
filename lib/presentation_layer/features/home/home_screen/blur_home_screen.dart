@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
@@ -13,10 +14,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_states.dart';
-import '../../../../data_layer/local/cache_helper.dart';
 import '../../authentication/screens/login_screen/login_screen.dart';
 import '../../car_sell/screens/listed_cars_screen.dart';
-
 
 class BlurHomeScreen extends StatefulWidget {
   const BlurHomeScreen({Key? key}) : super(key: key);
@@ -63,17 +62,14 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
       }
     });
     getInit();
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-
-    });
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {});
   }
+
   void getInit() async {
     await FirebaseMessaging.instance.getInitialMessage().then((value) {
-      if(value != null){
-      }
-      return null ;
+      if (value != null) {}
+      return null;
     });
-
   }
 
   @override
@@ -90,12 +86,14 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppCubit, MainAppStates>(
       listener: (context, state) {
-        if(state is GetCountryErrorState){
-          showDialog(context: context, builder: (context)=>const MyAlertDialog(
-            title: 'برجاء التحقق من أتصال الأنترنت',
-            isFailed: true,
-            actions: [],
-          ));
+        if (state is GetCountryErrorState) {
+          showDialog(
+              context: context,
+              builder: (context) => const MyAlertDialog(
+                    title: 'برجاء التحقق من أتصال الأنترنت',
+                    isFailed: true,
+                    actions: [],
+                  ));
         }
       },
       builder: (context, state) {
@@ -176,15 +174,24 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                               ),
                               Positioned(
                                 bottom: 0,
-                                left: displayWidth(context) <= 385 ? displayWidth(context)*0.21 : displayWidth(context) > 600 ?  displayWidth(context)*0.22 : displayWidth(context)*0.16,
+                                left: displayWidth(context) <= 385
+                                    ? displayWidth(context) * 0.21
+                                    : displayWidth(context) > 600
+                                        ? displayWidth(context) * 0.22
+                                        : displayWidth(context) * 0.16,
                                 child: AnimatedBuilder(
                                     animation: carSlidingAnimation,
                                     builder: (context, _) {
                                       return SlideTransition(
                                         position: carSlidingAnimation,
                                         child: Image(
-                                          width: displayWidth(context) <= 385 ? 330.w :  displayWidth(context) > 600 ? 330.w : 350.w,
-                                          image: const AssetImage('assets/images/mazda3.png'),
+                                          width: displayWidth(context) <= 385
+                                              ? 330.w
+                                              : displayWidth(context) > 600
+                                                  ? 330.w
+                                                  : 350.w,
+                                          image: const AssetImage(
+                                              'assets/images/mazda3.png'),
                                         ),
                                       );
                                     }),
@@ -275,7 +282,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: displayHeight(context)*0.19,
+                          height: displayHeight(context) * 0.19,
                         ),
                         Expanded(
                           child: Column(
@@ -284,7 +291,8 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                 tween: Tween<double>(begin: 0.0, end: 1.0),
                                 duration: const Duration(seconds: 2),
                                 builder: (_, value, child) {
-                                  Future.delayed(const Duration(seconds: 1), () {
+                                  Future.delayed(const Duration(seconds: 1),
+                                      () {
                                     if (!isShowSecondText) {
                                       setState(() {
                                         isShowSecondText = true;
@@ -338,23 +346,29 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                             children: [
                                               defaultButton(
                                                 onTap: () {
-                                                  if(CacheHelper.getString(key: 'country') != null){
-                                                    String? country = CacheHelper.getString(key: 'country') ;
+                                                  if (Platform.isAndroid) {
                                                     navigateTo(
-                                                      context: context,
-                                                      widget: RegisterScreen(isShowSensitiveData: country == 'Egypt'),
-                                                    );
+                                                        context: context,
+                                                        widget: const RegisterScreen(
+                                                            isShowSensitiveData:
+                                                                true));
                                                   }
-                                                  else
-                                                    {
-                                                      MainAppCubit.get(context).getCountry().then((value) {
+                                                  if (Platform.isIOS) {
+                                                    MainAppCubit.get(context)
+                                                        .isShowSensitiveData()
+                                                        .then((value) {
+                                                      if (state
+                                                          is GetCountrySuccessState) {
                                                         navigateTo(
                                                             context: context,
-                                                            widget: RegisterScreen(isShowSensitiveData: value == 'Egypt')
-                                                        );
-                                                      });
-                                                    }
-
+                                                            widget: RegisterScreen(
+                                                                isShowSensitiveData:
+                                                                    value ||
+                                                                        !Platform
+                                                                            .isIOS));
+                                                      }
+                                                    });
+                                                  }
                                                 },
                                                 text: 'سجل',
                                                 width: displayWidth(context) *
@@ -398,10 +412,12 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                 onTap: () {
                                                   navigateTo(
                                                     context: context,
-                                                    widget: const PhoneNumbersScreen(),
+                                                    widget:
+                                                        const PhoneNumbersScreen(),
                                                   );
                                                 },
-                                                text: 'ارقام التليفون والعناوين',
+                                                text:
+                                                    'ارقام التليفون والعناوين',
                                                 width: displayWidth(context) *
                                                     0.70,
                                                 height: 37.h,
@@ -420,11 +436,15 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                               defaultButton(
                                                 onTap: () {
                                                   navigateTo(
-                                                    context: context,
-                                                    widget: const ListedCarsForSaleScreen(isFromBlurHomeScreen: true,)
-                                                  );
+                                                      context: context,
+                                                      widget:
+                                                          const ListedCarsForSaleScreen(
+                                                        isFromBlurHomeScreen:
+                                                            true,
+                                                      ));
                                                 },
-                                                text: 'سيارات للبيع بضمان المركز',
+                                                text:
+                                                    'سيارات للبيع بضمان المركز',
                                                 width: displayWidth(context) *
                                                     0.70,
                                                 height: 37.h,
@@ -455,32 +475,42 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                   ),
                                                   TextButton(
                                                     onPressed: () {
-                                                      if(CacheHelper.getString(key: 'country') != null){
-                                                        String? country = CacheHelper.getString(key: 'country') ;
+                                                      if (Platform.isAndroid) {
                                                         navigateTo(
-                                                          context: context,
-                                                          widget: LoginScreen(isShowSensitiveData: country == 'Egypt'),
-                                                        );
+                                                            context: context,
+                                                            widget: const LoginScreen(
+                                                                isShowSensitiveData:
+                                                                true));
                                                       }
-                                                      else
-                                                      {
-                                                        MainAppCubit.get(context).getCountry().then((value) {
-                                                          navigateTo(
-                                                              context: context,
-                                                              widget: LoginScreen(isShowSensitiveData: value == 'Egypt')
-                                                          );
+                                                      if (Platform.isIOS) {
+                                                        MainAppCubit.get(context)
+                                                            .isShowSensitiveData()
+                                                            .then((value) {
+                                                          if (state
+                                                          is GetCountrySuccessState) {
+                                                            navigateTo(
+                                                                context: context,
+                                                                widget: LoginScreen(
+                                                                    isShowSensitiveData:
+                                                                    value ||
+                                                                        !Platform
+                                                                            .isIOS));
+                                                          }
                                                         });
                                                       }
                                                     },
                                                     child: Text(
                                                       'تسجيل الدخول',
                                                       style: TextStyle(
-                                                          fontSize: 13.sp,color: defaultColor,),
+                                                        fontSize: 13.sp,
+                                                        color: defaultColor,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              if(state is GetCountryLoadingState)
+                                              if (state
+                                                  is GetCountryLoadingState)
                                                 myCircularProgressIndicator()
                                             ],
                                           ),
