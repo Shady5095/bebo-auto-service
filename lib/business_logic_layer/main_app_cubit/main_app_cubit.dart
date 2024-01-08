@@ -23,7 +23,6 @@ class MainAppCubit extends Cubit<MainAppStates> {
   static MainAppCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
-  bool isShowSensitiveDataToUser = true ;
 
   List<Widget> screens = [
     const HomeScreen(),
@@ -262,18 +261,6 @@ class MainAppCubit extends Cubit<MainAppStates> {
         storage.ref(element.fullPath).delete();
       }
     });
-  }
-  Future<bool> isShowSensitiveData() async{
-    emit(GetCountryLoadingState());
-    bool isShowSensitiveData = false ;
-    await db.collection('appReview').doc('VWXaPtEW88xIW8snjKyq').get().then((value) {
-      isShowSensitiveData = value.data()!['isShow'];
-      isShowSensitiveDataToUser = value.data()!['isShow'];
-      emit(GetCountrySuccessState());
-    }).catchError((error){
-      emit(GetCountryErrorState());
-    });
-    return isShowSensitiveData ;
   }
 }
 

@@ -1,11 +1,9 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/about_screen/about_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/phone_numbers_screen/phone_numbers_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/authentication/screens/register_screen/register_screen.dart';
-import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
 import 'package:countup/countup.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -85,17 +83,7 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppCubit, MainAppStates>(
-      listener: (context, state) {
-        if (state is GetCountryErrorState) {
-          showDialog(
-              context: context,
-              builder: (context) => const MyAlertDialog(
-                    title: 'برجاء التحقق من أتصال الأنترنت',
-                    isFailed: true,
-                    actions: [],
-                  ));
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Stack(
           children: [
@@ -346,29 +334,9 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                             children: [
                                               defaultButton(
                                                 onTap: () {
-                                                  if (Platform.isAndroid) {
-                                                    navigateTo(
-                                                        context: context,
-                                                        widget: const RegisterScreen(
-                                                            isShowSensitiveData:
-                                                                true));
-                                                  }
-                                                  if (Platform.isIOS) {
-                                                    MainAppCubit.get(context)
-                                                        .isShowSensitiveData()
-                                                        .then((value) {
-                                                      if (state
-                                                          is GetCountrySuccessState) {
-                                                        navigateTo(
-                                                            context: context,
-                                                            widget: RegisterScreen(
-                                                                isShowSensitiveData:
-                                                                    value ||
-                                                                        !Platform
-                                                                            .isIOS));
-                                                      }
-                                                    });
-                                                  }
+                                                  navigateTo(
+                                                      context: context,
+                                                      widget: const RegisterScreen());
                                                 },
                                                 text: 'سجل',
                                                 width: displayWidth(context) *
@@ -475,29 +443,9 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                   ),
                                                   TextButton(
                                                     onPressed: () {
-                                                      if (Platform.isAndroid) {
-                                                        navigateTo(
-                                                            context: context,
-                                                            widget: const LoginScreen(
-                                                                isShowSensitiveData:
-                                                                true));
-                                                      }
-                                                      if (Platform.isIOS) {
-                                                        MainAppCubit.get(context)
-                                                            .isShowSensitiveData()
-                                                            .then((value) {
-                                                          if (state
-                                                          is GetCountrySuccessState) {
-                                                            navigateTo(
-                                                                context: context,
-                                                                widget: LoginScreen(
-                                                                    isShowSensitiveData:
-                                                                    value ||
-                                                                        !Platform
-                                                                            .isIOS));
-                                                          }
-                                                        });
-                                                      }
+                                                      navigateTo(
+                                                          context: context,
+                                                          widget: const LoginScreen());
                                                     },
                                                     child: Text(
                                                       'تسجيل الدخول',
@@ -509,9 +457,6 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
                                                   ),
                                                 ],
                                               ),
-                                              if (state
-                                                  is GetCountryLoadingState)
-                                                myCircularProgressIndicator()
                                             ],
                                           ),
                                         ),

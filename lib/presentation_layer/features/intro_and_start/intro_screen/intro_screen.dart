@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 
 
 class IntroScreen extends StatefulWidget {
@@ -103,7 +102,6 @@ class _IntroScreenState extends State<IntroScreen> {
               navigateToAnimated(
                 context: context,
                 widget: const OnBoarding(),
-                animation: PageTransitionType.leftToRightWithFade
               );
             },
             decoration: BoxDecoration(

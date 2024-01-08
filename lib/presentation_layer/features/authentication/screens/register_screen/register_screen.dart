@@ -13,8 +13,7 @@ import '../../../../../components/components.dart';
 import '../../../../widgets/my_alert_dialog.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final bool isShowSensitiveData ;
-  const RegisterScreen({Key? key, required this.isShowSensitiveData}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -502,7 +501,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 12.h,
                         ),
-                        if(widget.isShowSensitiveData)
                         Column(
                           children: [
                             Row(
@@ -859,55 +857,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           condition: state is! RegisterLoadingState,
                           builder: (context) => defaultButton(
                             onTap: () {
-                              if(widget.isShowSensitiveData){
-                                if (formKey.currentState!.validate()) {
-                                  if (carModelSelected == null ||
-                                      carYearSelected == null ||
-                                      carColorSelected == null ||
-                                      bodyTypeSelected == null ||
-                                      transmissionSelected == null ||
-                                      secondLetter == null) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text('برجاء ادخال جميع البيانات '),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  } else if (firstLetter == null) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text(
-                                          'برجاء ادخال اول حرف من نمر السياره'),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  } else {
-                                    cubit
-                                        .userRegister(
-                                        email: '${chassisNo.text}@gmail.com',
-                                        password: chassisNo.text,
-                                        firstName: firstNameController.text,
-                                        lastName: lastNameController.text,
-                                        carModel: carModelSelected!,
-                                        year: carYearSelected!.toInt(),
-                                        transmission: transmissionSelected!,
-                                        color: carColorSelected!,
-                                        bodyType: bodyTypeSelected!,
-                                        km: kiloMeterCount.text.toInt(),
-                                        chassisNo: chassisNo.text,
-                                        engineNo: engineNo.text,
-                                        plate:
-                                        '$firstLetter $secondLetter ${thirdLetter ?? ''}  ${plateNo.text}',
-                                        phone: phoneController.text,
-                                        context: context)
-                                        .then((value) {});
-                                  }
-                                }
-                              }
-                              else
-                                {
+                              if (formKey.currentState!.validate()) {
+                                if (carModelSelected == null ||
+                                    carYearSelected == null ||
+                                    carColorSelected == null ||
+                                    bodyTypeSelected == null ||
+                                    transmissionSelected == null ||
+                                    secondLetter == null) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text('برجاء ادخال جميع البيانات '),
+                                    backgroundColor: Colors.red,
+                                  ));
+                                } else if (firstLetter == null) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'برجاء ادخال اول حرف من نمر السياره'),
+                                    backgroundColor: Colors.red,
+                                  ));
+                                } else {
                                   cubit
                                       .userRegister(
-                                      email: '11111111@gmail.com',
-                                      password: '11111111',
+                                      email: '${chassisNo.text}@gmail.com',
+                                      password: chassisNo.text,
                                       firstName: firstNameController.text,
                                       lastName: lastNameController.text,
                                       carModel: carModelSelected!,
@@ -916,14 +889,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       color: carColorSelected!,
                                       bodyType: bodyTypeSelected!,
                                       km: kiloMeterCount.text.toInt(),
-                                      chassisNo: '11111111',
-                                      engineNo: '111111',
+                                      chassisNo: chassisNo.text,
+                                      engineNo: engineNo.text,
                                       plate:
-                                      'ا ا ا 111',
+                                      '$firstLetter $secondLetter ${thirdLetter ?? ''}  ${plateNo.text}',
                                       phone: phoneController.text,
                                       context: context)
                                       .then((value) {});
                                 }
+                              }
                             },
                             text: 'تسجيل',
                             height: 40.h,

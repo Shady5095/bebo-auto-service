@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/invoices_screen/invoices_screen.dart';
@@ -54,7 +52,6 @@ class _MyCarScreenState extends State<MyCarScreen> {
       builder: (context, state) {
         oldKm = MainAppCubit.get(context).userData!.km!.toDouble();
         UserModel? userData = MainAppCubit.get(context).userData;
-        bool isShowSensitiveData = MainAppCubit.get(context).isShowSensitiveDataToUser|| !Platform.isIOS ;
         return Scaffold(
           backgroundColor: defaultBackgroundColor,
           appBar: AppBar(
@@ -120,7 +117,6 @@ class _MyCarScreenState extends State<MyCarScreen> {
                                     //height: 1.4.sp,
                                   ),
                                 ),
-                                if(isShowSensitiveData)
                                 Text(
                                   '${userData.plate}',
                                   style: TextStyle(
@@ -137,7 +133,6 @@ class _MyCarScreenState extends State<MyCarScreen> {
                                     //height: 1.2.h,
                                   ),
                                 ),
-                                if(isShowSensitiveData)
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
