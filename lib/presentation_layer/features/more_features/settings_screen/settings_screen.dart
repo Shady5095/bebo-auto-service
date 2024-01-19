@@ -1,7 +1,8 @@
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/features/authentication/screens/login_screen/login_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/features/home/layout/app_layout.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/about_screen/about_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/chat/screens/chat_details_screen.dart';
-import 'package:bebo_auto_service/presentation_layer/features/home/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/my_profile_screen/my_profile_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/phone_numbers_screen/phone_numbers_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,6 +51,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 children: [
+                  if(myUid != null)
                   ListTile(
                     onTap: (){
                       navigateToAnimated(
@@ -70,6 +72,29 @@ class SettingsScreen extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18.sp,
                           color: Colors.white
+                      ),
+                    ),
+                  ),
+                  if(myUid ==null)
+                  ListTile(
+                    onTap: (){
+                      navigateToAnimated(
+                        context: context,
+                        widget: const LoginScreen(),
+                      );
+                    },
+                    splashColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: Icon(
+                      Icons.login,
+                      color: defaultColor,
+                      size: 24.sp,
+                    ),
+                    title: Text(
+                      'تسجيل الدخول',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          color: defaultColor
                       ),
                     ),
                   ),
@@ -95,6 +120,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if(myUid != null)
                   ListTile(
                     onTap: (){
                       navigateToAnimated(
@@ -204,6 +230,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if(myUid != null)
                   ListTile(
                     onTap: () async {
                       showDialog(
@@ -249,12 +276,9 @@ class SettingsScreen extends StatelessWidget {
     )?.then((value) {
       if (value) {
         myUid = null ;
-        Navigator.pushReplacement(context, PageTransition(
-            type: PageTransitionType.fade,
-            child: const BlurHomeScreen(),
-            duration: const Duration(milliseconds: 250)
-        ),
-        );
+        MainAppCubit.get(context).changeBottomNav(0);
+        MainAppCubit.get(context).userData = null ;
+        navigateAndFinish(context: context, widget: const AppLayout(),);
       }
     });
   }

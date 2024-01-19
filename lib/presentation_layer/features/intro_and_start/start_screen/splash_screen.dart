@@ -3,7 +3,6 @@ import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/presentation_layer/features/home/layout/app_layout.dart';
-import 'package:bebo_auto_service/presentation_layer/features/home/home_screen/blur_home_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/rating/rating_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +34,7 @@ class SplashScreen extends StatelessWidget {
             else {
               navigateAndFinish(
                 context: context,
-                widget: const BlurHomeScreen(),
+                widget: const AppLayout(),
               );
             }
           }
@@ -86,7 +85,7 @@ class SplashScreen extends StatelessWidget {
                       myUid = null ;
                       navigateAndFinish(
                         context: context,
-                        widget: const BlurHomeScreen(),
+                        widget: const AppLayout(),
                       );
                     }
                   });
@@ -98,7 +97,7 @@ class SplashScreen extends StatelessWidget {
                   myUid = null ;
                   navigateAndFinish(
                     context: context,
-                    widget: const BlurHomeScreen(),
+                    widget: const AppLayout(),
                   );
                 }
               },
@@ -111,7 +110,7 @@ class SplashScreen extends StatelessWidget {
             myUid = null ;
             navigateAndFinish(
               context: context,
-              widget: const BlurHomeScreen(),
+              widget: const AppLayout(),
             );
           }
           /*else

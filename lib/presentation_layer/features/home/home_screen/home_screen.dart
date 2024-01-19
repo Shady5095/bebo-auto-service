@@ -1,6 +1,7 @@
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
+import 'package:bebo_auto_service/presentation_layer/features/authentication/screens/register_screen/register_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/features/points/points_screen.dart';
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
@@ -21,24 +22,33 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
-  late AnimationController carAnimationController ;
-  late AnimationController pointsTextAnimationController ;
-  late AnimationController helloTextAnimationController ;
-  late AnimationController button1AnimationController ;
-  late AnimationController button2AnimationController ;
-  late Animation<Offset> carSlidingAnimation ;
-  late Animation<Offset> pointsTextSlidingAnimation ;
-  late Animation<Offset> helloTextSlidingAnimation ;
-  late Animation<Offset> button1Animation ;
-  late Animation<Offset> button2Animation ;
+  late AnimationController carAnimationController;
+
+  late AnimationController pointsTextAnimationController;
+
+  late AnimationController helloTextAnimationController;
+
+  late AnimationController button1AnimationController;
+
+  late AnimationController button2AnimationController;
+
+  late Animation<Offset> carSlidingAnimation;
+
+  late Animation<Offset> pointsTextSlidingAnimation;
+
+  late Animation<Offset> helloTextSlidingAnimation;
+
+  late Animation<Offset> button1Animation;
+
+  late Animation<Offset> button2Animation;
 
   @override
   void initState() {
     super.initState();
-      initCarAnimation();
-      initPointsTextAnimation();
-      initHelloTextAnimation();
-      initButtonsAnimation();
+    initCarAnimation();
+    initPointsTextAnimation();
+    initHelloTextAnimation();
+    initButtonsAnimation();
   }
 
   @override
@@ -50,12 +60,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     button2AnimationController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MainAppCubit,MainAppStates>(
-      listener: (context,state){},
-      builder: (context,state){
-        UserModel? userData = MainAppCubit.get(context).userData ;
+    return BlocConsumer<MainAppCubit, MainAppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        UserModel? userData = MainAppCubit
+            .get(context)
+            .userData;
         return Scaffold(
           backgroundColor: defaultBackgroundColor,
           body: Column(
@@ -84,43 +97,49 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       textDirection: TextDirection.ltr,
                       child: Stack(
                         children: [
-                          Positioned(
-                            top: 60.h,
-                            child: AnimatedBuilder(
-                                animation: helloTextSlidingAnimation,
-                                builder: (context,_) {
-                                  return SlideTransition(
-                                    position: helloTextSlidingAnimation,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 10).w,
-                                      child: Text(
-                                        'أهلا,${userData!.firstName}',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 27.sp,
+                          if(myUid != null)
+                            Positioned(
+                              top: 60.h,
+                              child: AnimatedBuilder(
+                                  animation: helloTextSlidingAnimation,
+                                  builder: (context, _) {
+                                    return SlideTransition(
+                                      position: helloTextSlidingAnimation,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 10)
+                                            .w,
+                                        child: Text(
+                                          'أهلا,${userData!.firstName}',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 27.sp,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                }
+                                    );
+                                  }
+                              ),
                             ),
-                          ),
                           Positioned(
                             top: 165.h,
                             child: AnimatedBuilder(
                                 animation: pointsTextSlidingAnimation,
-                                builder: (context,_) {
+                                builder: (context, _) {
                                   return SlideTransition(
                                     position: pointsTextSlidingAnimation,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 10).w,
+                                      padding: const EdgeInsets.only(left: 10)
+                                          .w,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center,
                                         children: [
                                           Countup(
                                             begin: 0,
-                                            end: userData!.points!.toDouble(),
-                                            duration: const Duration(milliseconds: 1500),
+                                            end: userData != null ? userData
+                                                .points!.toDouble() : 100,
+                                            duration: const Duration(
+                                                milliseconds: 1500),
                                             separator: ',',
                                             style: GoogleFonts.dosis(
                                                 color: Colors.white,
@@ -150,15 +169,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ),
                           Positioned(
                             bottom: 0,
-                            left: displayWidth(context) <= 385 ? displayWidth(context)*0.21 : displayWidth(context) > 600 ?  displayWidth(context)*0.25 : displayWidth(context)*0.16,
+                            left: displayWidth(context) <= 385 ? displayWidth(
+                                context) * 0.21 : displayWidth(context) > 600
+                                ? displayWidth(context) * 0.25
+                                : displayWidth(context) * 0.16,
                             child: AnimatedBuilder(
                                 animation: carSlidingAnimation,
                                 builder: (context, _) {
                                   return SlideTransition(
                                     position: carSlidingAnimation,
                                     child: Image(
-                                      width: displayWidth(context) <= 385 ? 330.w :  displayWidth(context) > 600 ? 315.w : 350.w,
-                                      image: const AssetImage('assets/images/mazda3.png'),
+                                      width: displayWidth(context) <= 385 ? 330
+                                          .w : displayWidth(context) > 600 ? 315
+                                          .w : 350.w,
+                                      image: const AssetImage(
+                                          'assets/images/mazda3.png'),
                                     ),
                                   );
                                 }
@@ -177,59 +202,34 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      AnimatedBuilder(
-                          animation: button1Animation,
-                          builder: (context,_) {
-                            return SlideTransition(
-                              position: button1Animation,
-                              child: defaultButton(
-                                onTap: (){
-                                  navigateToAnimated(
-                                    widget: const OffersScreen(),
-                                    context: context,
-                                  );
-                                },
-                                text: 'الأطلاع علي احدث العروض',
-                                width: double.infinity,
-                                height: 37.h,
-                                textColor: Colors.white,
-                                isUppercase: false,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: defaultColor
+                      if(myUid != null)
+                        buildSignedInUssrsMenu(),
+                      if(myUid == null)
+                        AnimatedBuilder(
+                            animation: button1Animation,
+                            builder: (context, _) {
+                              return SlideTransition(
+                                position: button1Animation,
+                                child: defaultButton(
+                                  onTap: () async {
+                                    navigateToAnimated(
+                                      widget: const RegisterScreen(),
+                                      context: context,
+                                    );
+                                  },
+                                  text: 'سجل عربيتك',
+                                  width: double.infinity,
+                                  height: 37.h,
+                                  textColor: Colors.white,
+                                  isUppercase: false,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: defaultColor
+                                  ),
                                 ),
-                              ),
-                            );
-                          }
-                      ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
-                      AnimatedBuilder(
-                          animation: button2Animation,
-                          builder: (context,_) {
-                            return SlideTransition(
-                              position: button2Animation,
-                              child: defaultButton(
-                                onTap: (){
-                                  navigateToAnimated(
-                                    context: context,
-                                    widget: const PointsScreen(),
-                                  );
-                                },
-                                text: 'تقدم النقاط',
-                                width: double.infinity,
-                                height: 37.h,
-                                textColor: Colors.white,
-                                isUppercase: false,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: const Color.fromRGBO(49, 47, 47, 1.0)
-                                ),
-                              ),
-                            );
-                          }
-                      ),
+                              );
+                            }
+                        ),
                     ],
                   ),
                 ),
@@ -241,17 +241,79 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  void initCarAnimation(){
+  Widget buildSignedInUssrsMenu() {
+    return Column(
+      children: [
+        AnimatedBuilder(
+            animation: button1Animation,
+            builder: (context, _) {
+              return SlideTransition(
+                position: button1Animation,
+                child: defaultButton(
+                  onTap: () {
+                    navigateToAnimated(
+                      widget: const OffersScreen(),
+                      context: context,
+                    );
+                  },
+                  text: 'الأطلاع علي احدث العروض',
+                  width: double.infinity,
+                  height: 37.h,
+                  textColor: Colors.white,
+                  isUppercase: false,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: defaultColor
+                  ),
+                ),
+              );
+            }
+        ),
+        SizedBox(
+          height: 15.h,
+        ),
+        AnimatedBuilder(
+            animation: button2Animation,
+            builder: (context, _) {
+              return SlideTransition(
+                position: button2Animation,
+                child: defaultButton(
+                  onTap: () {
+                    navigateToAnimated(
+                      context: context,
+                      widget: const PointsScreen(),
+                    );
+                  },
+                  text: 'تقدم النقاط',
+                  width: double.infinity,
+                  height: 37.h,
+                  textColor: Colors.white,
+                  isUppercase: false,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color.fromRGBO(49, 47, 47, 1.0)
+                  ),
+                ),
+              );
+            }
+        ),
+      ],
+    );
+  }
+
+  void initCarAnimation() {
     carAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     );
-    carSlidingAnimation = Tween<Offset>(begin: const Offset(5 , 0) , end:  const Offset(0 , 0)).animate(
-      CurvedAnimation(
-          parent: carAnimationController,
-          curve: Curves.fastLinearToSlowEaseIn
-      ),
-    );
+    carSlidingAnimation =
+        Tween<Offset>(begin: const Offset(5, 0), end: const Offset(0, 0))
+            .animate(
+          CurvedAnimation(
+              parent: carAnimationController,
+              curve: Curves.fastLinearToSlowEaseIn
+          ),
+        );
     carAnimationController.forward();
   }
 
@@ -260,29 +322,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(seconds: 1),
     );
-    pointsTextSlidingAnimation = Tween<Offset>(begin: const Offset(-2 , 0) , end:  const Offset(0 , 0)).animate(
-      CurvedAnimation(
-          parent: pointsTextAnimationController,
-          curve: Curves.fastLinearToSlowEaseIn,
-      ),
-    );
+    pointsTextSlidingAnimation =
+        Tween<Offset>(begin: const Offset(-2, 0), end: const Offset(0, 0))
+            .animate(
+          CurvedAnimation(
+            parent: pointsTextAnimationController,
+            curve: Curves.fastLinearToSlowEaseIn,
+          ),
+        );
     await Future.delayed(const Duration(milliseconds: 500));
-    if(mounted){
+    if (mounted) {
       pointsTextAnimationController.forward();
     }
   }
 
-  void initHelloTextAnimation(){
+  void initHelloTextAnimation() {
     helloTextAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    helloTextSlidingAnimation = Tween<Offset>(begin: const Offset(-5 , 0) , end:  const Offset(0 , 0)).animate(
-      CurvedAnimation(
-          parent: helloTextAnimationController,
-          curve: Curves.fastLinearToSlowEaseIn,
-      ),
-    );
+    helloTextSlidingAnimation =
+        Tween<Offset>(begin: const Offset(-5, 0), end: const Offset(0, 0))
+            .animate(
+          CurvedAnimation(
+            parent: helloTextAnimationController,
+            curve: Curves.fastLinearToSlowEaseIn,
+          ),
+        );
     helloTextAnimationController.forward();
   }
 
@@ -291,12 +357,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    button1Animation = Tween<Offset>(begin: const Offset(0 , 7) , end:  const Offset(0 , 0)).animate(
-      CurvedAnimation(
-          parent: button1AnimationController,
-          curve: Curves.fastLinearToSlowEaseIn,
-      ),
-    );
+    button1Animation =
+        Tween<Offset>(begin: const Offset(0, 7), end: const Offset(0, 0))
+            .animate(
+          CurvedAnimation(
+            parent: button1AnimationController,
+            curve: Curves.fastLinearToSlowEaseIn,
+          ),
+        );
     button1AnimationController.forward();
 
     ///button2
@@ -304,12 +372,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    button2Animation = Tween<Offset>(begin: const Offset(0 , 7) , end:  const Offset(0 , 0)).animate(
-      CurvedAnimation(
-        parent: button2AnimationController,
-        curve: Curves.fastLinearToSlowEaseIn,
-      ),
-    );
-      button2AnimationController.forward();
+    button2Animation =
+        Tween<Offset>(begin: const Offset(0, 7), end: const Offset(0, 0))
+            .animate(
+          CurvedAnimation(
+            parent: button2AnimationController,
+            curve: Curves.fastLinearToSlowEaseIn,
+          ),
+        );
+    button2AnimationController.forward();
   }
 }

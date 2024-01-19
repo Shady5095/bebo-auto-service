@@ -156,7 +156,7 @@ class _SparePartsDetailsScreenState extends State<SparePartsDetailsScreen> {
                           ),
                         ),
                         Text(
-                          DateFormat.yMMMd().format((widget
+                          DateFormat.yMMMd('ar').format((widget
                               .sparePartsModel.lastPriceUpdate
                               ?.toDate())!),
                           textAlign: TextAlign.center,

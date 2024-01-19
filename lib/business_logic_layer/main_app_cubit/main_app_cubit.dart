@@ -24,10 +24,16 @@ class MainAppCubit extends Cubit<MainAppStates> {
 
   int currentIndex = 0;
 
-  List<Widget> screens = [
+  List<Widget> signedINScreens = [
     const HomeScreen(),
     const MyCarScreen(),
     const SparePartsCategoriesScreen(),
+    const ListedCarsForSaleScreen(isFromBlurHomeScreen: false),
+    const SettingsScreen(),
+  ];
+  List<Widget> signedOutScreens = [
+    const HomeScreen(),
+    const MyCarScreen(),
     const ListedCarsForSaleScreen(isFromBlurHomeScreen: false),
     const SettingsScreen(),
   ];
@@ -146,8 +152,8 @@ class MainAppCubit extends Cubit<MainAppStates> {
     await db.collection('complaints').add({
       'complaint': complaint,
       'addedTime': FieldValue.serverTimestamp(),
-      'userName': '${userData!.firstName}' ' ${userData!.lastName}',
-      'uId': myUid
+      'userName': '${userData != null && userData!.firstName != null ? userData!.firstName : 'غير'} ${userData != null && userData!.lastName != null ? userData!.lastName : 'مسجل'}',
+      'uId': myUid??''
     }).then((value) {
       db.collection('complaints').doc(value.id).update({
         'docId' : value.id,
@@ -155,7 +161,7 @@ class MainAppCubit extends Cubit<MainAppStates> {
       DioHelper.pushNotification(data: {
         'to': '/topics/admin',
         'notification': {
-          "title": " شكوي من ${userData!.firstName} ${userData!.lastName}",
+          "title": " شكوي من ${userData != null && userData!.firstName != null ? userData!.firstName : 'غير'} ${userData != null && userData!.lastName != null ? userData!.lastName : 'مسجل'}",
           "body": complaint,
           "sound": "default",
         },

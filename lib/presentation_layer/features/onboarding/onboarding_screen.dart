@@ -1,10 +1,9 @@
 import 'package:bebo_auto_service/components/constans.dart';
-import 'package:bebo_auto_service/presentation_layer/features/home/home_screen/blur_home_screen.dart';
+import 'package:bebo_auto_service/presentation_layer/features/home/layout/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../../components/components.dart';
 import '../../../data_layer/local/cache_helper.dart';
 
@@ -44,42 +43,41 @@ class _OnBoardingState extends State<OnBoarding> {
     CacheHelper.putData(key: 'onBoarding', value: true);
     navigateAndFinish(
         context: context,
-        widget: const BlurHomeScreen(),
+        widget: const AppLayout(),
         animation: PageTransitionType.rightToLeft);
   }
-
+  List<BoardingModel> boarding = [
+    BoardingModel(
+      image1: 'assets/images/onBoarding1.jpeg',
+      image2: 'assets/images/maintenance.png',
+      image2Alignment: AlignmentDirectional.bottomCenter,
+      title: 'دليل شامل عن سيارتك',
+      body: 'تقدر دلوقتي تشوف جميع فواتير الصيانه و تعرف معاد الصيانه القادم ويمكنك فحص كل قطعه في السياره والحصول علي تقرير بحاله السياره',
+    ),
+    BoardingModel(
+      image1: 'assets/images/onBoarding2.jpg',
+      image2: 'assets/images/report.png',
+      image2Alignment: AlignmentDirectional.bottomStart,
+      title: 'الأطلاع علي جميع قطع الغيار',
+      body: 'يمكنك معرفه توافر جميع قطع الغيار واسعارها',
+    ),
+    BoardingModel(
+      image1: 'assets/images/onBoarding3.jpg',
+      image2: 'assets/images/report.png',
+      image2Alignment: AlignmentDirectional.bottomStart,
+      title: 'فلوسك رجعالك نقاط',
+      body: 'دلوقتي مع كل صيانه هتعملها تقدر تجمع نقط تستبدلها في صيانتك القادمه',
+    ),
+    BoardingModel(
+      image1: 'assets/images/onBoarding4.jpeg',
+      image2: 'assets/images/price.png',
+      image2Alignment: AlignmentDirectional.bottomEnd,
+      title: 'بيع واشتري بضمان المركز',
+      body: 'دلوقتي تقدر تبيع عربيتك بعد الفحص من المركز وعربيتك هتنزل علي التطبيق بجميع تفاصيل حاله كل جزء في السياره',
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
-    List<BoardingModel> boarding = [
-      BoardingModel(
-        image1: 'assets/images/onBoarding1.jpeg',
-        image2: 'assets/images/maintenance.png',
-        image2Alignment: AlignmentDirectional.bottomCenter,
-        title: 'دليل شامل عن سيارتك',
-        body: 'تقدر دلوقتي تشوف جميع فواتير الصيانه و تعرف معاد الصيانه القادم ويمكنك فحص كل قطعه في السياره والحصول علي تقرير بحاله السياره',
-      ),
-      BoardingModel(
-        image1: 'assets/images/onBoarding2.jpg',
-        image2: 'assets/images/report.png',
-        image2Alignment: AlignmentDirectional.bottomStart,
-        title: 'الأطلاع علي جميع قطع الغيار',
-        body: 'يمكنك معرفه توافر جميع قطع الغيار واسعارها',
-      ),
-      BoardingModel(
-        image1: 'assets/images/onBoarding3.jpg',
-        image2: 'assets/images/report.png',
-        image2Alignment: AlignmentDirectional.bottomStart,
-        title: 'فلوسك رجعالك نقاط',
-        body: 'دلوقتي مع كل صيانه هتعملها تقدر تجمع نقط تستبدلها في صيانتك القادمه',
-      ),
-      BoardingModel(
-        image1: 'assets/images/onBoarding4.jpeg',
-        image2: 'assets/images/price.png',
-        image2Alignment: AlignmentDirectional.bottomEnd,
-        title: 'بيع واشتري بضمان المركز',
-        body: 'دلوقتي تقدر تبيع عربيتك بعد الفحص من المركز وعربيتك هتنزل علي التطبيق بجميع تفاصيل حاله كل جزء في السياره',
-      ),
-    ];
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       //appBar: AppBar(),

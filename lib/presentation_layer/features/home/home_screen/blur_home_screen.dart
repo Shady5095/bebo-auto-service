@@ -1,4 +1,4 @@
-import 'dart:ui';
+/*import 'dart:ui';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/more_features/about_screen/about_screen.dart';
@@ -559,4 +559,4 @@ class _BlurHomeScreenState extends State<BlurHomeScreen>
     await Future.delayed(const Duration(milliseconds: 300));
     button2AnimationController.forward();
   }
-}
+}*/

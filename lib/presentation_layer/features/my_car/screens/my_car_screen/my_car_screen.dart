@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/my_car/screens/invoices_screen/invoices_screen.dart';
@@ -11,12 +13,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import '../../../../../data_layer/models/user_model.dart';
 import '../../../../widgets/my_alert_dialog.dart';
+import '../../../authentication/screens/register_screen/register_screen.dart';
 
 class MyCarScreen extends StatefulWidget {
   const MyCarScreen({Key? key}) : super(key: key);
@@ -44,184 +48,257 @@ class _MyCarScreenState extends State<MyCarScreen> {
   var kmController = TextEditingController();
   double oldKm = 0;
 
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppCubit, MainAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        oldKm = MainAppCubit.get(context).userData!.km!.toDouble();
+        oldKm = MainAppCubit.get(context).userData != null ? MainAppCubit.get(context).userData!.km!.toDouble() : 0;
         UserModel? userData = MainAppCubit.get(context).userData;
-        return Scaffold(
-          backgroundColor: defaultBackgroundColor,
-          appBar: AppBar(
-            backgroundColor: defaultBackgroundColor,
-            elevation: 0,
-            toolbarHeight: 45.h,
-            title: Text(
-              'سيارتي',
-              style: TextStyle(fontSize: 22.sp),
-            ),
-          ),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 28.0, vertical: 9)
-                          .w,
-                  child: Stack(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+        return Stack(
+          children: [
+            Scaffold(
+              backgroundColor: defaultBackgroundColor,
+              appBar: AppBar(
+                backgroundColor: defaultBackgroundColor,
+                elevation: 0,
+                toolbarHeight: 45.h,
+                title: Text(
+                  'سيارتي',
+                  style: TextStyle(fontSize: 22.sp),
+                ),
+              ),
+              body: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 28.0, vertical: 9)
+                              .w,
+                      child: Stack(
                         children: [
-                          Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.11,
-                            decoration: const BoxDecoration(
-                              color: Colors.transparent,
-                            ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            //height: MediaQuery.of(context).size.height * 0.25,
-                            padding: const EdgeInsets.only(bottom: 10),
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(2, 0, 0, 0.3),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(40),
-                                topRight: Radius.circular(40),
-                                bottomRight: Radius.circular(20),
-                                bottomLeft: Radius.circular(20),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.height * 0.11,
+                                decoration: const BoxDecoration(
+                                  color: Colors.transparent,
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 32.h,
-                                ),
-                                Text(
-                                  '${userData!.carModel} ${userData.year}',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      //height: 0.5.h,
-                                      fontSize: 22.sp),
-                                ),
-                                Text(
-                                  '${userData.bodyType} | ${userData.transmission}',
-                                  style: TextStyle(
-                                    color: Colors.white54,
-                                    fontSize: 14.sp,
-                                    //height: 1.4.sp,
+                              Container(
+                                width: double.infinity,
+                                //height: MediaQuery.of(context).size.height * 0.25,
+                                padding: const EdgeInsets.only(bottom: 10),
+                                decoration: const BoxDecoration(
+                                  color: Color.fromRGBO(2, 0, 0, 0.3),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(40),
+                                    topRight: Radius.circular(40),
+                                    bottomRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
                                   ),
                                 ),
-                                Text(
-                                  '${userData.plate}',
-                                  style: TextStyle(
-                                    color: Colors.white54,
-                                    fontSize: 14.sp,
-                                    //height: 1.4.sp,
-                                  ),
-                                ),
-                                Text(
-                                  '${userData.km!.addCommaToInt()} كم ',
-                                  style: TextStyle(
-                                    color: defaultColor,
-                                    fontSize: 14.sp,
-                                    //height: 1.2.h,
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                child: Column(
                                   children: [
-                                    Row(
+                                    SizedBox(
+                                      height: 32.h,
+                                    ),
+                                    if(myUid !=null)
+                                    Column(
                                       children: [
                                         Text(
-                                          'شاسيه : ',
+                                          '${userData!.carModel ?? 'Mazda 3'} ${userData.year ?? '2022'}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              //height: 0.5.h,
+                                              fontSize: 22.sp),
+                                        ),
+                                        Text(
+                                          '${userData.bodyType ?? 'سيدان'} | ${userData.transmission ?? 'أوتوماتيك'}',
                                           style: TextStyle(
                                             color: Colors.white54,
-                                            fontSize: 12.sp,
-                                            height: 1.2.h,
+                                            fontSize: 14.sp,
+                                            //height: 1.4.sp,
                                           ),
                                         ),
                                         Text(
-                                          '${MainAppCubit.get(context).userData!.chassisNo}',
+                                          userData.plate ?? 'ر ق م 1',
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.white54,
                                             fontSize: 14.sp,
-                                            height: 1.2.h,
+                                            //height: 1.4.sp,
                                           ),
+                                        ),
+                                        Text(
+                                          userData.km != null
+                                              ? '${userData.km!.addCommaToInt()} كم '
+                                              : '90,000',
+                                          style: TextStyle(
+                                            color: defaultColor,
+                                            fontSize: 14.sp,
+                                            //height: 1.2.h,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'شاسيه : ',
+                                                  style: TextStyle(
+                                                    color: Colors.white54,
+                                                    fontSize: 12.sp,
+                                                    height: 1.2.h,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  MainAppCubit.get(context).userData!.chassisNo??'00000000',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14.sp,
+                                                    height: 1.2.h,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'ماتور : ',
+                                                  style: TextStyle(
+                                                    color: Colors.white54,
+                                                    fontSize: 12.sp,
+                                                    height: 1.2.h,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  MainAppCubit.get(context).userData!.engineNo??'000000',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14.sp,
+                                                    height: 1.2.h,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'ماتور : ',
-                                          style: TextStyle(
-                                            color: Colors.white54,
-                                            fontSize: 12.sp,
-                                            height: 1.2.h,
-                                          ),
-                                        ),
-                                        Text(
-                                          '${MainAppCubit.get(context).userData!.engineNo}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14.sp,
-                                            height: 1.2.h,
-                                          ),
-                                        ),
-                                      ],
+                                    if(myUid ==null)
+                                    SizedBox(
+                                      height: 80.h,
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Center(
+                              child: Image(
+                                width: displayWidth(context) * 0.7,
+                                height: displayHeight(context) * 0.18,
+                                image: CachedNetworkImageProvider(userData != null && userData
+                                        .carImage != null ? userData
+                                    .carImage! :
+                                    'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Center(
-                          child: Image(
-                            width: displayWidth(context) * 0.7,
-                            height: displayHeight(context) * 0.18,
-                            image: CachedNetworkImageProvider(userData
-                                    .carImage ??
-                                'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b'),
-                          ),
-                        ),
+                    ),
+                    AnimationLimiter(
+                      child: ListView.builder(
+                        itemCount: menuItemsDetails.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: buildMenuItems(
+                                    menuItemsDetails[index], context, index),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                AnimationLimiter(
-                  child: ListView.builder(
-                    itemCount: menuItemsDetails.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 375),
-                        child: SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: buildMenuItems(
-                                menuItemsDetails[index], context, index),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            if(myUid== null)
+            TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0.0, end: 4.0),
+              duration: const Duration(seconds: 0),
+              builder: (_, value, child) {
+                return BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: value,
+                      sigmaY: value,
+                    ),
+                    child: child);
+              },
+              child: Container(
+                color: Colors.black.withOpacity(0.5),
+              ),
+            ),
+            if(myUid== null)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'برجاء تسجيل سيارتك لعرض جميع البيانات الخاصة بها والفواتير ومواعيد الصيانة',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.cairo(
+                        color: Colors.white,
+                        fontSize: 20.sp,
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    defaultButton(
+                      onTap: () {
+                        navigateTo(
+                            context: context,
+                            widget: const RegisterScreen());
+                      },
+                      text: 'سجل',
+                      width: displayWidth(context) *
+                          0.70,
+                      height: 37.h,
+                      textColor: Colors.white,
+                      isUppercase: false,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(
+                              15),
+                          color: defaultColor),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+          ],
         );
       },
     );

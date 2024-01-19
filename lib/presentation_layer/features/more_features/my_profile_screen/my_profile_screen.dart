@@ -10,12 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:page_transition/page_transition.dart';
-
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_states.dart';
 import '../../../../data_layer/local/cache_helper.dart';
-import '../../home/home_screen/blur_home_screen.dart';
+import '../../home/layout/app_layout.dart';
 
 class MyProfileScreen extends StatefulWidget {
   final UserModel userData;
@@ -471,12 +469,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     )?.then((value) {
       if (value) {
         myUid = null ;
-        Navigator.pushReplacement(context, PageTransition(
-            type: PageTransitionType.fade,
-            child: const BlurHomeScreen(),
-            duration: const Duration(milliseconds: 250)
-        ),
-        );
+        MainAppCubit.get(context).changeBottomNav(0);
+        MainAppCubit.get(context).userData = null ;
+        navigateAndFinish(context: context, widget: const AppLayout(),);
       }
     });
   }

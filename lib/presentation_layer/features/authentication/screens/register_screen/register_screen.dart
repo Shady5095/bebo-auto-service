@@ -1,5 +1,6 @@
 import 'package:bebo_auto_service/business_logic_layer/authentication_cubit/authentication_cubit.dart';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/presentation_layer/features/authentication/screens/login_screen/login_screen.dart';
 import 'package:bebo_auto_service/presentation_layer/widgets/dropdown_buttom.dart';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:page_transition/page_transition.dart';
 import '../../../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../../../components/components.dart';
 import '../../../../widgets/my_alert_dialog.dart';
@@ -527,6 +529,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       suffixIconColor:
                                           Theme.of(context).secondaryHeaderColor,
                                       labelText: 'رقم الشاسيه (من الرخصة)',
+                                      errorMaxLines: 2,
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),
                                       ),
@@ -569,6 +572,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       prefixIconColor:
                                           Theme.of(context).secondaryHeaderColor,
                                       labelText: 'رقم الماتور (من الرخصة)',
+                                      errorMaxLines: 2,
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),
                                       ),
@@ -912,6 +916,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 14.h,
                         ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                ' لديك حساب بالفعل ؟',
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontSize: 14.sp),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  navigateToAnimated(
+                                      context: context,
+                                      widget: const LoginScreen(),
+                                      animation:
+                                          PageTransitionType.leftToRight);
+                                },
+                                child: Text(
+                                  'تسجيل الدخول',
+                                  style: TextStyle(
+                                      fontSize: 13.sp, color: defaultColor),
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ),

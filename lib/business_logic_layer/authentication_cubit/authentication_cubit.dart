@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:bebo_auto_service/components/car_images_url.dart';
 import 'package:bebo_auto_service/presentation_layer/features/home/layout/app_layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -57,8 +60,18 @@ class AuthCubit extends Cubit<AuthStates> {
     if (isChassisNoExists) {
       emit(ChassisNoExistsBeforeState());
     } else {
-      String carImageUrl =
-          carPhotoUrl(carModel: carModel, carYear: year, carColor: color);
+      String carImageUrl = carPhotoUrl(carModel: carModel, carYear: year, carColor: color);
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      String deviceName = '';
+      if(Platform.isIOS){
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        deviceName = iosInfo.name ;
+      }
+      if(Platform.isAndroid){
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        deviceName = '${androidInfo.manufacturer} ${androidInfo.model}' ;
+      }
+
       UserModel userModel = UserModel(
         firstName: firstName,
         lastName: lastName,
@@ -79,6 +92,7 @@ class AuthCubit extends Cubit<AuthStates> {
         serviceStreak: 0,
         carImage: carImageUrl,
         isLastServiceRated: true,
+        deviceModel: deviceName ,
       );
       await db
           .collection('unverifiedUsers')

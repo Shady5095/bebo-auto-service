@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/chat/screens/chat_details_screen.dart';
@@ -90,8 +89,7 @@ class _AppLayoutState extends State<AppLayout> {
               durationUntilAlertAgain: const Duration(seconds: 1),
             ),
             child: Scaffold(
-              body: MainAppCubit.get(context)
-                  .screens[MainAppCubit.get(context).currentIndex],
+              body: myUid != null ? MainAppCubit.get(context).signedINScreens[MainAppCubit.get(context).currentIndex] : MainAppCubit.get(context).signedOutScreens[MainAppCubit.get(context).currentIndex],
               bottomNavigationBar: BottomNavigationBar(
                 backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
                 selectedItemColor: const Color.fromRGBO(210, 29, 29, 1.0),
@@ -123,6 +121,7 @@ class _AppLayoutState extends State<AppLayout> {
                     ),
                     label: 'سيارتي',
                   ),
+                  if(myUid != null)
                   BottomNavigationBarItem(
                     icon:  Padding(
                       padding: const EdgeInsets.only(bottom: 0.0),
