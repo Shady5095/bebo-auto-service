@@ -4,6 +4,7 @@ import 'package:bebo_auto_service/presentation_layer/features/authentication/scr
 import 'package:bebo_auto_service/presentation_layer/widgets/dropdown_buttom.dart';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../../../../business_logic_layer/authentication_cubit/authentication_states.dart';
 import '../../../../../components/components.dart';
+import '../../../../../data_layer/local/cache_helper.dart';
 import '../../../../widgets/my_alert_dialog.dart';
+import '../../../chat/screens/chat_details_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -29,7 +32,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var engineNo = TextEditingController();
   var chassisNo = TextEditingController();
   var plateNo = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  var formKeyRegister = GlobalKey<FormState>();
+  var formKeyDialog = GlobalKey<FormState>();
   List<String> carModels = [
     'Mazda 3',
     'Mazda 2',
@@ -138,10 +142,171 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (state is ChassisNoExistsBeforeState) {
             showDialog(
                 context: context,
-                builder: (context) => const MyAlertDialog(
+                builder: (context) => MyAlertDialog(
                       isFailed: true,
                       title: 'رقم الشاسيه مسجل من قبل',
-                      actions: [],
+                      actions: [
+                        defaultButton(
+                          onTap: () {
+                            if (CacheHelper.getString(key: 'chassisNo') == null) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => MyAlertDialog(
+                                    content: Form(
+                                      key: formKeyDialog,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'برجاء ادخال بياناتك للتواصل معنا',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15.sp
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          TextFormField(
+                                            controller: chassisNo,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp('[0-9۰-۹]')),
+                                            ],
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                fontSize: 13.sp),
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 13),
+                                              labelStyle: TextStyle(
+                                                  color:
+                                                  Theme.of(context).hintColor,
+                                                  fontSize: 11.sp),
+                                              prefixIconColor: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              suffixIconColor: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              labelText: 'رقم الشاسيه (من الرخصة)',
+                                              errorMaxLines: 2,
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(15),
+                                              ),
+                                            ),
+                                            autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'برجاء ادخال البيانات';
+                                              } else if (value.length < 6) {
+                                                return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          TextFormField(
+                                            controller: phoneController,
+                                            keyboardType: TextInputType.phone,
+                                            inputFormatters: [
+                                              LengthLimitingTextInputFormatter(11),
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp('[0-9۰-۹]')),
+                                            ],
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                fontSize: 12.sp),
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                              const EdgeInsets.all(5),
+                                              labelStyle: TextStyle(
+                                                  color:
+                                                  Theme.of(context).hintColor,
+                                                  fontSize: 12.sp),
+                                              prefixIconColor: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              suffixIconColor: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              labelText: 'رقم الهاتف',
+                                              prefixIcon: const Icon(Icons.phone),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(15),
+                                              ),
+                                            ),
+                                            autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'برجاء ادخال البيانات';
+                                              } else if (value.length < 11) {
+                                                return 'رقم الهاتف غير صالح';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      defaultButton(
+                                          onTap: () {
+                                            if(formKeyDialog.currentState!.validate()){
+                                              CacheHelper.putString(key: 'chassisNo', value: '${chassisNo.text}${phoneController.text}').then((value) {
+                                                CacheHelper.putString(key: 'chassisOnly', value: chassisNo.text);
+                                                CacheHelper.putString(key: 'phoneOnly', value: phoneController.text);
+                                                FirebaseMessaging.instance.subscribeToTopic('${chassisNo.text}${phoneController.text}');
+                                                Navigator.pop(context);
+                                                navigateToAnimated(
+                                                  context: context,
+                                                  widget: const ChatsDetailsScreen(),
+                                                );
+                                              });
+                                            }
+                                          }, text: 'تم',width: 70.w)
+                                    ],
+                                  ));
+                            }
+                            else
+                            {
+                              navigateToAnimated(
+                                context: context,
+                                widget: const ChatsDetailsScreen(),
+                              );
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'تواصل معنا',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Icon(CupertinoIcons.chat_bubble_2,
+                              color: Colors.white,
+                              size: 19.sp,),
+                            ],
+                          ),
+                          width: 100.w,
+                        )
+                      ],
                     ));
           }
           if (state is RegisterSuccessState) {
@@ -218,7 +383,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Form(
-                  key: formKey,
+                  key: formKeyRegister,
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Column(
@@ -325,7 +490,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.phone,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(11),
-                            FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                            FilteringTextInputFormatter.allow(
+                                RegExp('[0-9۰-۹]')),
                           ],
                           style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor,
@@ -468,7 +634,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 textCapitalization: TextCapitalization.words,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(6),
-                                  FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9۰-۹]')),
                                 ],
                                 style: TextStyle(
                                     color:
@@ -512,22 +679,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: chassisNo,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[0-9۰-۹]')),
                                     ],
                                     style: TextStyle(
-                                        color:
-                                            Theme.of(context).secondaryHeaderColor,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
                                         fontSize: 13.sp),
                                     decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 13),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 13),
                                       labelStyle: TextStyle(
                                           color: Theme.of(context).hintColor,
                                           fontSize: 11.sp),
-                                      prefixIconColor:
-                                          Theme.of(context).secondaryHeaderColor,
-                                      suffixIconColor:
-                                          Theme.of(context).secondaryHeaderColor,
+                                      prefixIconColor: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                      suffixIconColor: Theme.of(context)
+                                          .secondaryHeaderColor,
                                       labelText: 'رقم الشاسيه (من الرخصة)',
                                       errorMaxLines: 2,
                                       border: OutlineInputBorder(
@@ -539,8 +708,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'برجاء ادخال البيانات';
-                                      }
-                                      else if (value.length < 6) {
+                                      } else if (value.length < 6) {
                                         return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
                                       }
                                       return null;
@@ -555,22 +723,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: engineNo,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[0-9۰-۹]')),
                                     ],
-                                    textCapitalization: TextCapitalization.words,
+                                    textCapitalization:
+                                        TextCapitalization.words,
                                     style: TextStyle(
-                                        color:
-                                            Theme.of(context).secondaryHeaderColor,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
                                         fontSize: 13.sp),
                                     decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 13),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 13),
                                       labelStyle: TextStyle(
                                         color: Theme.of(context).hintColor,
                                         fontSize: 11.sp,
                                       ),
-                                      prefixIconColor:
-                                          Theme.of(context).secondaryHeaderColor,
+                                      prefixIconColor: Theme.of(context)
+                                          .secondaryHeaderColor,
                                       labelText: 'رقم الماتور (من الرخصة)',
                                       errorMaxLines: 2,
                                       border: OutlineInputBorder(
@@ -582,8 +753,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'برجاء ادخال البيانات';
-                                      }
-                                      else if (value.length < 3) {
+                                      } else if (value.length < 3) {
                                         return 'رقم الماتور يجب ان لا يقل عن 3 ارقام';
                                       }
                                       return null;
@@ -610,7 +780,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             Container(
                               width: double.infinity,
-                              margin: const EdgeInsets.symmetric(horizontal: 50).w,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 50).w,
                               height: 100.h,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -652,7 +823,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   Expanded(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           children: [
@@ -661,7 +833,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 children: [
                                                   Expanded(
                                                     child: CustomDropdownButton(
-                                                      dropdownItems: plateLetters,
+                                                      dropdownItems:
+                                                          plateLetters,
                                                       hint: '',
                                                       iconSize: 0,
                                                       value: firstLetter,
@@ -670,13 +843,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                         firstLetter = selected;
                                                         setState(() {});
                                                       },
-                                                      buttonWidth: double.infinity,
+                                                      buttonWidth:
+                                                          double.infinity,
                                                       buttonHeight: 38.h,
                                                     ),
                                                   ),
                                                   Expanded(
                                                     child: CustomDropdownButton(
-                                                      dropdownItems: plateLetters,
+                                                      dropdownItems:
+                                                          plateLetters,
                                                       hint: '',
                                                       iconSize: 0,
                                                       value: secondLetter,
@@ -685,13 +860,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                         secondLetter = selected;
                                                         setState(() {});
                                                       },
-                                                      buttonWidth: double.infinity,
+                                                      buttonWidth:
+                                                          double.infinity,
                                                       buttonHeight: 38.h,
                                                     ),
                                                   ),
                                                   Expanded(
                                                     child: CustomDropdownButton(
-                                                      dropdownItems: plateLetters,
+                                                      dropdownItems:
+                                                          plateLetters,
                                                       hint: '',
                                                       iconSize: 0,
                                                       value: thirdLetter,
@@ -700,7 +877,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                         thirdLetter = selected!;
                                                         setState(() {});
                                                       },
-                                                      buttonWidth: double.infinity,
+                                                      buttonWidth:
+                                                          double.infinity,
                                                       buttonHeight: 38.h,
                                                     ),
                                                   ),
@@ -709,8 +887,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 8.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
                                                 child: TextFormField(
                                                   controller: plateNo,
                                                   keyboardType:
@@ -718,14 +897,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   inputFormatters: [
                                                     LengthLimitingTextInputFormatter(
                                                         4),
-                                                    FilteringTextInputFormatter.allow(RegExp('[0-9۰-۹]')),
+                                                    FilteringTextInputFormatter
+                                                        .allow(
+                                                            RegExp('[0-9۰-۹]')),
                                                   ],
                                                   style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 13.sp),
                                                   decoration: InputDecoration(
                                                     contentPadding:
-                                                        const EdgeInsets.symmetric(
+                                                        const EdgeInsets
+                                                            .symmetric(
                                                             horizontal: 7),
                                                     hintStyle: const TextStyle(
                                                       color: Colors.white,
@@ -735,7 +917,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     fillColor: Colors.grey[900],
                                                     border: OutlineInputBorder(
                                                       borderRadius:
-                                                          BorderRadius.circular(15),
+                                                          BorderRadius.circular(
+                                                              15),
                                                     ),
                                                     enabledBorder:
                                                         OutlineInputBorder(
@@ -746,10 +929,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(15)),
+                                                                    .circular(
+                                                                        15)),
                                                   ),
-                                                  autovalidateMode: AutovalidateMode
-                                                      .onUserInteraction,
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
                                                   validator: (value) {
                                                     if (value == null ||
                                                         value.isEmpty) {
@@ -786,12 +971,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'سيتم مراجعة بياناتك من قبل المسئول',
                                         style: TextStyle(
-                                            color: Colors.white54, fontSize: 13.sp),
+                                            color: Colors.white54,
+                                            fontSize: 13.sp),
                                       ),
                                     ],
                                   ),
@@ -813,12 +1000,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'برجاء العلم انه لن يتم قبول حسابك اذا انت ليس عميل بمركز بيبو',
                                         style: TextStyle(
-                                            color: Colors.white54, fontSize: 13.sp),
+                                            color: Colors.white54,
+                                            fontSize: 13.sp),
                                       ),
                                     ],
                                   ),
@@ -840,12 +1029,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'برجاء التأكد من رقم الشاسيه جيدا لانه لن يتم قبول السياره اذا كان الرقم غير صحيح ',
                                         style: TextStyle(
-                                            color: Colors.white54, fontSize: 13.sp),
+                                            color: Colors.white54,
+                                            fontSize: 13.sp),
                                       ),
                                     ],
                                   ),
@@ -861,7 +1052,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           condition: state is! RegisterLoadingState,
                           builder: (context) => defaultButton(
                             onTap: () {
-                              if (formKey.currentState!.validate()) {
+                              if (formKeyRegister.currentState!.validate()) {
                                 if (carModelSelected == null ||
                                     carYearSelected == null ||
                                     carColorSelected == null ||
@@ -883,22 +1074,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 } else {
                                   cubit
                                       .userRegister(
-                                      email: '${chassisNo.text}@gmail.com',
-                                      password: chassisNo.text,
-                                      firstName: firstNameController.text,
-                                      lastName: lastNameController.text,
-                                      carModel: carModelSelected!,
-                                      year: carYearSelected!.toInt(),
-                                      transmission: transmissionSelected!,
-                                      color: carColorSelected!,
-                                      bodyType: bodyTypeSelected!,
-                                      km: kiloMeterCount.text.toInt(),
-                                      chassisNo: chassisNo.text,
-                                      engineNo: engineNo.text,
-                                      plate:
-                                      '$firstLetter $secondLetter ${thirdLetter ?? ''}  ${plateNo.text}',
-                                      phone: phoneController.text,
-                                      context: context)
+                                          email: '${chassisNo.text}@gmail.com',
+                                          password: chassisNo.text,
+                                          firstName: firstNameController.text,
+                                          lastName: lastNameController.text,
+                                          carModel: carModelSelected!,
+                                          year: carYearSelected!.toInt(),
+                                          transmission: transmissionSelected!,
+                                          color: carColorSelected!,
+                                          bodyType: bodyTypeSelected!,
+                                          km: kiloMeterCount.text.toInt(),
+                                          chassisNo: chassisNo.text,
+                                          engineNo: engineNo.text,
+                                          plate:
+                                              '$firstLetter $secondLetter ${thirdLetter ?? ''}  ${plateNo.text}',
+                                          phone: phoneController.text,
+                                          context: context)
                                       .then((value) {});
                                 }
                               }
@@ -917,31 +1108,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: 14.h,
                         ),
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                ' لديك حساب بالفعل ؟',
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              ' لديك حساب بالفعل ؟',
+                              style: TextStyle(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  fontSize: 14.sp),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                navigateToAnimated(
+                                    context: context,
+                                    widget: const LoginScreen(),
+                                    animation: PageTransitionType.leftToRight);
+                              },
+                              child: Text(
+                                'تسجيل الدخول',
                                 style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontSize: 14.sp),
+                                    fontSize: 13.sp, color: defaultColor),
                               ),
-                              TextButton(
-                                onPressed: () {
-                                  navigateToAnimated(
-                                      context: context,
-                                      widget: const LoginScreen(),
-                                      animation:
-                                          PageTransitionType.leftToRight);
-                                },
-                                child: Text(
-                                  'تسجيل الدخول',
-                                  style: TextStyle(
-                                      fontSize: 13.sp, color: defaultColor),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

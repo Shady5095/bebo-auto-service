@@ -56,6 +56,9 @@ class MyAlertDialog extends StatelessWidget {
                   fontSize: 16.sp,
                 ),
               ),
+              SizedBox(
+                height: 10.h,
+              ),
             ],
           ),
       actions: actions ??

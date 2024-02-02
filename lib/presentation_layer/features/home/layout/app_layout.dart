@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:upgrader/upgrader.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_cubit.dart';
 import '../../../../business_logic_layer/main_app_cubit/main_app_states.dart';
+import '../../../../data_layer/local/cache_helper.dart';
 import '../../offers/offers_screen.dart';
 
 class AppLayout extends StatefulWidget {
@@ -153,7 +154,7 @@ class _AppLayoutState extends State<AppLayout> {
                           ),
                         ),
                         StreamBuilder(
-                            stream: FirebaseFirestore.instance.collection('chats').doc(myUid).collection('messages').where('isSeen',isEqualTo: false).where('senderId',isEqualTo: 'admin').snapshots(),
+                            stream: FirebaseFirestore.instance.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).collection('messages').where('isSeen',isEqualTo: false).where('senderId',isEqualTo: 'admin').snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
                                 return const Center(

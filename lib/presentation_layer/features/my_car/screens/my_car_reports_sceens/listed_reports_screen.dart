@@ -27,6 +27,7 @@ class ListedReportsScreen extends StatelessWidget {
               .collection('verifiedUsers')
               .doc(myUid)
               .collection('reports')
+              .where('isVerified',isEqualTo: true)
               .orderBy('dateTime', descending: true)
               .get(),
           builder: (context, snapshot) {

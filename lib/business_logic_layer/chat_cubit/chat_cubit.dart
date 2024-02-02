@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bebo_auto_service/components/constans.dart';
+import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
 import 'package:bebo_auto_service/data_layer/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -39,9 +40,9 @@ class ChatCubit extends Cubit<ChatStates> {
   Future<void> updateUserInformationFirstTime({
     required UserModel userData,
   }) async {
-    await db.collection('chats').doc(myUid).get().then((value) {
+    await db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).get().then((value) {
       if (!value.exists) {
-        db.collection('chats').doc(myUid).set({
+        db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).set({
           'name':
               '${userData.firstName} ${userData.lastName}',
           'carModel': '${userData.carModel}',
@@ -56,16 +57,16 @@ class ChatCubit extends Cubit<ChatStates> {
     required String? text,
     required UserModel userData,
   }) async {
-    await db.collection('chats').doc(myUid).collection('messages').add({
+    await db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).collection('messages').add({
       'receiverId': 'admin',
-      'senderId': myUid,
+      'senderId': myUid??CacheHelper.getString(key: 'chassisNo'),
       'text': text,
       'dateTime': FieldValue.serverTimestamp(),
       'isSeen': false,
     }).then((messageId) async {
       await db
           .collection('chats')
-          .doc(myUid)
+          .doc(myUid??CacheHelper.getString(key: 'chassisNo'))
           .collection('messages')
           .doc(messageId.id)
           .update({
@@ -75,12 +76,13 @@ class ChatCubit extends Cubit<ChatStates> {
     DioHelper.pushNotification(data: {
       'to': '/topics/admin',
       'notification': {
-        "title": "${userData.firstName} ${userData.lastName} (${userData.carModel} ${userData.year})",
+        "title": userData.lastName == 'مسجل' ? 'عميل غير مسجل':"${userData.firstName} ${userData.lastName} (${userData.carModel} ${userData.year})",
         "body": text,
         "sound": "default",
       },
       'data' : {
         "newMessage": userData.uId,
+        "chassisNo": CacheHelper.getString(key: 'chassisOnly'),
         "click_action": "FLUTTER_NOTIFICATION_CLICK"
       },
     });
@@ -95,9 +97,9 @@ class ChatCubit extends Cubit<ChatStates> {
     if (newMessageImagePhoto != null) {
       imageUrl = await uploadNewMessagePhotoAndAddPath();
     }
-    await db.collection('chats').doc(myUid).collection('messages').add({
+    await db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).collection('messages').add({
       'receiverId': 'admin',
-      'senderId': myUid,
+      'senderId': myUid??CacheHelper.getString(key: 'chassisNo'),
       'text': text,
       'image': imageUrl,
       'dateTime': FieldValue.serverTimestamp(),
@@ -105,7 +107,7 @@ class ChatCubit extends Cubit<ChatStates> {
     }).then((messageId) async {
       await db
           .collection('chats')
-          .doc(myUid)
+          .doc(myUid??CacheHelper.getString(key: 'chassisNo'))
           .collection('messages')
           .doc(messageId.id)
           .update({
@@ -113,7 +115,7 @@ class ChatCubit extends Cubit<ChatStates> {
       });
       db
           .collection('chats')
-          .doc(myUid)
+          .doc(myUid??CacheHelper.getString(key: 'chassisNo'))
           .collection('messages')
           .doc(messageId.id)
           .update({
@@ -125,12 +127,13 @@ class ChatCubit extends Cubit<ChatStates> {
     DioHelper.pushNotification(data: {
       'to': '/topics/admin',
       'notification': {
-        "title": "${userData.firstName} ${userData.lastName} (${userData.carModel} ${userData.year})",
+        "title": userData.lastName == 'مسجل' ? 'عميل غير مسجل': "${userData.firstName} ${userData.lastName} (${userData.carModel} ${userData.year})",
         "body": 'صوره',
         "sound": "default",
       },
       'data' : {
         "newMessage": userData.uId,
+        "chassisNo": CacheHelper.getString(key: 'chassisOnly'),
         "click_action": "FLUTTER_NOTIFICATION_CLICK"
       },
     });
@@ -177,11 +180,12 @@ class ChatCubit extends Cubit<ChatStates> {
   String? imagePath;
 
   Future<String?> uploadNewMessagePhotoAndAddPath() async {
+    String? uId = myUid??CacheHelper.getString(key: 'chassisNo') ;
     String? newOfferPhotoUrl;
     await storage
         .ref()
         .child(
-            'messagesImages/$myUid/${Uri.file((newMessageImagePhoto?.path)!).pathSegments.last}')
+            'messagesImages/$uId/${Uri.file((newMessageImagePhoto?.path)!).pathSegments.last}')
         .putFile(newMessageImagePhoto!)
         .then((value) async {
       imagePath = value.ref.name;
@@ -200,7 +204,7 @@ class ChatCubit extends Cubit<ChatStates> {
     ///get last message
     await db
         .collection('chats')
-        .doc(myUid)
+        .doc(myUid??CacheHelper.getString(key: 'chassisNo'))
         .collection('messages')
         .orderBy('dateTime', descending: true)
         .limit(1)
@@ -217,14 +221,14 @@ class ChatCubit extends Cubit<ChatStates> {
       isSeen = value.docs.isNotEmpty ? value.docs[0].data()['isSeen'] : false;
     });
     try {
-      db.collection('chats').doc(myUid).update({
+      db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).update({
         'lastMessage':'$text',
         'lastMessageDatetime': dateTime,
         'isSeen': isSeen
       });
     } on FirebaseException catch (e) {
       if (e.message == 'Some requested document was not found.') {
-        db.collection('chats').doc(myUid).set({
+        db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).set({
           'lastMessage': '$text',
           'lastMessageDatetime': dateTime,
           'isSeen': isSeen
@@ -239,27 +243,27 @@ class ChatCubit extends Cubit<ChatStates> {
     try {
       await db
           .collection('chats')
-          .doc(myUid)
+          .doc(myUid??CacheHelper.getString(key: 'chassisNo'))
           .collection('messages')
           .doc(messageId)
           .update({
         'isSeen': true,
       });
 
-      await db.collection('chats').doc(myUid).update({
+      await db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).update({
         'isSeen': true,
       });
     } on FirebaseException {
       await db
           .collection('chats')
-          .doc(myUid)
+          .doc(myUid??CacheHelper.getString(key: 'chassisNo'))
           .collection('messages')
           .doc(messageId)
           .set({
         'isSeen': true,
       });
 
-      await db.collection('chats').doc(myUid).set({
+      await db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).set({
         'isSeen': true,
       });
     }

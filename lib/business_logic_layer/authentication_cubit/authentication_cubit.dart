@@ -181,6 +181,7 @@ class AuthCubit extends Cubit<AuthStates> {
                     .get()
                     .then((value) {
                   if (value.exists) {
+                    MainAppCubit.get(context).changeBottomNav(0);
                     navigateAndFinish(
                       context: context,
                       widget: const AppLayout(),

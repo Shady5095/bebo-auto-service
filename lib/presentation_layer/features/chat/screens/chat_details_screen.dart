@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:bebo_auto_service/business_logic_layer/main_app_cubit/main_app_cubit.dart';
+import 'package:bebo_auto_service/data_layer/local/cache_helper.dart';
+import 'package:bebo_auto_service/data_layer/models/user_model.dart';
+import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
@@ -97,7 +100,7 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('chats')
-                        .doc(myUid)
+                        .doc(myUid??CacheHelper.getString(key: 'chassisNo'))
                         .collection('messages')
                         .orderBy('dateTime', descending: true)
                         .snapshots(),
@@ -207,7 +210,7 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                           }
 
                           if (!messageModel.isSeen! &&
-                              messageModel.receiverId == myUid && messageModel.messageId != null) {
+                              messageModel.receiverId == (myUid??CacheHelper.getString(key: 'chassisNo')) && messageModel.messageId != null) {
                             chatCubit.messageSeen(
                                 messageId: messageModel.messageId!);
                           }
@@ -236,7 +239,7 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                                 ),
                               if (snapshot.data?.docs[index]
                                       .data()['senderId'] ==
-                                  myUid)
+                                  (myUid??CacheHelper.getString(key: 'chassisNo')))
                                 MessageWidget(
                                   context: context,
                                   messageModel: messageModel,
@@ -246,7 +249,7 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                                 ),
                               if (snapshot.data?.docs[index]
                                       .data()['senderId'] !=
-                                  myUid)
+                                  (myUid??CacheHelper.getString(key: 'chassisNo')))
                                 MessageWidget(
                                   context: context,
                                   messageModel: messageModel,
@@ -361,8 +364,13 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                                     (chatCubit.newMessageImagePhoto != null)) {
                                   chatCubit.sendMessage(
                                     text: chatController.text,
-                                    userData:
-                                        MainAppCubit.get(context).userData!,
+                                    userData: MainAppCubit.get(context).userData??UserModel(
+                                      carImage: 'https://firebasestorage.googleapis.com/v0/b/bebo-auto-service.appspot.com/o/carImages%2FMazda3%2F2021-2024%2Fmazda3_2020_red.png?alt=media&token=dbf503b1-7c2f-4f9b-b1e8-8eebbf4ead5b0',
+                                      carModel: '${CacheHelper.getString(key: 'chassisOnly')}',
+                                      firstName: 'عميل غير',
+                                      lastName: 'مسجل',
+                                      uId: CacheHelper.getString(key: 'chassisNo')
+                                    ),
                                   );
                                   chatController.clear();
                                 }

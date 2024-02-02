@@ -85,4 +85,5 @@ flutter {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:22.2.0'
+    implementation 'com.google.android.recaptcha:recaptcha:18.4.0'
 }
