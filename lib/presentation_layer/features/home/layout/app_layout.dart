@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
@@ -40,12 +41,61 @@ class _AppLayoutState extends State<AppLayout> {
               widget: const ChatsDetailsScreen(),
             );
           }
+          if (key == 'notificationTitle' || key == 'notificationDescription') {
+            showDialog(
+              context: context,
+              builder: (context) => notificationDialog(value),
+            );
+          }
         }
       }
       return null;
     });
   }
 
+  Widget notificationDialog(RemoteMessage value) {
+    return AlertDialog(
+      icon: Icon(
+        Icons.notifications_active_outlined,
+        color: defaultColor,
+        size: 40.sp,
+      ),
+      contentPadding: EdgeInsets.only(
+        bottom: 4.h,
+        top: 12.h,
+        right: 12.w,
+        left: 12.w,
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      backgroundColor: defaultBackgroundColor,
+      //this right here
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '${value.data['notificationTitle']}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.sp,
+            ),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Text(
+            '${value.data['notificationDescription']}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 14.sp,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  late StreamSubscription subscription ;
   @override
   void initState() {
     super.initState();
@@ -64,6 +114,12 @@ class _AppLayoutState extends State<AppLayout> {
             widget: const ChatsDetailsScreen(),
           );
         }
+        if (key == 'notificationTitle' || key == 'notificationDescription') {
+          showDialog(
+            context: context,
+            builder: (context) => notificationDialog(event)
+          );
+        }
       }
     });
     getInit();
@@ -79,7 +135,9 @@ class _AppLayoutState extends State<AppLayout> {
         builder: (context, state) {
           return UpgradeAlert(
             upgrader: Upgrader(
-              dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material ,
+              dialogStyle: Platform.isIOS
+                  ? UpgradeDialogStyle.cupertino
+                  : UpgradeDialogStyle.material,
               canDismissDialog: false,
               countryCode: 'eg',
               languageCode: 'ar',
@@ -90,11 +148,14 @@ class _AppLayoutState extends State<AppLayout> {
               durationUntilAlertAgain: const Duration(seconds: 1),
             ),
             child: Scaffold(
-              body: myUid != null ? MainAppCubit.get(context).signedINScreens[MainAppCubit.get(context).currentIndex] : MainAppCubit.get(context).signedOutScreens[MainAppCubit.get(context).currentIndex],
+              body: myUid != null
+                  ? MainAppCubit.get(context)
+                      .signedINScreens[MainAppCubit.get(context).currentIndex]
+                  : MainAppCubit.get(context)
+                      .signedOutScreens[MainAppCubit.get(context).currentIndex],
               bottomNavigationBar: BottomNavigationBar(
                 backgroundColor: const Color.fromRGBO(35, 33, 33, 1.0),
                 selectedItemColor: const Color.fromRGBO(210, 29, 29, 1.0),
-
                 type: BottomNavigationBarType.fixed,
                 unselectedItemColor: Colors.white54,
                 elevation: 20,
@@ -105,7 +166,7 @@ class _AppLayoutState extends State<AppLayout> {
                   MainAppCubit.get(context).changeBottomNav(index);
                 },
                 items: [
-                   BottomNavigationBarItem(
+                  BottomNavigationBarItem(
                     icon: Padding(
                       padding: const EdgeInsets.only(bottom: 0.0),
                       child: Icon(
@@ -115,35 +176,33 @@ class _AppLayoutState extends State<AppLayout> {
                     ),
                     label: 'الرئيسية',
                   ),
-                   BottomNavigationBarItem(
+                  BottomNavigationBarItem(
                     icon: Icon(
                       CupertinoIcons.car_detailed,
                       size: 19.sp,
                     ),
                     label: 'سيارتي',
                   ),
-                  if(myUid != null)
-                  BottomNavigationBarItem(
-                    icon:  Padding(
-                      padding: const EdgeInsets.only(bottom: 0.0),
-                      child: Icon(
-                        FontAwesomeIcons.list,
-                        size: 19.sp,
+                  if (myUid != null)
+                    BottomNavigationBarItem(
+                      icon: Padding(
+                        padding: const EdgeInsets.only(bottom: 0.0),
+                        child: Icon(
+                          FontAwesomeIcons.list,
+                          size: 19.sp,
+                        ),
                       ),
+                      label: 'قطع الغيار',
                     ),
-                    label: 'قطع الغيار',
-                  ),
                   BottomNavigationBarItem(
-                    icon:  ImageIcon(
+                    icon: ImageIcon(
                       size: 21.sp,
-                      const AssetImage(
-                        'assets/icons/carSell.png'
-                      ),
+                      const AssetImage('assets/icons/carSell.png'),
                     ),
                     label: 'سيارات للبيع',
                   ),
                   BottomNavigationBarItem(
-                    icon:  Stack(
+                    icon: Stack(
                       alignment: Alignment.topRight,
                       children: [
                         Padding(
@@ -154,7 +213,14 @@ class _AppLayoutState extends State<AppLayout> {
                           ),
                         ),
                         StreamBuilder(
-                            stream: FirebaseFirestore.instance.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).collection('messages').where('isSeen',isEqualTo: false).where('senderId',isEqualTo: 'admin').snapshots(),
+                            stream: FirebaseFirestore.instance
+                                .collection('chats')
+                                .doc(myUid ??
+                                    CacheHelper.getString(key: 'chassisNo'))
+                                .collection('messages')
+                                .where('isSeen', isEqualTo: false)
+                                .where('senderId', isEqualTo: 'admin')
+                                .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
                                 return const Center(
@@ -172,11 +238,12 @@ class _AppLayoutState extends State<AppLayout> {
                                 return const SizedBox();
                               }
                               return CircleAvatar(
-                                backgroundColor: snapshot.data!.docs.isEmpty ? Colors.transparent : defaultColor,
+                                backgroundColor: snapshot.data!.docs.isEmpty
+                                    ? Colors.transparent
+                                    : defaultColor,
                                 radius: 5.r,
                               );
-                            }
-                        ),
+                            }),
                       ],
                     ),
                     label: 'المزيد',

@@ -102,9 +102,11 @@ class InvoicesScreen extends StatelessWidget {
               widget:  ImageViewer(
                 isNetworkImage: true,
                 photoUrlToSaveImage: '${invoiceMap['image']}',
-                photo: NetworkImage(
+                photosList: [
                   '${invoiceMap['image']}',
-                ),
+                  if(invoiceMap['image2'] != null)
+                  '${invoiceMap['image2']}',
+                ],
               ));
         },
         child: Padding(

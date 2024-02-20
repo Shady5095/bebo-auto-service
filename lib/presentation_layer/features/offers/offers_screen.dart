@@ -156,47 +156,43 @@ class OffersScreen extends StatelessWidget {
                 if (offersModel.image != null)
                   LayoutBuilder(builder:
                       (BuildContext context, BoxConstraints constraints) {
-                    return SizedBox(
-                      width: constraints.maxWidth,
-                      height: constraints.maxWidth,
-                      child: Hero(
-                        tag: '${offersModel.id}',
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image(
-                            errorBuilder: (BuildContext? context,
-                                Object? exception, StackTrace? stackTrace) {
-                              return const Center(
-                                child: Icon(
-                                  Icons.warning_amber,
-                                  color: Colors.red,
-                                  size: 100,
+                    return Hero(
+                      tag: '${offersModel.id}',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image(
+                          errorBuilder: (BuildContext? context,
+                              Object? exception, StackTrace? stackTrace) {
+                            return const Center(
+                              child: Icon(
+                                Icons.warning_amber,
+                                color: Colors.red,
+                                size: 100,
+                              ),
+                            );
+                          },
+                          loadingBuilder: (BuildContext? context,
+                              Widget? child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child!;
+                            return Center(
+                              child: SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: CircularProgressIndicator(
+                                  color: defaultColor,
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress
+                                              .cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
                                 ),
-                              );
-                            },
-                            loadingBuilder: (BuildContext? context,
-                                Widget? child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child!;
-                              return Center(
-                                child: SizedBox(
-                                  width: 30,
-                                  height: 30,
-                                  child: CircularProgressIndicator(
-                                    color: defaultColor,
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                ),
-                              );
-                            },
-                            image: CachedNetworkImageProvider(
-                              '${offersModel.image}',
-                            ),
+                              ),
+                            );
+                          },
+                          image: CachedNetworkImageProvider(
+                            '${offersModel.image}',
                           ),
                         ),
                       ),

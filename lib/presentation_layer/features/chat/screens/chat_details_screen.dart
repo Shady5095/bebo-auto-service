@@ -169,7 +169,7 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                                           snapshot.data!.docs[index - 1]
                                               .data()['senderId']);
 
-                          final isShowDateCard = (index ==
+                          final isShowDateCard = ((index ==
                                   snapshot.data!.docs.length - 1) ||
                               ((index == 0) &&
                                   myDateTime.day >
@@ -187,7 +187,52 @@ class _ChatsDetailsScreenState extends State<ChatsDetailsScreen> {
                                                   .data()['dateTime'] ??
                                               Timestamp.now())
                                           .toDate()
-                                          .day);
+                                          .day)||
+
+                              (index == snapshot.data!.docs.length - 1) ||
+                              ((index == 0) &&
+                                  myDateTime.month >
+                                      (snapshot.data?.docs[index + 1]
+                                          .data()['dateTime'] ??
+                                          Timestamp.now())
+                                          .toDate()
+                                          .month) ||
+                              (myDateTime.month >
+                                  (snapshot.data?.docs[index + 1]
+                                      .data()['dateTime'] ??
+                                      Timestamp.now())
+                                      .toDate()
+                                      .month &&
+                                  myDateTime.month <=
+                                      (snapshot.data?.docs[index - 1]
+                                          .data()['dateTime'] ??
+                                          Timestamp.now())
+                                          .toDate()
+                                          .month)
+                              ||
+
+                              (index == snapshot.data!.docs.length - 1) ||
+                              ((index == 0) &&
+                                  myDateTime.year >
+                                      (snapshot.data?.docs[index + 1]
+                                          .data()['dateTime'] ??
+                                          Timestamp.now())
+                                          .toDate()
+                                          .year) ||
+                              (myDateTime.year >
+                                  (snapshot.data?.docs[index + 1]
+                                      .data()['dateTime'] ??
+                                      Timestamp.now())
+                                      .toDate()
+                                      .year &&
+                                  myDateTime.year <=
+                                      (snapshot.data?.docs[index - 1]
+                                          .data()['dateTime'] ??
+                                          Timestamp.now())
+                                          .toDate()
+                                          .year)
+
+                          );
                           String dateCardText() {
                             if (myDateTime.year ==
                                     Timestamp.now().toDate().year &&

@@ -43,9 +43,9 @@ class ChatCubit extends Cubit<ChatStates> {
     await db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).get().then((value) {
       if (!value.exists) {
         db.collection('chats').doc(myUid??CacheHelper.getString(key: 'chassisNo')).set({
-          'name':
-              '${userData.firstName} ${userData.lastName}',
+          'name': '${userData.firstName} ${userData.lastName}',
           'carModel': '${userData.carModel}',
+          'carImage': userData.carImage,
           'carYear': '${userData.year}',
           'uId': userData.uId,
         });
@@ -130,6 +130,7 @@ class ChatCubit extends Cubit<ChatStates> {
         "title": userData.lastName == 'مسجل' ? 'عميل غير مسجل': "${userData.firstName} ${userData.lastName} (${userData.carModel} ${userData.year})",
         "body": 'صوره',
         "sound": "default",
+        "image": imageUrl
       },
       'data' : {
         "newMessage": userData.uId,

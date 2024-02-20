@@ -40,11 +40,15 @@ class _ImageViewerState extends State<ImageViewer> {
           if(widget.photoUrlToSaveImage != null)
           TextButton(
               onPressed: ()  {
-                 saveImageToDevice(widget.photoUrlToSaveImage!).then((value) {
-                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                     content: Text('تم حفظ الصوره'),
-                   ));
-                 });
+                if(widget.photosList != null){
+                  for(var image in widget.photosList!){
+                    saveImageToDevice(image).then((value) {
+                    });
+                  }
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('تم حفظ الصوره'),
+                  ));
+                }
               },
               child:  Text(
                 'حفظ',
@@ -98,11 +102,11 @@ class _ImageViewerState extends State<ImageViewer> {
                   errorBuilder: (BuildContext? context,
                       Object? exception,
                       StackTrace? stackTrace) {
-                    return const Center(
+                    return  Center(
                       child: Icon(
-                        Icons.warning_amber,
+                        Icons.image_not_supported_outlined,
                         color: Colors.red,
-                        size: 100,
+                        size: 50.sp,
                       ),
                     );
                   },
