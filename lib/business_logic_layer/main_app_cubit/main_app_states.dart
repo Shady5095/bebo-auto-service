@@ -36,6 +36,10 @@ class DeleteCustomerReportLoadingState extends MainAppStates {}
 
 class DeleteCustomerReportSuccessState extends MainAppStates {}
 
+class ImagePickedSuccessState extends MainAppStates {}
+
+class FilePickedSuccessState extends MainAppStates {}
+
 class ChassisNoCheckState extends MainAppStates {
   final bool isChassisNoExist ;
 

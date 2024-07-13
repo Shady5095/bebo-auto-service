@@ -11,8 +11,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../data_layer/local/cache_helper.dart';
-import '../../data_layer/network/dio_helper.dart';
 import '../../presentation_layer/features/car_sell/screens/listed_cars_screen.dart';
 import '../../presentation_layer/features/spare_parts/screens/spare_parts_categories_screen/spare_parts_categories_screen.dart';
 import 'main_app_states.dart';
@@ -23,6 +23,8 @@ class MainAppCubit extends Cubit<MainAppStates> {
   static MainAppCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
+  var storage = FirebaseStorage.instance;
+  var picker = ImagePicker();
 
   List<Widget> signedINScreens = [
     const HomeScreen(),
@@ -38,7 +40,6 @@ class MainAppCubit extends Cubit<MainAppStates> {
     const SettingsScreen(),
   ];
   var db = FirebaseFirestore.instance;
-  var storage = FirebaseStorage.instance;
 
   void changeBottomNav(int index) {
     currentIndex = index;
@@ -157,18 +158,6 @@ class MainAppCubit extends Cubit<MainAppStates> {
     }).then((value) {
       db.collection('complaints').doc(value.id).update({
         'docId' : value.id,
-      });
-      DioHelper.pushNotification(data: {
-        'to': '/topics/admin',
-        'notification': {
-          "title": " شكوي من ${userData != null && userData!.firstName != null ? userData!.firstName : 'غير'} ${userData != null && userData!.lastName != null ? userData!.lastName : 'مسجل'}",
-          "body": complaint,
-          "sound": "default",
-        },
-        'data' : {
-          "complaint": 'complaint',
-          "click_action": "FLUTTER_NOTIFICATION_CLICK"
-        },
       });
       emit(SendComplaintSuccessState());
     }).catchError((error) {

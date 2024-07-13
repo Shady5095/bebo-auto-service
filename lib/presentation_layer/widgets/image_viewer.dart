@@ -96,63 +96,51 @@ class _ImageViewerState extends State<ImageViewer> {
             items: widget.photosList!
                 .map(
                   (e) => ClipRRect(
-                child: widget.isNetworkImage == null || widget.isNetworkImage!
-                    ? Image(
-                  width: double.infinity,
-                  errorBuilder: (BuildContext? context,
-                      Object? exception,
-                      StackTrace? stackTrace) {
-                    return  Center(
-                      child: Icon(
-                        Icons.image_not_supported_outlined,
-                        color: Colors.red,
-                        size: 50.sp,
-                      ),
-                    );
-                  },
-                  loadingBuilder: (BuildContext? context,
-                      Widget? child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) return child!;
-                    return Center(
-                      child: SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: CircularProgressIndicator(
-                          color: defaultColor,
-                          value: loadingProgress
-                              .expectedTotalBytes !=
-                              null
-                              ? loadingProgress
-                              .cumulativeBytesLoaded /
-                              loadingProgress
-                                  .expectedTotalBytes!
-                              : null,
-                        ),
-                      ),
-                    );
-                  },
-                  image: CachedNetworkImageProvider(
-                    e,
+                borderRadius: BorderRadius.circular(8.0),
+                child: PhotoView(
+                  imageProvider: widget.isNetworkImage!
+                      ? CachedNetworkImageProvider(e)
+                      : FileImage(File(e)) as ImageProvider,
+                  loadingBuilder: (context, event) => Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.blue, // Adjust this to your preferred color
+                      value: event == null
+                          ? 0
+                          : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+                    ),
                   ),
-                )
-                    : Image(image: FileImage(File(e!.path))),
+                  errorBuilder: (context, error, stackTrace) => const Center(
+                    child: Icon(
+                      Icons.warning_amber,
+                      color: Colors.red,
+                      size: 100,
+                    ),
+                  ),
+                  minScale: PhotoViewComputedScale.contained * 0.8,
+                  backgroundDecoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                  maxScale: PhotoViewComputedScale.covered * 2,
+                ),
               ),
             )
                 .toList(),
             options: CarouselOptions(
-                height: double.infinity,
-                initialPage: myCarouselIndex ?? 0,
-                enableInfiniteScroll: false,
-                enlargeCenterPage: false,
-                reverse: false,
-                viewportFraction: 1.0,
-                autoPlay: false,
-                scrollDirection: Axis.horizontal,
-                scrollPhysics: const BouncingScrollPhysics(),
-                onPageChanged: (index, _) {
+              height: double.infinity,
+              initialPage: myCarouselIndex ?? 0,
+              enableInfiniteScroll: false,
+              enlargeCenterPage: false,
+              reverse: false,
+              viewportFraction: 1.0,
+              autoPlay: false,
+              scrollDirection: Axis.horizontal,
+              scrollPhysics: const BouncingScrollPhysics(),
+              onPageChanged: (index, _) {
+                setState(() {
                   myCarouselIndex = index;
-                }),
+                });
+              },
+            ),
           ),
       ),
     );

@@ -1,4 +1,5 @@
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -32,3 +33,5 @@ double displayAspectRatio(BuildContext context) {
   return displaySize(context).aspectRatio;
 }
 
+AudioPlayer? cachedPlayer ;
+AudioPlayer? pausedPlayer ;

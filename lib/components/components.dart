@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -337,11 +338,54 @@ class MapUtils {
   }
 }
 
-void printWithColor(String? text) {
+void printWithColor(dynamic text) {
   if (kDebugMode) {
     print('\x1B[33m$text\x1B[0m');
   }
 }
 
+String formatAudioDuration(Duration duration){
+  String twoDigits(int n) =>
+      n.toString().padLeft(2, '0');
+  final twoDigitMinutes = twoDigits(
+      duration.inMinutes.remainder(60));
+  final twoDigitSeconds = twoDigits(
+      duration.inSeconds.remainder(60));
+  return '$twoDigitMinutes:$twoDigitSeconds' ;
+}
+
+void myToast({
+  required String? msg ,
+  required ToastStates state ,
+}) => Fluttertoast.showToast(
+  msg: msg!,
+  toastLength: Toast.LENGTH_SHORT,
+  gravity: ToastGravity.BOTTOM,
+  timeInSecForIosWeb: 1,
+  backgroundColor: toastColor(state),
+  textColor: Colors.white,
+  fontSize: 16.0,
+);
+
+enum ToastStates {success,error,warning,normal}
+
+Color toastColor(ToastStates state) {
+  Color? color;
+  switch(state)
+  {
+    case ToastStates.success :
+      color = Colors.green;
+      break;
+    case ToastStates.error :
+      color = Colors.red;
+      break;
+    case ToastStates.normal :
+      color = Colors.grey;
+      break;
+    case ToastStates.warning :
+      color =  Colors.amber;
+  }
+  return color;
+}
 
 

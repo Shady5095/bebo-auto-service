@@ -98,8 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'برجاء ادخال البيانات';
-                              } else if (value.length < 6) {
-                                return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
+                              } else if (value.length < 4) {
+                                return 'رقم الشاسيه يجب ان لا يقل عن 4 ارقام';
                               }
                               return null;
                             },

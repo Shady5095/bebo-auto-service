@@ -360,7 +360,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   color: Colors.white, fontSize: 13.sp),
                             ),
                             Text(
-                              chassisNo.text,
+                              chassisNo.text.length < 6 ? "${chassisNo.text}${phoneController.text}" : chassisNo.text,
                               style: TextStyle(
                                   color: Colors.white, fontSize: 13.sp),
                             ),
@@ -708,8 +708,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'برجاء ادخال البيانات';
-                                      } else if (value.length < 6) {
-                                        return 'رقم الشاسيه يجب ان لا يقل عن 6 ارقام';
+                                      } else if (value.length < 4) {
+                                        return 'رقم الشاسيه يجب ان لا يقل عن 4 ارقام';
                                       }
                                       return null;
                                     },
@@ -1075,7 +1075,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   cubit
                                       .userRegister(
                                           email: '${chassisNo.text}@gmail.com',
-                                          password: chassisNo.text,
+                                          password: chassisNo.text.length < 6 ? "${chassisNo.text}${phoneController.text}" : chassisNo.text,
                                           firstName: firstNameController.text,
                                           lastName: lastNameController.text,
                                           carModel: carModelSelected!,

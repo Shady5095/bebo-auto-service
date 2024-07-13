@@ -101,7 +101,7 @@ class AuthCubit extends Cubit<AuthStates> {
         emit(RegisterSuccessState());
         db.collection('unverifiedUsers').doc(value.id).update(
             {'newUserId': value.id, 'joinedDate': FieldValue.serverTimestamp()});
-        DioHelper.pushNotification(data: {
+        /*DioHelper.pushNotification(data: {
           'to': '/topics/admin',
           'notification': {
             "title": "عميل جديد بأنتظار الموافقة",
@@ -112,7 +112,7 @@ class AuthCubit extends Cubit<AuthStates> {
             "newUserDocId": value.id,
             "click_action": "FLUTTER_NOTIFICATION_CLICK"
           },
-        });
+        });*/
         FirebaseMessaging.instance.subscribeToTopic(
             chassisNo); // to send to customer notification when he accepted
         CacheHelper.putString(key: 'chassisNo', value: chassisNo);

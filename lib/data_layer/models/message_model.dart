@@ -6,6 +6,8 @@ class MessageModel {
   String? text;
   String? image;
   String? messageImageNamesInStorage;
+  String? voiceMessage;
+  int? duration;
   bool? isSeen ;
 
   MessageModel({
@@ -16,6 +18,8 @@ class MessageModel {
     this.text,
     this.image,
     this.messageImageNamesInStorage,
+    this.voiceMessage,
+    this.duration,
     this.isSeen,
   });
 
@@ -27,6 +31,8 @@ class MessageModel {
     text = json['text'];
     image = json['image'];
     messageImageNamesInStorage = json['imagePath'];
+    voiceMessage = json['voiceMessage'];
+    duration = json['duration'];
     isSeen = json['isSeen'];
   }
 
@@ -41,6 +47,8 @@ class MessageModel {
         'text' : text ,
       'image' : image ,
       'imagePath' : messageImageNamesInStorage ,
+      'voiceMessage' : voiceMessage ,
+      'duration' : duration ,
       'isSeen' : isSeen ,
 
     };

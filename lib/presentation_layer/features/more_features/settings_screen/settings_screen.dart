@@ -77,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       title: Text(
                         'تعديل الملف الشخصي',
-                        style: TextStyle(fontSize: 18.sp, color: Colors.white),
+                        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500, color: Colors.white),
                       ),
                     ),
                   if (myUid == null)
@@ -97,7 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       title: Text(
                         'تسجيل الدخول',
-                        style: TextStyle(fontSize: 18.sp, color: defaultColor),
+                        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500, color: defaultColor),
                       ),
                     ),
                   ListTile(
@@ -117,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     title: Text(
                       'أرسال شكوي',
-                      style: TextStyle(fontSize: 18.sp, color: Colors.white),
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                   ),
                   ListTile(
@@ -320,7 +320,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     title: Text(
                       'تواصل معنا',
-                      style: TextStyle(fontSize: 18.sp, color: Colors.white),
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                   ),
                   ListTile(
@@ -339,7 +339,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     title: Text(
                       'ارقام التليفون و العناوين',
-                      style: TextStyle(fontSize: 18.sp, color: Colors.white),
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                   ),
                   ListTile(
@@ -358,7 +358,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     title: Text(
                       'عن المركز',
-                      style: TextStyle(fontSize: 18.sp, color: Colors.white),
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                   ),
                   if (myUid != null)
@@ -384,7 +384,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       title: Text(
                         'تسجيل الخروج',
-                        style: TextStyle(fontSize: 18.sp, color: Colors.red),
+                        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500, color: Colors.red),
                       ),
                     ),
                 ],
