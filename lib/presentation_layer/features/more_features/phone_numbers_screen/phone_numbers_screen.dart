@@ -293,19 +293,6 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                         SizedBox(
                           width: 20.w,
                         ),
-                        Icon(
-                          FontAwesomeIcons.instagram,
-                          color: const Color.fromRGBO(238, 12, 124, 1.0),
-                          size: 34.sp,
-                        ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.twitter,
-                          color: Colors.blue,
-                          size: 34.sp,
-                        ),
                       ],
                     ),
                   ],
@@ -343,7 +330,7 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
             onPressed: () {
               callDial(phoneMap['phone']);
             },
-            padding: EdgeInsets.symmetric(horizontal: 8).w,
+            padding: const EdgeInsets.symmetric(horizontal: 8).w,
             icon: Icon(
               Icons.call,
               color: defaultColor,
@@ -355,7 +342,7 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
               onPressed: () {
                 openWhatsapp(phoneNumber: '+2${phoneMap['phone']}', text: '');
               },
-              padding: EdgeInsets.symmetric(horizontal: 8).w,
+              padding: const EdgeInsets.symmetric(horizontal: 8).w,
               icon: Icon(
                 FontAwesomeIcons.whatsapp,
                 color: Colors.green,
