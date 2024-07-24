@@ -151,22 +151,6 @@ class _PhoneNumbersScreenState extends State<PhoneNumbersScreen> {
                             openFacebook();
                           },
                         ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.instagram,
-                          color: const Color.fromRGBO(238, 12, 124, 1.0),
-                          size: 34.sp,
-                        ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Icon(
-                         FontAwesomeIcons.twitter,
-                          color: Colors.blue,
-                          size: 34.sp,
-                        ),
                       ],
                     ),
                   ],
