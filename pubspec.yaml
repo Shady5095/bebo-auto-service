@@ -76,13 +76,13 @@ dependencies:
   file_picker: ^8.0.0+1
 
   #firebase
-  firebase_storage: ^12.1.1
-  firebase_core: ^3.2.0
-  firebase_auth: ^5.1.2
-  cloud_firestore: ^5.1.0
-  firebase_messaging: ^15.0.3
-  firebase_performance: ^0.10.0+3
-  firebase_analytics: ^11.2.0
+  firebase_storage: ^11.5.3
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.0
+  cloud_firestore: ^4.13.3
+  firebase_messaging: ^14.7.6
+  firebase_performance: ^0.9.3+4
+  firebase_analytics: ^10.7.4
 
   flutter:
     sdk: flutter

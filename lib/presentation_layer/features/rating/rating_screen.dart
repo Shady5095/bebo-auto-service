@@ -3,11 +3,14 @@ import 'package:bebo_auto_service/business_logic_layer/rating_cubit/rating_cubit
 import 'package:bebo_auto_service/components/components.dart';
 import 'package:bebo_auto_service/components/constans.dart';
 import 'package:bebo_auto_service/presentation_layer/features/home/layout/app_layout.dart';
+import 'package:bebo_auto_service/presentation_layer/widgets/image_viewer.dart';
 import 'package:bebo_auto_service/presentation_layer/widgets/my_alert_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class RatingScreen extends StatefulWidget {
   final String serviceDocId;
@@ -57,7 +60,7 @@ class _RatingScreenState extends State<RatingScreen> {
                       widget: const AppLayout(),
                     );
                   },
-                  icon:  Icon(
+                  icon: Icon(
                     Icons.close,
                     color: Colors.white,
                     size: 21.sp,
@@ -81,7 +84,57 @@ class _RatingScreenState extends State<RatingScreen> {
                     style: TextStyle(color: Colors.white, fontSize: 18.sp),
                   ),
                   SizedBox(
-                    height: 7.h,
+                    height: 5.h,
+                  ),
+                  FutureBuilder(
+                      future: FirebaseFirestore.instance
+                          .collection('allServices')
+                          .doc(widget.serviceDocId)
+                          .get(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Icon(
+                              Icons.warning_amber,
+                              color: Colors.red,
+                              size: 10,
+                            ),
+                          );
+                        }
+                        if (!snapshot.hasData) {
+                          return const SizedBox.shrink();
+                        }
+                        if ((snapshot.data?.data() == null)) {
+                          return const SizedBox.shrink();
+                        }
+                        return Column(
+                          children: [
+                            Text(
+                              "بتاريخ : ${DateFormat.yMMMd('ar').format(snapshot.data?.data()?["serviceTime"].toDate())}",
+                              style: TextStyle(
+                                  color: Colors.white54, fontSize: 13.sp),
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            InkWell(
+                              child: Text(
+                                "عرض الفاتوره",
+                                style: TextStyle(
+                                    color: defaultColor, fontSize: 14.sp),
+                              ),
+                              onTap: (){
+                                navigateTo(context: context,widget: ImageViewer(
+                                  isNetworkImage: true,
+                                  photo: NetworkImage(snapshot.data?.data()?["invoiceImage"]),
+                                ));
+                              },
+                            ),
+                          ],
+                        );
+                      }),
+                  SizedBox(
+                    height: 2.h,
                   ),
                   faceReaction(rating) ?? const SizedBox(),
                   SizedBox(
@@ -95,7 +148,7 @@ class _RatingScreenState extends State<RatingScreen> {
                     itemSize: 35.sp,
                     itemCount: 5,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) =>  const Icon(
+                    itemBuilder: (context, _) => const Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),
@@ -114,11 +167,13 @@ class _RatingScreenState extends State<RatingScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  if(state is SendRatingLoadingState)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: LinearProgressIndicator(color: defaultColor,),
-                  ),
+                  if (state is SendRatingLoadingState)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: LinearProgressIndicator(
+                        color: defaultColor,
+                      ),
+                    ),
                   defaultButton(
                     onTap: () {
                       if (rating != 0) {
